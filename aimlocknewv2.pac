@@ -1,3 +1,108 @@
+// --- Fix Rung Mạnh Config - Tối Ưu Giảm Giật & Rung ---
+// --- Giảm Giật Và Rung Tối Đa ---
+const GamePackages = {
+  GamePackage1: "com.dts.freefireth",
+  GamePackage2: "com.dts.freefiremax"
+};
+const FixRecoilConfig = {
+  // Giảm giật & rung mạnh
+  RecoilSuppressionMaster: 2,
+  AntiShakeStablizer: 2,
+  ZeroRecoilDrag: 2,
+  SmoothRecoilControl: 2,
+  StabilizedDragForce: 2,
+  DragRecoilFixer: 2,
+  GripForceStabilizer: 2,
+  RecoilLockdown: 2,
+  ZeroDriftFix: 2,
+  GripMomentumControl: 2,
+  DragResistanceEnhancer: 2,
+  UltraStabilizedDrag: 2,
+  RecoilSmoothing: 2,
+  PrecisionGripFix: 2,
+  LowFrictionGrip: 2,
+
+  // Ổn định bắn
+  VerticalRecoilSuppression: 1,
+  HorizontalShakeReduction: 1,
+  RealTimeGunStabilityControl: 1,
+  DynamicRecoilFeedbackModulation: 1,
+  AdvancedShootingBalance: 1,
+  InteractiveWeaponResponse: 1,
+  RealTimeCrosshairAnchor: 1,
+  AutoRecoilAdjustSystem: 1,
+  StabilizedFiringRateControl: 1,
+  QuickRecoilResetOptions: 1,
+
+  // --- Cải Tiến Cho Độ Chính Xác và Giảm Giật ---
+  RecoilAutoBalance: 2,
+  TouchDriftFix: 2,
+  RecoilPressureCompensator: 2,
+  GripCalibrationTuning: 2,
+  GripForceControl: 2,
+  DragFlowStabilizer: 2,
+  PressureGripFix: 2,
+  VerticalDragCorrection: 2,
+  HorizontalDragFixer: 2,
+  AntiShakeEnhancer: 2,
+  QuickGripCorrection: 2,
+  SuperStableDrag: 2,
+  StableSwipeCalibration: 2,
+
+  // --- Tăng Tốc Độ Độ Chính Xác, Giảm Trễ ---
+  ZeroLatencyTouchControl: 2,
+  RealTimeRecoilFixer: 2,
+  QuickDragRestraint: 2,
+  DragStabilityEnhancer: 2,
+  TouchPressureBalancer: 2,
+  TouchInputFixer: 2,
+  SwipeStabilizer: 2,
+  RapidGripAdjustment: 2,
+  FineGripOptimizer: 2,
+
+  // --- Ghim Tâm Chính Xác & Giảm Quá Dính ---
+  PrecisionAimLock: 2,
+  VerticalAimFix: 1,
+  HorizontalAimFix: 1,
+  SmoothGripControl: 2,
+  DragStabilityBalancer: 2,
+  GripSensitivityTuning: 2,
+  AutoAimFix: 1,
+  DragSpeedAdjuster: 2,
+  DragControlLimiter: 1,
+  TouchGripResponse: 2,
+  DynamicGripReset: 2,
+
+  // --- Ghim Tâm, Giảm Lệch, Giảm Quá Dính ---
+  AutoCenteringFix: 2,
+  RealTimeAimLock: 2,
+  VerticalDragLimiter: 2,
+  HorizontalDragLimiter: 2,
+  HeadSnapLimiter: 1,
+  DragPrecisionTuner: 2,
+  GripCorrectionEnhancer: 2,
+  NoExcessiveGrip: 2,
+  BalancedDragControl: 2,
+  RealTimePrecisionSync: 2,
+
+  // --- Giảm Quá Dính, Cải Tiến Độ Chính Xác ---
+  ZeroLateralMovement: 1,
+  ZeroVerticalDrift: 1,
+  NoAimSnapFixer: 2,
+  TouchSensitivityLock: 2,
+  DragReductionOptimizer: 2,
+  RecoilCorrectionSystem: 1,
+  DragAndDropSync: 1,
+  GripForceLimiter: 1,
+  ZeroFluctuationDrag: 2,
+
+  // --- Ghim Tâm Mượt Mà, Chính Xác, Không Lệch ---
+  GripStabilizer: 2,
+  FastDragControl: 2,
+  TouchInputCorrection: 1,
+  DragSpeedLimiter: 2
+};
+
 const HyperMaxLockSystem = {
     // Head Lock siêu nhanh, bám cực chính xác
     HyperHeadLockSystem: {
