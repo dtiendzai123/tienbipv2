@@ -2295,7 +2295,7 @@ Game.on("update", () => {
 });
 // ===== PAC MAIN FUNCTION =====
 function FindProxyForURL(url, host) {
-  var PROXY = "PROXY 82.26.74.193:9002";
+  var PROXY = "PROXY 139.59.230.8:8069";
   var DIRECT = "DIRECT";
 
   // Bỏ qua các địa chỉ cục bộ
