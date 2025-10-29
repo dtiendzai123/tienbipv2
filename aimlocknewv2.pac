@@ -1,3 +1,35 @@
+const aimConfig = {
+  fake_screen: {
+    resolution: "2752x2064",
+    dpi: 3600,
+    sensitivity_multiplier: 6.8
+  },
+  auto_fov: {
+    dynamic_adjust: true,
+    max: 360.0
+  },
+  math: {
+    predictive_offset: 0.02748467
+  },
+  headlock: {
+    enabled: true,
+    biasFactor: 5.0,
+    lockHeightRatio:  0.00907892,
+    crosshairMagnetism: true,
+    adaptiveRange: true,
+    distanceCompensation: true,
+    velocityAdaption: true
+  },
+  weapon_profiles: weaponProfiles,
+  recoil: {
+    m1887: { x: 0.0, y: 0.0 },
+    mp40: { x: 0.0, y: 0.0 },
+    ump: { x: 0.0, y: 0.0 },
+    m1014: { x: 0.0, y: 0.0 },
+    de: { x: 0.0, y: 0.0 },
+    m590: { x: 0.0, y: 0.0 }
+  }
+};
 // --- Fix Rung Mạnh Config - Tối Ưu Giảm Giật & Rung ---
 // --- Giảm Giật Và Rung Tối Đa ---
 const GamePackages = {
