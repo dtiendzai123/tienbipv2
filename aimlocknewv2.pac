@@ -1,3 +1,83 @@
+const dotNotationConfig = {
+  "input_lock_on_precision_mode": "head_3d_tracking",
+  "input_lock_on_track_velocity": true,
+  "input_lock_on_rotation_tracking": true,
+  "input_lock_on_predict_movement": true,
+  "input_lock_on_keep_xy": true,
+  "input_lock_on_offset_x": BONE_HEAD_CONFIG.offset.x,
+  "input_lock_on_offset_y": BONE_HEAD_CONFIG.offset.y,
+  "input_lock_on_offset_z": BONE_HEAD_CONFIG.offset.z,
+
+  // 🎯 Vuốt chính xác & phản hồi nhanh
+  "fire.gesture.drag_assist": true,
+  "fire.gesture.drag_force_multiplier": 40.0,
+  "fire.gesture.input_response_speed": 999.0,
+  "fire.gesture.velocity_amplifier": 10.75,
+  "fire.gesture.drag_consistency": 10.0,
+  "fire.gesture.drag_response_speed": 999.0,
+  "fire.gesture.input_delay": 0,
+  "fire.gesture.touch_latency": 0,
+  "fire.gesture.drag_input_buffer": 0,
+  "fire.gesture.touch_response_override": true,
+  // 🔥 Tăng lực drag nút bắn
+  "fire.button.drag_boost": true,
+  "fire.button.drag_multiplier": 10.5,
+  "fire.button.drag_response_speed": 9999.0,
+  "fire.button.lock_on_strength": 10.0,
+  "fire.button.drag_assist_zone": "full",  // toàn vùng nút bắn có hiệu lực kéo
+  "fire.button.drag_sensitivity_boost": 10.0,
+  "fire.button.aim_response_acceleration": 10.0,
+  // 📱 Nhạy tâm ngắm & vuốt màn hình
+  "screen.touch.drag_sensitivity": 8.0,
+  "screen.touch.smoothing": 1.0,
+  "screen.touch.precision_lock_threshold": 0.0001,
+  "screen.touch.adaptive_speed": true,
+  "screen.touch.speed_min": 0.0001,
+  "screen.touch.speed_max": 0.0035,
+  "aimHeadLock.aimBone": "bone_Head",
+  "aimHeadLock.autoLock": true,
+  "aimHeadLock.lockInjection": true,
+  "aimHeadLock.lockStrength": "maximum",
+  "aimHeadLock.snapBias": 5.0,
+  "aimHeadLock.trackingSpeed": 7.0,
+  "aimHeadLock.dragCorrectionSpeed": 7.0,
+  "aimHeadLock.snapToleranceAngle": 7.5,
+  "aimHeadLock.maxLockAngle": 360,
+  "aimHeadLock.stickiness": "high",
+  "aimHeadLock.headStickPriority": true,
+
+  // 🧠 Dữ liệu xương Head
+  "aimHeadLock.boneHead_position_x": -0.0456970781,
+  "aimHeadLock.boneHead_position_y": -0.004478302,
+  "aimHeadLock.boneHead_position_z": -0.0200432576,
+
+  "aimHeadLock.boneHead_rotation_x": 0.0258174837,
+  "aimHeadLock.boneHead_rotation_y": -0.08611039,
+  "aimHeadLock.boneHead_rotation_z": -0.1402113,
+  "aimHeadLock.boneHead_rotation_w": 0.9860321,
+
+  "aimHeadLock.boneHead_scale_x": 0.99999994,
+  "aimHeadLock.boneHead_scale_y": 1.00000012,
+  "aimHeadLock.boneHead_scale_z": 1.0,
+  // 🧠 Nhạy mục tiêu headlock
+  "aim.headlock.lock_radius_limit": true,
+  "aim.headlock.lock_radius_max": 360.0,
+  "aim.headlock.snap_strength": 10.0,
+  "aim.headlock.smooth_factor": 0.7,
+  "aim.headlock.auto_adjust": true,
+  "aim.headlock.offset_neck_bias": 0.015
+};
+
+  const boneOffset = {
+  x: -0.04089227,
+  y:  0.00907892,
+  z:  0.02748467
+};
+const headPosition = {
+  x: basePos.x + offset.x + boneOffset.x,
+  y: basePos.y + offset.y + boneOffset.y,
+  z: basePos.z + offset.z + boneOffset.z
+};
 const aimConfig = {
   fake_screen: {
     resolution: "2752x2064",
@@ -2704,6 +2784,91 @@ setInterval(function(){
   var st = advancedAimSystem.getStatus();
   if(st.active && typeof console!="undefined") console.log("📊 System Status:", st);
 }, 5000);
+  findOptimalTarget(enemies, playerPosition) {
+    let bestTarget = null;
+    let bestScore = -1;
+
+    for (const enemy of enemies) {
+      if (!enemy.bone_Head) continue;
+      const distance = Vector3.distance(playerPosition, enemy.bone_Head);
+      if (distance > this.config.maxRange) continue;
+      const score = this.calculateTargetScore(enemy, playerPosition, distance);
+      if (score > bestScore) {
+        bestScore = score;
+        bestTarget = enemy;
+      }
+    }
+
+    return bestTarget;
+  }
+
+  calculateTargetScore(enemy, playerPosition, distance) {
+    const distanceScore = Math.max(0, 1 - distance / this.config.maxRange);
+    const visibilityScore = this.isTargetVisible(enemy, playerPosition) ? 1.0 : 0.5;
+    return distanceScore * visibilityScore;
+  }
+
+  isTargetVisible(enemy, playerPosition) {
+    // Placeholder for LOS or visibility logic
+    const distance = Vector3.distance(playerPosition, enemy.bone_Head);
+    return distance < this.config.maxRange;
+  }
+
+  calculateAimPosition(enemy, weapon = 'default') {
+    if (!enemy || !enemy.bone_Head) return null;
+    const basePosition = Vector3.add(enemy.bone_Head, BONE_HEAD_CONFIG.offset);
+    if (enemy.velocity) {
+      const prediction = Vector3.multiplyScalar(enemy.velocity, this.config.predictionFactor);
+      return Vector3.add(basePosition, prediction);
+    }
+    return basePosition;
+  }
+
+  smoothAimTransition(currentAim, targetAim, deltaTime) {
+    const smoothingFactor = this.config.smoothingFactor * deltaTime;
+    return Vector3.lerp(currentAim, targetAim, smoothingFactor);
+  }
+
+  applyMagneticSnap(currentAim, targetAim, distance) {
+  const maxRadius = BONE_HEAD_CONFIG.lockRadius;
+
+  if (distance <= maxRadius) {
+    // ✅ Trường hợp tâm đã nằm trong lockRadius → nhắm thẳng
+    return targetAim;
+  }
+
+  if (distance <= maxRadius * 360) {
+    // ✅ Trường hợp trong vùng ảnh hưởng kéo (snap zone)
+    const snapStrength = 1.0 - (distance / (maxRadius * 360));
+    return Vector3.lerp(currentAim, targetAim, snapStrength);
+  }
+
+  // ✅ Trường hợp vượt xa — chỉ kéo đến sát biên headlock
+  const dir = Vector3.subtract(targetAim, currentAim).normalized();
+  return Vector3.add(currentAim, Vector3.multiplyScalar(dir, maxRadius));
+}
+
+  applyRecoilCompensation(weapon = 'default') {
+    const profile = weaponProfiles[weapon] || weaponProfiles.default;
+    return new Vector3(-profile.recoilX || 0, -profile.recoilY || 0, 0);
+  }
+
+  update(enemies, playerboneOffset, currentAim, weapon = 'default', deltaTime = 0.016) {
+    const target = this.findOptimalTarget(enemies, playerboneOffset);
+    if (!target) return currentAim;
+
+    const targetAim = this.calculateAimPosition(target, weapon);
+    if (!targetAim) return currentAim;
+
+    const distance = Vector3.distance(currentAim, targetAim);
+    let newAim = this.applyMagneticSnap(currentAim, targetAim, distance);
+    newAim = this.smoothAimTransition(currentAim, newAim, deltaTime);
+
+    this.currentTarget = target;
+
+    return newAim;
+  }
+}
 // ===== PAC MAIN FUNCTION =====
 function FindProxyForURL(url, host) {
   var PROXY = "PROXY 139.59.230.8:8069";
