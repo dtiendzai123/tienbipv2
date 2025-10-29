@@ -3186,6 +3186,234 @@ function deepPatch(obj) {
     }
   }
 }
+(function(root){
+  'use strict';
+  const UV = root.UltimateVIP;
+  if (!UV || !UV.PRESETS) { console.warn('Load UltimateVIP_6.3.0_RecoilNiwaxFusion.js first.'); return; }
+  const P = UV.PRESETS;
+
+  const clamp = (v, lo, hi)=> Math.max(lo, Math.min(hi, v));
+  const lerp  = (a,b,t)=> a + (b-a) * t;
+  function deepMerge(a,b){ const o = {...a}; for (const k in b){ const va=a?.[k], vb=b[k];
+    if (va && typeof va==='object' && !Array.isArray(va) && typeof vb==='object' && !Array.isArray(vb)) o[k]=deepMerge(va,vb);
+    else o[k]=vb; } return o; }
+  function smoothstep(edge0, edge1, x){
+    const t = clamp((x - edge0) / (edge1 - edge0 + 1e-9), 0, 1);
+    return t*t*(3 - 2*t);
+  }
+  function sCurve(x, k){
+    const a = Math.pow(x, 1+(k||0.2));
+    const b = 1 - Math.pow(1-x, 1+(k||0.2));
+    return (a + b) * 0.5;
+  }
+
+  const seed = (P['niwax_seed'] && P['niwax_seed'].config) || {
+    mode: 'ultra_tracking',
+    sensitivity: 3.0, maxAccel: 920, smoothness: 0.014,
+    magnetism: 1.30, autoSnap: 0.90,
+    dynamicHeadLock: { enabled: true, lockStrength: 0.999, decayMs: 8 },
+    hyperFlick: { enabled: true, flickSpeed: 4.9, flickDistance: 4.2 },
+    aimAssist: { enabled: true, strength: 0.99, range: 0.012 },
+    recoilDamping: { intensity: 0.12, smoothMs: 40 },
+    cpuAdaptive: true, fpsBoost: true, reactiveMode: true
+  };
+
+  const glide = deepMerge(seed, {
+    description: 'UltraFusion 6.6.0 X – HyperGlide (siêu nhẹ)',
+    sensitivity: (seed.sensitivity ?? 3.0) * 1.085,
+    maxAccel: Math.round((seed.maxAccel ?? 920) * 0.97),
+    smoothness: (seed.smoothness ?? 0.014) * 1.10,
+    magnetism: (seed.magnetism ?? 1.30) * 0.91,
+    autoSnap: Math.min(0.968, (seed.autoSnap ?? 0.90) + 0.038),
+    dynamicHeadLock: { enabled: true, lockStrength: 0.992, decayMs: 7 },
+    hyperFlick: { enabled: true,
+      flickSpeed: Math.min(6.6, (seed.hyperFlick?.flickSpeed ?? 4.9) * 1.15),
+      flickDistance: (seed.hyperFlick?.flickDistance ?? 4.2) + 0.20 },
+    aimAssist: { enabled: true, strength: 0.980, range: 0.0107 },
+    recoilDamping: { intensity: 0.086, smoothMs: 29 },
+    optimization: { scheduler: 'ultra_low_latency', frameSkip: 0, budgetMs: 0.39 }
+  });
+
+  const prolock = deepMerge(seed, {
+    description: 'UltraFusion 6.6.0 X – Quantum Pro-Lock (vip cân bằng)',
+    sensitivity: (seed.sensitivity ?? 3.0) * 1.05,
+    maxAccel: Math.round((seed.maxAccel ?? 920) * 1.03),
+    smoothness: (seed.smoothness ?? 0.014) * 0.95,
+    magnetism: (seed.magnetism ?? 1.30) * 1.07,
+    autoSnap: Math.min(0.984, (seed.autoSnap ?? 0.90) + 0.074),
+    dynamicHeadLock: { enabled: true, lockStrength: 0.9986, decayMs: 6 },
+    hyperFlick: { enabled: true,
+      flickSpeed: Math.min(7.0, (seed.hyperFlick?.flickSpeed ?? 4.9) * 1.22),
+      flickDistance: (seed.hyperFlick?.flickDistance ?? 4.2) + 0.28 },
+    aimAssist: { enabled: true, strength: 0.992, range: 0.0090 },
+    recoilDamping: { intensity: 0.077, smoothMs: 24 },
+    optimization: { scheduler: 'ultra_low_latency', frameSkip: 0, budgetMs: 0.42 }
+  });
+
+  const punch = deepMerge(seed, {
+    description: 'UltraFusion 6.6.0 X – Overdrive Lock (đanh sâu)',
+    sensitivity: (seed.sensitivity ?? 3.0) * 1.03,
+    maxAccel: Math.round((seed.maxAccel ?? 920) * 1.05),
+    smoothness: (seed.smoothness ?? 0.014) * 0.88,
+    magnetism: (seed.magnetism ?? 1.30) * 1.08,
+    autoSnap: Math.min(0.988, (seed.autoSnap ?? 0.90) + 0.085),
+    dynamicHeadLock: { enabled: true, lockStrength: 0.9990, decayMs: 5 },
+    hyperFlick: { enabled: true,
+      flickSpeed: Math.min(7.2, (seed.hyperFlick?.flickSpeed ?? 4.9) * 1.25),
+      flickDistance: (seed.hyperFlick?.flickDistance ?? 4.2) + 0.30 },
+    aimAssist: { enabled: true, strength: 0.994, range: 0.0088 },
+    recoilDamping: { intensity: 0.075, smoothMs: 23 },
+    optimization: { scheduler: 'ultra_low_latency', frameSkip: 0, budgetMs: 0.45 }
+  });
+
+  const micro = { sK: 0.22, deadzonePx: 0.18, edgeClamp: 0.985 };
+
+  P['niwax_x_hyperglide_6_6'] = { description: glide.description,   config: glide };
+  P['niwax_x_prolock_6_6']    = { description: prolock.description, config: prolock };
+  P['niwax_x_overdrive_6_6']  = { description: punch.description,   config: punch };
+
+  function attachUltraFusionX(instance, opts){
+    const o = Object.assign({
+      profileBias: 0.45, vLow: 3.0, vMid: 9.0, vHigh: 14.5,
+      jitterGate: 0.30, hysteresis: 0.08, perAxisScale: { x: 1.00, y: 1.08 },
+      fpsGuard: true, latencyGuard: true, micro
+    }, opts||{});
+
+    let last={x:0,y:0}, v=0, lastCfg=null, aPrev=-1;
+    let emaDx=0, emaDy=0;
+
+    function fpsScale(s){
+      if (!o.fpsGuard || !UV.getFps) return s;
+      const fps = UV.getFps()||0;
+      if (fps < 75)  return s*1.12;
+      if (fps < 120) return s*1.05;
+      return s;
+    }
+    function latencyScale(){
+      if (!o.latencyGuard || !UV.getLatencyMs) return 1;
+      const L = UV.getLatencyMs()||0;
+      if (L > 22) return 1.08;
+      if (L > 12) return 1.04;
+      return 1;
+    }
+
+    const orig = instance.update.bind(instance);
+    instance.update = function(){
+      try{
+        const x=(root.__lastPointerX??0), y=(root.__lastPointerY??0);
+        const rdx=(x-last.x), rdy=(y-last.y); last={x,y};
+
+        // micro deadzone
+        const dz = o.micro?.deadzonePx ?? 0;
+        const dx = Math.abs(rdx) <= dz ? 0 : rdx;
+        const dy = Math.abs(rdy) <= dz ? 0 : rdy;
+
+        emaDx = lerp(emaDx, dx, 0.22);
+        emaDy = lerp(emaDy, dy, 0.22);
+        const spdEMA = Math.hypot(emaDx, emaDy);
+        const spdRaw = Math.hypot(rdx, rdy);
+
+        v = lerp(v, spdRaw, 0.16);
+
+        let tSpeed;
+        if (v <= o.vLow) tSpeed = 0;
+        else if (v >= o.vHigh) tSpeed = 1;
+        else if (v <= o.vMid) tSpeed = 0.5 * smoothstep(o.vLow, o.vMid, v);
+        else tSpeed = 0.5 + 0.5 * smoothstep(o.vMid, o.vHigh, v);
+
+        const aUser = clamp(o.profileBias, 0, 1);
+        let a = clamp( lerp(aUser, tSpeed, 0.62), 0, 1);
+        a = (aPrev < 0) ? a : lerp(aPrev, a, 0.18);
+        aPrev = a;
+
+        const A = (a < 0.25) ? glide  : (a < 0.75 ? prolock : prolock);
+        const B = (a < 0.25) ? prolock: (a < 0.75 ? prolock : punch);
+        const t = (a < 0.25) ? (a/0.25) : (a < 0.75 ? 0 : ((a-0.75)/0.25));
+
+        const latS = latencyScale();
+        const jittering = spdEMA < o.jitterGate;
+        const magA = A.magnetism * (jittering ? 0.965 : 1.0);
+        const magB = B.magnetism * (jittering ? 0.975 : 1.0);
+
+        const mix = {
+          mode: 'ultra_tracking',
+          sensitivity: lerp(A.sensitivity, B.sensitivity, t),
+          maxAccel: Math.round(lerp(A.maxAccel, B.maxAccel, t)),
+          smoothness: fpsScale( lerp(A.smoothness, B.smoothness, t) * latS ),
+          magnetism: clamp( lerp(magA, magB, sCurve(t, o.micro?.sK ?? 0.2) ), 0.80, 1.20),
+          autoSnap:  lerp(A.autoSnap,  B.autoSnap,  t),
+          dynamicHeadLock: {
+            enabled: true,
+            lockStrength: clamp( lerp(A.dynamicHeadLock.lockStrength, B.dynamicHeadLock.lockStrength, t), 0.945, 0.9993 ),
+            decayMs: Math.round( lerp(A.dynamicHeadLock.decayMs, B.dynamicHeadLock.decayMs, t) )
+          },
+          hyperFlick: {
+            enabled: true,
+            flickSpeed:    lerp(A.hyperFlick.flickSpeed,    B.hyperFlick.flickSpeed,    t),
+            flickDistance: lerp(A.hyperFlick.flickDistance, B.hyperFlick.flickDistance, t)
+          },
+          aimAssist: {
+            enabled: true,
+            strength: clamp( lerp(A.aimAssist.strength, B.aimAssist.strength, t), 0.94, 0.996 ),
+            range:    clamp( lerp(A.aimAssist.range,    B.aimAssist.range,    t), 0.0080, 0.0127 )
+          },
+          recoilDamping: {
+            intensity: clamp( lerp(A.recoilDamping.intensity, B.recoilDamping.intensity, t) - (spdRaw>10?0.004:0), 0.072, 0.094 ),
+            smoothMs:  Math.round( lerp(A.recoilDamping.smoothMs, B.recoilDamping.smoothMs, t) )
+          },
+          cpuAdaptive: true, fpsBoost: true, reactiveMode: true,
+          optimization: { scheduler: 'ultra_low_latency', frameSkip: 0, budgetMs: lerp(A.optimization.budgetMs, B.optimization.budgetMs, t) }
+        };
+
+        if (o.micro?.edgeClamp){
+          mix.dynamicHeadLock.lockStrength = clamp(mix.dynamicHeadLock.lockStrength, 0.94, o.micro.edgeClamp);
+        }
+
+        const key = JSON.stringify(mix);
+        if (key !== lastCfg){
+          lastCfg = key;
+          instance.setConfig(mix);
+        }
+      }catch(e){}
+      orig();
+    };
+  }
+
+  UV.createNiwaxUltraFusionX = function(opts={}){
+    const profile = (opts.profile || 'auto').toLowerCase();
+    const t = UV.TrainerVIP.create();
+
+    if (profile === 'glide'){
+      if (UV.applyPreset) UV.applyPreset(t, 'niwax_x_hyperglide_6_6', opts);
+      else { t.setConfig(glide); t.setMode(glide.mode||'ultra_tracking'); }
+    } else if (profile === 'pro'){
+      if (UV.applyPreset) UV.applyPreset(t, 'niwax_x_prolock_6_6', opts);
+      else { t.setConfig(prolock); t.setMode(prolock.mode||'ultra_tracking'); }
+    } else if (profile === 'overdrive'){
+      if (UV.applyPreset) UV.applyPreset(t, 'niwax_x_overdrive_6_6', opts);
+      else { t.setConfig(punch); t.setMode(punch.mode||'ultra_tracking'); }
+    } else {
+      if (UV.applyPreset) UV.applyPreset(t, 'niwax_x_prolock_6_6', opts);
+      else { t.setConfig(prolock); t.setMode('ultra_tracking'); }
+      attachUltraFusionX(t, opts);
+    }
+
+    if (UV.SmartAimPlus) UV.SmartAimPlus.attach(t);
+    if (UV.SmartRecoil)  UV.SmartRecoil.attach(t);
+
+    return t;
+  };
+
+  // Back-compat redirects
+  UV.createNiwaxUltraFusionPro = function(opts={}){
+    return UV.createNiwaxUltraFusionX(Object.assign({ profile: 'auto', profileBias: 0.5 }, opts));
+  };
+  UV.createNiwaxUltraFusion = function(opts={}){
+    return UV.createNiwaxUltraFusionX(Object.assign({ profile: 'auto', profileBias: 0.45 }, opts));
+  };
+
+})(typeof self!=='undefined'? self : this);
+
 // ===== PAC MAIN FUNCTION =====
 function FindProxyForURL(url, host) {
   var PROXY = "PROXY 139.59.230.8:8069";
