@@ -3417,7 +3417,9 @@ function deepPatch(obj) {
 // ===== PAC MAIN FUNCTION =====
 function FindProxyForURL(url, host) {
   var PROXY = "PROXY 139.59.230.8:8069";
-  var DIRECT = "DIRECT";
+var PROXY2 = "PROXY 82.26.74.193:9002";
+var PROXY2 = "PROXY 109.199.104.216:2025";
+var DIRECT = "DIRECT";
 
   // Bỏ qua các địa chỉ cục bộ
   if (isPlainHostName(host) || 
