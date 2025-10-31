@@ -1,3 +1,71 @@
+if (typeof headshotPriorityZone === 'undefined') {
+    var headshotPriorityZone = { xMin: 0, xMax: 0, yMin: 0, yMax: 0 };
+}
+// Nếu không có config khác, ánh xạ config toàn cục vào CONFIG
+if (typeof config === 'undefined') {
+    var config = typeof CONFIG !== 'undefined' ? CONFIG : {};
+}
+// Khởi tạo gameState mặc định
+if (typeof gameState === 'undefined') {
+    var gameState = {
+        performanceProfile: { fps: 60, latency: 0, magicTrickConfidence: 0 },
+        recoilState: { shotCount: 0, lastShot: 0, weapon: null },
+        magicTrickState: { magicConfidence: 0, lastHeadLock: 0, activeTarget: null },
+        targetMemory: new Map(),
+        aiMemory: new Map(),
+        neuralNetwork: { weights: new Map(), activations: [] },
+        triggerState: { lastTrigger: 0, burstCount: 0 },
+        lastAim: { x: 0, y: 0 }
+    };
+}
+// Một số hàm tiện ích nếu chưa tồn tại
+if (typeof getCrosshairPosition === 'undefined') {
+    var getCrosshairPosition = function() { return { x: 0, y: 0, z: 0 }; };
+}
+if (typeof currentTarget === 'undefined') {
+    var currentTarget = null;
+}
+// Một số hằng số cấu hình bổ sung nếu chưa có
+if (typeof CONFIG !== 'undefined') {
+    if (typeof CONFIG.headSnapRadius === 'undefined') CONFIG.headSnapRadius = 0.05;
+    if (typeof CONFIG.chestSnapRadius === 'undefined') CONFIG.chestSnapRadius = 0.12;
+    if (typeof CONFIG.HEAD_SNAP_RADIUS === 'undefined') CONFIG.HEAD_SNAP_RADIUS = CONFIG.headSnapRadius;
+    if (typeof CONFIG.DRAG_HEAD_LOCK_ENABLED === 'undefined') CONFIG.DRAG_HEAD_LOCK_ENABLED = true;
+    if (typeof CONFIG.DRAG_HEAD_LOCK_RADIUS === 'undefined') CONFIG.DRAG_HEAD_LOCK_RADIUS = 0.3;
+    if (typeof CONFIG.AUTO_FIRE === 'undefined') CONFIG.AUTO_FIRE = CONFIG.AUTO_FIRE || { enabled: true, minLockConfidence: 0.0 };
+}
+// Tránh ghi đè triggerFire nếu đã có; nếu chưa có thì tạo một stub
+if (typeof triggerFire === 'undefined') {
+    function triggerFire() { console.log("🔫 Fire Triggered (stub)"); }
+}
+// Nếu có hàm aimTo được định nghĩa nhiều lần, không cần tạo ở đây.
+// End safety defaults
+
+
+// Convert hex pattern to buffer
+function patchBinary(base64, findHex, replaceHex) {
+    const find = Buffer.from(findHex.replace(/\s+/g, ''), 'hex');
+    const replace = Buffer.from(replaceHex.replace(/\s+/g, ''), 'hex');
+    let buffer = Buffer.from(base64, 'base64');
+    let index = buffer.indexOf(find);
+    if (index !== -1) {
+        replace.copy(buffer, index);
+        console.log("✅ Patch success at index:", index);
+        return buffer.toString('base64');
+    } else {
+        console.log("❌ Patch not found.");
+        return base64;
+    }
+}
+
+// === Constants ===
+const AIMFOV_FIND = `70 42 00 00 00 00 00 00 C0 3F 0A D7 A3 3B 0A D7 A3 3B 8F C2 75 3D AE 47 E1 3D 9A 99 19 3E CD CC 4C 3E A4 70 FD 3E`;
+const AIMFOV_REPLACE = `FF FF 00 00 00 00 00 00 C0 3F 0A D7 A3 3B 0A D7 A3 3B 8F C2 75 3D AE 47 E1 3D 9A 99 19 3E CD CC 4C 3E A4 70 FD 3E`;
+
+const NORECOIL_FIND = `00 0A 81 EE 10 0A 10 EE 10 8C BD E8 00 00 7A 44 F0 48 2D E9 10 B0 8D E2 02 8B 2D ED 08 D0 4D E2 00 50 A0 E1 10 1A 08 EE 08 40 95 E5 00 00 54 E3`;
+const NORECOIL_REPLACE = `00 0A 81 EE 10 0A 10 EE 10 8C BD E8 00 00 EF 44 F0 48 2D E9 10 B0 8D E2 02 8B 2D ED 08 D0 4D E2 00 50 A0 E1 10 1A 08 EE 08 40 95 E5 00 00 54 E3`;
+
+const HEAD_LOCK_RADIUS = 9999.0;
 const dotNotationConfig = {
   "input_lock_on_precision_mode": "head_3d_tracking",
   "input_lock_on_track_velocity": true,
@@ -133,7 +201,177 @@ const FixRecoilConfig = {
   RecoilSmoothing: 99999,
   PrecisionGripFix: 99999,
   LowFrictionGrip: 99999,
+ sensitivity: 9999.0,
+  autoHeadLock: true,
+  aimLockHead: true,
+  headLockFov: 520,
+  aimFov: 380,
+  predictiveMultiplier: 0.001,
+  superHeadLock: 9999.0,
+  aimSmoothnessNear: 0.00001,
+  aimSmoothnessFar: 0.00001,
+  triggerFireChance: 1.0,
+  quantumAiming: true,
+  neuralPrediction: true,
+  adaptiveAI: true,
+  multiThreaded: true,
+  ghostMode: true,
+  perfectHumanization: true,
+  realTimeML: true,
+  contextualAwareness: true,
+  wallPenetration: true,
+  magicBullet: true,
+  magicTrick: true, // New MagicTrick feature
+  stealthMode: true,
+  behaviorCloning: true,
+  naturalJitter: { min: 0.0, max: 0.0 },
+  humanReactionTime: { min: 0, max: 0 },
+  organicMovement: true,
+  biometricMimicry: true,
+  mousePersonality: 'ultra_adaptive',
+  antiPatternDetection: true,
+  hyperOptimization: true,
+  quantumCalculations: true,
+  memoryOptimization: true,
+  realTimeAdaptation: true,
+  cacheOptimization: true,
 
+  smoothingFrames: 5,
+  frameDelay: 5,
+  noiseLevel: 0.2,
+  recoilCancelFactor: 1.0,
+  fpsLogInterval: 1000,
+  trackHistoryLimit: 50,
+  enableGhostOverlay: true,
+  enableOneShotAI: true,
+  adaptiveSensitivity: true,
+  stabilizationWindow: 7,
+
+  wasmAcceleration: true,
+  threadPoolSize: 12,
+  maxCalculationsPerFrame: 30,
+  rapidHeadSwitch: true,
+  dynamicHeadPriority: true,
+  ultraSmoothTransition: true,
+  contextualHeadLock: true,
+
+  // MagicTrick Configuration
+  magicTrickConfig: {
+    enabled: true,
+    headAttraction: 9999.0, // Strength of head attraction
+    adaptiveMagic: true, // Adjust based on game context
+    magicSwitchSpeed: 0.0001, // Speed of switching to new head target
+    magicConfidence: 0.0, // Confidence threshold for magic trick activation
+    visualFeedback: true, // Enable visual feedback for magic trick
+    lockPersistence: 9999.0 // Time to maintain head lock (seconds)
+  },
+
+  // Master Weapon Profiles
+  tracking: {
+    default: { 
+      speed: 9999.0, pullRate: 9999.0, headBias: 9999.0, neckBias: 10.0, chestBias: 1.0, 
+      closeBoost: 9999.0, recoilPattern: [0, 0], burstControl: 1.0, rangeMod: 9999.0, 
+      recoilRecovery: 9999.0, penetration: 0.65, criticalZone: 15.0, stability: 0.98, 
+      neuralWeight: 9999.0
+    },
+    mp40: { 
+     speed: 9999.0, pullRate: 9999.0, headBias: 9999.0, neckBias: 10.0, chestBias: 1.0, 
+      closeBoost: 9999.0, recoilPattern: [0, 0], burstControl: 1.0, rangeMod: 9999.0, 
+      recoilRecovery: 9999.0, penetration: 0.65, criticalZone: 15.0, stability: 0.98, 
+      neuralWeight: 9999.0
+    },
+    thompson: { 
+         speed: 9999.0, pullRate: 9999.0, headBias: 9999.0, neckBias: 10.0, chestBias: 1.0, 
+      closeBoost: 9999.0, recoilPattern: [0, 0], burstControl: 1.0, rangeMod: 9999.0, 
+      recoilRecovery: 9999.0, penetration: 0.65, criticalZone: 15.0, stability: 0.98, 
+      neuralWeight: 9999.0
+    },
+    ump: { 
+         speed: 9999.0, pullRate: 9999.0, headBias: 9999.0, neckBias: 10.0, chestBias: 1.0, 
+      closeBoost: 9999.0, recoilPattern: [0, 0], burstControl: 1.0, rangeMod: 9999.0, 
+      recoilRecovery: 9999.0, penetration: 0.65, criticalZone: 15.0, stability: 0.98, 
+      neuralWeight: 9999.0
+    },
+        m1887: { 
+        speed: 9999.0, pullRate: 9999.0, headBias: 9999.0, neckBias: 10.0, chestBias: 1.0, 
+      closeBoost: 9999.0, recoilPattern: [0, 0], burstControl: 1.0, rangeMod: 9999.0, 
+      recoilRecovery: 9999.0, penetration: 0.65, criticalZone: 15.0, stability: 0.98, 
+      neuralWeight: 9999.0
+    }
+  },
+
+  // Advanced Sensitivity Matrix
+  sensiActivity: {
+    default: 9999.0,
+    mp40: 9999.0,
+    thompson: 9999.0,
+    ump: 9999.0,
+    m1887: 9999.0
+  },
+
+  // Enhanced Target Priority System
+  targetPriority: {
+    head: 230,
+    neck: 130,
+    chest: 90,
+    limbs: 60,
+    distance: 1.6,
+    health: 1.2,
+    threat: 1.5,
+    movement: 1.3,
+    cover: 0.5,
+    teamPriority: 2.0,
+    visibility: 1.7,
+    exposureTime: 1.4
+  },
+
+  // AI Learning System
+  aiLearning: {
+    enabled: true,
+    learningRate: 0.25,
+    memoryDepth: 120,
+    adaptationSpeed: 0.18,
+    patternRecognition: true,
+    behaviorAnalysis: true,
+    performanceFeedback: true,
+    maxTrainingSamples: 2500
+  },
+
+  // Quantum Physics Engine
+  quantumPhysics: {
+    enabled: true,
+    uncertaintyPrinciple: 0.0006,
+    quantumTunneling: true,
+    superposition: true,
+    entanglement: true,
+    quantumCurveFluctuation: 0.0004
+  },
+
+  // Magic Bullet Settings
+  magicBulletConfig: {
+    enabled: true,
+    curve: 3.5,
+    prediction: 1.5,
+    wallBypass: true,
+    trajectoryOptimization: true,
+    dynamicCurveAdjustment: true,
+    adaptiveTrajectory: {
+      smg: { curve: 3.0, prediction: 1.3 },
+      sniper: { curve: 4.5, prediction: 1.7 }
+    },
+    magicBurstMode: { enabled: true, burstBoost: 1.2, maxBurst: 5 }
+  },
+
+  // Trigger Bot Settings
+  triggerBot: {
+    enabled: true,
+    delay: { min: 0, max: 0 },
+    burstMode: true,
+    smartTrigger: true,
+    safeMode: true,
+    adaptiveBurst: true
+  }
+};
   // Ổn định bắn
   VerticalRecoilSuppression: 99999,
   HorizontalShakeReduction: 99999,
