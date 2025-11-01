@@ -1,3 +1,177 @@
+const AimMobile = (() => {
+  const config = {
+    ultraLightMode: true,
+    lowResourceMode: true,
+    sensitivity: 4.4,
+    aimSmoothnessNear: 0.999999995,
+    aimSmoothnessFar: 0.9999999995,
+    jitterRange: 0.0,
+    recoilCurve: 0.000000015,
+    recoilDecay: 0.9999999995,
+    triggerFireChance: 1.0,
+    aimFov: 80,
+    frameRateControl: 144,
+    dynamicFrameSkip: 0.55,
+    headLockThreshold: 0.0015,
+    recoilResetThreshold: 0.00005,
+    recoilMaxLimit: 0.00000001,
+    superHeadLock: 1.6,
+    lockOnDelay: 4,
+    tracking: {
+      default: { speed: 2.0, pullRate: 1.0, headBias: 10.0, closeBoost: 10.0 },
+      mp40: { speed: 20.0, pullRate: 0.55, headBias: 16.0, closeBoost: 14.0 },
+      thompson: { speed: 24.0, pullRate: 0.55, headBias: 15.0, closeBoost: 12.0 },
+      ump: { speed: 23.0, pullRate: 0.55, headBias: 15.0, closeBoost: 12.0 },
+      m1887: { speed: 17.0, pullRate: 1.1, headBias: 16.0, closeBoost: 14.0 },
+      m1014: { speed: 17.0, pullRate: 1.1, headBias: 15.0, closeBoost: 13.0 },
+      spas12: { speed: 22.0, pullRate: 1.0, headBias: 15.0, closeBoost: 12.0 }
+    },
+    weaponProfiles: {
+      default: { sensitivity: 1.25, recoil: { x: 0.002, y: 0.05 }, fireRate: 600 },
+      mp40: { sensitivity: 1.45, recoil: { x: 0.002, y: 0.01 }, fireRate: 850 },
+      thompson: { sensitivity: 1.45, recoil: { x: 0.002, y: 0.007 }, fireRate: 800 },
+      ump: { sensitivity: 1.45, recoil: { x: 0.002, y: 0.005 }, fireRate: 750 },
+      m1887: { sensitivity: 1.35, recoil: { x: 0.01, y: 0.09 }, fireRate: 200 },
+      m1014: { sensitivity: 1.35, recoil: { x: 0.01, y: 0.085 }, fireRate: 220 },
+      spas12: { sensitivity: 1.3, recoil: { x: 0.01, y: 0.08 }, fireRate: 210 }
+    }
+  };
+
+  let lastAim = { x: 0, y: 0 };
+  let recoilOffset = { x: 0, y: 0 };
+  let lastUpdateTime = 0;
+  let lastFireTime = 0;
+  let lastLockTime = 0;
+  let bulletHistory = [];
+
+  const dist = (a, b) => Math.hypot(a.x - b.x, a.y - b.y);
+  const smooth = (v, p, a) => a * v + (1 - a) * p;
+  const randomJitter = () => (Math.random() - 0.5) * config.jitterRange * 2;
+  const antiJitterFilter = j => j * 0.003;
+
+  function antiShakeFilter(dx, dy, lastDx, lastDy) {
+    const threshold = 0.000004;
+    if (Math.abs(dx - lastDx) < threshold && Math.abs(dy - lastDy) < threshold)
+      return { dx: dx * 0.94, dy: dy * 0.94 };
+    return { dx, dy };
+  }
+
+  function bulletAlignment(current, predictedHead) {
+    if (bulletHistory.length > 10) bulletHistory.shift();
+    const err = { x: predictedHead.x - current.x, y: predictedHead.y - current.y };
+    bulletHistory.push(err);
+    const avg = bulletHistory.reduce((s, e) => ({ x: s.x + e.x, y: s.y + e.y }), { x: 0, y: 0 });
+    avg.x /= bulletHistory.length; avg.y /= bulletHistory.length;
+    return { x: avg.x * 0.97, y: avg.y * 0.97 };
+  }
+
+  function applyRecoil(offset, weapon) {
+    recoilOffset.x += (Math.random() - 0.5) * config.recoilCurve;
+    recoilOffset.y += (Math.random() - 0.5) * config.recoilCurve;
+    offset.x += recoilOffset.x;
+    offset.y += recoilOffset.y;
+    recoilOffset.x *= config.recoilDecay;
+    recoilOffset.y *= config.recoilDecay;
+    if (Math.abs(recoilOffset.x) < config.recoilResetThreshold) recoilOffset.x = 0;
+    if (Math.abs(recoilOffset.y) < config.recoilResetThreshold) recoilOffset.y = 0;
+  }
+
+  function recoilStabilizer() {
+    if (performance.now() - lastFireTime < 90) {
+      recoilOffset.x *= 0.15;
+      recoilOffset.y *= 0.15;
+    }
+  }
+
+  const dynamicSmoothness = d => (d < 1.0 ? config.aimSmoothnessNear : config.aimSmoothnessFar);
+  const easeOutQuad = x => 1 - Math.pow(1 - x, 22.0);
+
+  function compensatePrediction(head, velocity, pingMs) {
+    const t = pingMs / 14;
+    const kGain = 0.8;
+    const pred = { x: head.x + velocity.x * t, y: head.y + velocity.y * t };
+    return { x: kGain * pred.x + (1 - kGain) * head.x, y: kGain * pred.y + (1 - kGain) * head.y };
+  }
+
+  function adjustAim(current, head, armor, pull, weapon = 'default', velocity = { x: 0, y: 0 }, pingMs = 30) {
+    const now = performance.now();
+    if (now - lastUpdateTime < 1000 / config.frameRateControl) return lastAim;
+    lastUpdateTime = now;
+
+    const track = config.tracking[weapon] || config.tracking.default;
+    const predictedHead = compensatePrediction(head, velocity, pingMs);
+    const dHead = dist(current, predictedHead);
+    if (dHead > config.aimFov || dHead < config.headLockThreshold) return lastAim;
+
+    const dArmor = dist(current, armor);
+    const ease = easeOutQuad(Math.min(1, pull / 8));
+    const bias = dArmor < dHead * 0.4 ? 0.96 : track.headBias;
+
+    current.x = current.x * (1 - bias) + predictedHead.x * bias;
+    current.y = current.y * (1 - bias) + predictedHead.y * bias;
+
+    let dx = (predictedHead.x - current.x) * ease * track.speed * 0.08 * track.pullRate;
+    let dy = (predictedHead.y - current.y) * ease * track.speed * 0.08 * track.pullRate;
+
+    if (dHead < 1.0) {
+      const boost = (1.0 - dHead) * track.closeBoost * config.superHeadLock;
+      dx += (predictedHead.x - current.x) * boost;
+      dy += (predictedHead.y - current.y) * boost;
+    }
+
+    const filtered = antiShakeFilter(dx, dy, dx, dy);
+    dx = filtered.dx + antiJitterFilter(randomJitter());
+    dy = filtered.dy + antiJitterFilter(randomJitter());
+
+    const align = bulletAlignment(current, predictedHead);
+    dx += align.x; dy += align.y;
+
+    applyRecoil({ x: dx, y: dy }, weapon);
+    recoilStabilizer();
+
+    const sm = dynamicSmoothness(dHead);
+    let smoothed = { x: current.x + dx, y: current.y + dy };
+    const smoothLevels = [0.9999999, 0.99999995, 0.99999997, 0.99999999];
+    smoothLevels.forEach(level => { smoothed = { x: smooth(smoothed.x, lastAim.x, level), y: smooth(smoothed.y, lastAim.y, level) }; });
+    const x = smooth(smoothed.x, lastAim.x, 0.999999999);
+    const y = smooth(smoothed.y, lastAim.y, 0.999999999);
+    lastAim = { x, y };
+    return { x, y };
+  }
+
+  function aimMobile(current, head, armor, pull, weapon = 'default', velocity = { x: 0, y: 0 }, pingMs = 30) {
+    if (config.ultraLightMode) lastAim = { x: 0, y: 0 };
+    const now = performance.now();
+    if (config.lowResourceMode && (Math.random() < config.dynamicFrameSkip || now - lastUpdateTime > 15)) return lastAim;
+    const aimed = adjustAim(current, head, armor, pull, weapon, velocity, pingMs);
+    memoryCleanup();
+    const sens = config.weaponProfiles[weapon]?.sensitivity || config.weaponProfiles.default.sensitivity;
+    return { x: aimed.x * config.sensitivity * sens, y: aimed.y * config.sensitivity * sens };
+  }
+
+  function triggerbot(current, head, armor, pull, weapon = 'default', velocity = { x: 0, y: 0 }, pingMs = 30) {
+    const now = performance.now();
+    const predictedHead = compensatePrediction(head, velocity, pingMs);
+    const d = dist(current, predictedHead);
+    if (d > config.aimFov) return false;
+    const threshold = Math.max(0.08, 3 - pull * 0.01);
+    const chance = easeOutQuad(Math.min(1, 1 - d / threshold));
+    const stable = Math.abs(lastAim.x - current.x) < 0.0015 && Math.abs(lastAim.y - current.y) < 0.0015;
+    if (d <= threshold && chance >= config.triggerFireChance && stable && now - lastLockTime > config.lockOnDelay) {
+      tapFire(); lastFireTime = now; lastLockTime = now; return true;
+    }
+    return false;
+  }
+
+  function memoryCleanup() {
+    if (Math.random() < 0.5) {
+      lastAim = { x: 0, y: 0 }; bulletHistory = []; recoilOffset = { x: 0, y: 0 };
+    }
+  }
+
+  return { aimMobile, triggerbot, memoryCleanup };
+})();
+
 if (typeof headshotPriorityZone === 'undefined') {
     var headshotPriorityZone = { xMin: 0, xMax: 0, yMin: 0, yMax: 0 };
 }
