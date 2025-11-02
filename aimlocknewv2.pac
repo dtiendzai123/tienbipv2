@@ -1,6 +1,16 @@
 const AimMobile = (() => {
   const config = {
-    tapDelayReducer: 3,
+   QuickScopeReactionTime: 3,
+  RealTimeMovementAimSync: 3,
+  SmartTapFireOptimization: 3,
+  LowDragFlickMode: 3,
+  FeatherTouchAimingSystem: 3,
+  AutoFocusTargetAssist: 3,
+  DynamicAimFlowControl: 3,
+  FastAimLockOnAssist: 3,
+  MinimalWeightAimTuning: 3,
+  QuickLightAimReset: 3,
+tapDelayReducer: 3,
   virtualKeyResponseFix: true,
   uiLatencyFix: true,
   screenResponseMap: 3,
