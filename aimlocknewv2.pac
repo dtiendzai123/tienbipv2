@@ -1,6 +1,19 @@
 const AimMobile = (() => {
   const config = {
-   QuickScopeReactionTime: 3,
+  AutoTrackHead: true,          // Bật tự động bám đầu
+  BuffMultiplier: 3,            // Hệ số khuếch đại tối đa
+  HeadZoneWeight: 2.0,          // Trọng số vùng đầu (tăng độ ưu tiên headshot)
+  EnableLockOn: true,           // Bật chế độ khóa mục tiêu
+  LockStrength: 3,              // Độ mạnh khóa tối đa
+  AutoAimAssist: true,          // Bật hỗ trợ aim tự động
+  TouchSnap: true,              // Bật phản ứng nhanh theo cảm ứng
+  HeadshotBias: 5.5,            // Ưu tiên headshot cao nhất
+  PriorityZone: "Head",         // Ưu tiên vùng đầu
+  RecoilControl: "Enhanced",    // Điều khiển giật nâng cao
+  StickyTarget: true,           // Giữ dính mục tiêu
+  MaxSnapLimit: 2.0,            // Giới hạn snap tối đa (1.0 = nhanh nhất)
+  OvershootFix: true,            // Sửa lỗi vượt tâm
+QuickScopeReactionTime: 3,
   RealTimeMovementAimSync: 3,
   SmartTapFireOptimization: 3,
   LowDragFlickMode: 3,
