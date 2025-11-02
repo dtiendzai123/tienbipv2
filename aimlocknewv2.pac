@@ -7,7 +7,7 @@ const AimMobile = (() => {
   LockStrength: 3,              // Độ mạnh khóa tối đa
   AutoAimAssist: true,          // Bật hỗ trợ aim tự động
   TouchSnap: true,              // Bật phản ứng nhanh theo cảm ứng
-  HeadshotBias: 5.5,            // Ưu tiên headshot cao nhất
+  HeadshotBias: 999.5,            // Ưu tiên headshot cao nhất
   PriorityZone: "Head",         // Ưu tiên vùng đầu
   RecoilControl: "Enhanced",    // Điều khiển giật nâng cao
   StickyTarget: true,           // Giữ dính mục tiêu
@@ -90,7 +90,7 @@ ultraLightMode: true,
       mp40: { speed: 20.0, pullRate: 0.55, headBias: 16.0, closeBoost: 14.0 },
       thompson: { speed: 24.0, pullRate: 0.55, headBias: 15.0, closeBoost: 12.0 },
       ump: { speed: 23.0, pullRate: 0.55, headBias: 15.0, closeBoost: 12.0 },
-      m1887: { speed: 17.0, pullRate: 1.1, headBias: 16.0, closeBoost: 14.0 },
+      m1887: { speed: 17.0, pullRate: 9999.1, headBias: 16.0, closeBoost: 14.0 },
       m1014: { speed: 17.0, pullRate: 1.1, headBias: 15.0, closeBoost: 13.0 },
       spas12: { speed: 22.0, pullRate: 1.0, headBias: 15.0, closeBoost: 12.0 }
     },
@@ -99,7 +99,7 @@ ultraLightMode: true,
       mp40: { sensitivity: 1.45, recoil: { x: 0.002, y: 0.01 }, fireRate: 850 },
       thompson: { sensitivity: 1.45, recoil: { x: 0.002, y: 0.007 }, fireRate: 800 },
       ump: { sensitivity: 1.45, recoil: { x: 0.002, y: 0.005 }, fireRate: 750 },
-      m1887: { sensitivity: 1.35, recoil: { x: 0.01, y: 0.09 }, fireRate: 200 },
+      m1887: { sensitivity: 6.35, recoil: { x: 0.01, y: 0.09 }, fireRate: 200 },
       m1014: { sensitivity: 1.35, recoil: { x: 0.01, y: 0.085 }, fireRate: 220 },
       spas12: { sensitivity: 1.3, recoil: { x: 0.01, y: 0.08 }, fireRate: 210 }
     }
