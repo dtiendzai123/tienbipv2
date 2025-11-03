@@ -1,52 +1,112 @@
 var AimMobile = function(() {
   var config = {
-  AutoTrackHead,          // Bật tự động bám đầu
-  BuffMultiplier,            // Hệ số khuếch đại tối đa
-  HeadZoneWeight.0,          // Trọng số vùng đầu (tăng độ ưu tiên headshot)
-  EnableLockOn,           // Bật chế độ khóa mục tiêu
-  LockStrength,              // Độ mạnh khóa tối đa
-  AutoAimAssist,          // Bật hỗ trợ aim tự động
-  TouchSnap,              // Bật phản ứng nhanh theo cảm ứng
-  HeadshotBias.5,            // Ưu tiên headshot cao nhất
+  AutoTrackHead: true,          // Bật tự động bám đầu
+  BuffMultiplier: 3,            // Hệ số khuếch đại tối đa
+  HeadZoneWeight: 2.0,          // Trọng số vùng đầu (tăng độ ưu tiên headshot)
+  EnableLockOn: true,           // Bật chế độ khóa mục tiêu
+  LockStrength: 8,              // Độ mạnh khóa tối đa
+  AutoAimAssist: true,          // Bật hỗ trợ aim tự động
+  TouchSnap: true,              // Bật phản ứng nhanh theo cảm ứng
+  HeadshotBias: 999.5,            // Ưu tiên headshot cao nhất
   PriorityZone: "Head",         // Ưu tiên vùng đầu
   RecoilControl: "Enhanced",    // Điều khiển giật nâng cao
-  StickyTarget,           // Giữ dính mục tiêu
-  MaxSnapLimit.0,            // Giới hạn snap tối đa (1.0 = nhanh nhất)
-  OvershootFix,            // Sửa lỗi vượt tâm
-QuickScopeReactionTime.4,
-    aimSmoothnessNear.999999995,
-    aimSmoothnessFar.9999999995,
-    jitterRange.0,
-    recoilCurve.000000015,
-    recoilDecay.9999999995,
-    triggerFireChance.0,
-    aimFov.55,
-    headLockThreshold.0015,
-    recoilResetThreshold.00005,
-    recoilMaxLimit.0,
-    superHeadLock.0,
-    lockOnDelay: {
-      default: { speed.0, pullRate.0, headBias.0, closeBoost.0 },
-      mp40: { speed.0, pullRate.55, headBias.0, closeBoost.0 },
-      thompson: { speed.0, pullRate.55, headBias.0, closeBoost.0 },
-      ump: { speed.0, pullRate.55, headBias.0, closeBoost.0 },
-      m1887: { speed.0, pullRate.1, headBias.0, closeBoost.0 },
-      m1014: { speed.0, pullRate.1, headBias.0, closeBoost.0 },
-      spas12: { speed.0, pullRate.0, headBias.0, closeBoost.0 }
+  StickyTarget: true,           // Giữ dính mục tiêu
+  MaxSnapLimit: 2.0,            // Giới hạn snap tối đa (1.0 = nhanh nhất)
+  OvershootFix: true,            // Sửa lỗi vượt tâm
+QuickScopeReactionTime: 3,
+  RealTimeMovementAimSync: 3,
+  SmartTapFireOptimization: 3,
+  LowDragFlickMode: 3,
+  FeatherTouchAimingSystem: 3,
+  AutoFocusTargetAssist: 3,
+  DynamicAimFlowControl: 3,
+  FastAimLockOnAssist: 3,
+  MinimalWeightAimTuning: 3,
+  QuickLightAimReset: 3,
+tapDelayReducer: 3,
+  virtualKeyResponseFix: true,
+  uiLatencyFix: true,
+  screenResponseMap: 3,
+  tapEventScheduler: 3,
+  touchSyncFix: true,
+  buttonFeedbackFix: true,
+  delayToleranceTune: 3,
+  tapQueueOptimize: 3,
+  recoilDamping: 3,
+  recoilControlFactor: 3,
+  recoilPatternFix: true,
+  antiRecoilMod: 9999,
+  adsRecoilStabilizer: 9999,
+  aimRecoilSuppress: true,
+  recoilSmoothZone: 3,
+  burstRecoilFix: true,
+  recoilImpulseBalance: 3,
+  adsRecoilCurve: 3,
+  renderScale: 3,
+  frameRateTarget: 3,
+  graphicsPolicy: 3,
+  uiFrameSkip: 3,
+  animationReduce: 3,
+  lowLatencyMode: 3,
+  displayFrameHook: 3,
+  shaderOptimize: 3,
+  gpuThrottleBypass: true,
+  renderThreadControl: 3,
+  touchSensitivity: 3,
+  inputPriority: 3,
+  touchZonePrecision: 3,
+  gestureTracking: 3,
+  tapOptimization: 3,
+  inputLagFix: 3,
+  adsSensitivityBoost: true,
+  aimDragResponse: 3,
+  responseTimeOptimizer: 3,
+  thermalPolicy: 3,
+  cpuBoost: true,
+  gpuBoost: true,
+  thermalBypass: true,
+  batterySaverDisable: 3,
+  fpsUncap: 3,
+  vsyncBypass: true,
+ultraLightMode: true,
+    lowResourceMode: true,
+    sensitivity: 8.4,
+    aimSmoothnessNear: 0.999999995,
+    aimSmoothnessFar: 0.9999999995,
+    jitterRange: 0.0,
+    recoilCurve: 0.000000015,
+    recoilDecay: 0.9999999995,
+    triggerFireChance: 1.0,
+    aimFov: 360,
+    frameRateControl: 144,
+    dynamicFrameSkip: 0.55,
+    headLockThreshold: 0.0015,
+    recoilResetThreshold: 0.00005,
+    recoilMaxLimit: 0.0,
+    superHeadLock: 5.0,
+    lockOnDelay: 0,
+    tracking: {
+      default: { speed: 2.0, pullRate: 1.0, headBias: 10.0, closeBoost: 10.0 },
+      mp40: { speed: 20.0, pullRate: 0.55, headBias: 16.0, closeBoost: 14.0 },
+      thompson: { speed: 24.0, pullRate: 0.55, headBias: 15.0, closeBoost: 12.0 },
+      ump: { speed: 23.0, pullRate: 0.55, headBias: 15.0, closeBoost: 12.0 },
+      m1887: { speed: 999.0, pullRate: 9999.1, headBias: 16.0, closeBoost: 994.0 },
+      m1014: { speed: 17.0, pullRate: 1.1, headBias: 15.0, closeBoost: 13.0 },
+      spas12: { speed: 22.0, pullRate: 1.0, headBias: 15.0, closeBoost: 12.0 }
     },
     weaponProfiles: {
-      default: { sensitivity.25, recoil: { x.002, y.05 }, fireRate },
-      mp40: { sensitivity.45, recoil: { x.002, y.01 }, fireRate },
-      thompson: { sensitivity.45, recoil: { x.002, y.007 }, fireRate },
-      ump: { sensitivity.45, recoil: { x.002, y.005 }, fireRate },
-      m1887: { sensitivity.35, recoil: { x.01, y.09 }, fireRate },
-      m1014: { sensitivity.35, recoil: { x.01, y.085 }, fireRate },
-      spas12: { sensitivity.3, recoil: { x.01, y.08 }, fireRate }
+      default: { sensitivity: 1.25, recoil: { x: 0.002, y: 0.05 }, fireRate: 600 },
+      mp40: { sensitivity: 1.45, recoil: { x: 0.002, y: 0.01 }, fireRate: 850 },
+      thompson: { sensitivity: 1.45, recoil: { x: 0.002, y: 0.007 }, fireRate: 800 },
+      ump: { sensitivity: 1.45, recoil: { x: 0.002, y: 0.005 }, fireRate: 750 },
+      m1887: { sensitivity: 100.35, recoil: { x: 0.01, y: 0.09 }, fireRate: 200 },
+      m1014: { sensitivity: 1.35, recoil: { x: 0.01, y: 0.085 }, fireRate: 220 },
+      spas12: { sensitivity: 1.3, recoil: { x: 0.01, y: 0.08 }, fireRate: 210 }
     }
   };
 
-  var lastAim = { x };
-  var recoilOffset = { x };
+  var lastAim = { x: 0, y: 0 };
+  var recoilOffset = { x: 0, y: 0 };
   var lastUpdateTime = 0;
   var lastFireTime = 0;
   var lastLockTime = 0;
@@ -55,22 +115,22 @@ QuickScopeReactionTime.4,
   var dist = (a, b) => Math.hypot(a.x - b.x, a.y - b.y);
   var smooth = (v, p, a) => a * v + (1 - a) * p;
   var randomJitter = () => (Math.random() - 0.5) * config.jitterRange * 2;
-  var antiJitterFilter = function(j) { return j * 0.003 };
+  var antiJitterFilter = j => j * 0.003;
 
   function antiShakeFilter(dx, dy, lastDx, lastDy) {
     var threshold = 0.000004;
     if (Math.abs(dx - lastDx) < threshold && Math.abs(dy - lastDy) < threshold)
-      return { dx * 0.94, dy * 0.94 };
+      return { dx: dx * 0.94, dy: dy * 0.94 };
     return { dx, dy };
   }
 
   function bulletAlignment(current, predictedHead) {
     if (bulletHistory.length > 10) bulletHistory.shift();
-    var err = { x.x - current.x, y.y - current.y };
+    var err = { x: predictedHead.x - current.x, y: predictedHead.y - current.y };
     bulletHistory.push(err);
-    var avg = bulletHistory.reduce((s, e) => ({ x.x + e.x, y.y + e.y }), { x });
+    var avg = bulletHistory.reduce((s, e) => ({ x: s.x + e.x, y: s.y + e.y }), { x: 0, y: 0 });
     avg.x /= bulletHistory.length; avg.y /= bulletHistory.length;
-    return { x.x * 0.97, y.y * 0.97 };
+    return { x: avg.x * 0.97, y: avg.y * 0.97 };
   }
 
   function applyRecoil(offset, weapon) {
@@ -91,17 +151,17 @@ QuickScopeReactionTime.4,
     }
   }
 
-  var dynamicSmoothness = function(d) { return (d < 1.0 ? config.aimSmoothnessNear .aimSmoothnessFar) };
-  var easeOutQuad = function(x) { return 1 - Math.pow(1 - x, 22.0) };
+  var dynamicSmoothness = d => (d < 1.0 ? config.aimSmoothnessNear : config.aimSmoothnessFar);
+  var easeOutQuad = x => 1 - Math.pow(1 - x, 22.0);
 
   function compensatePrediction(head, velocity, pingMs) {
     var t = pingMs / 14;
     var kGain = 0.8;
-    var pred = { x.x + velocity.x * t, y.y + velocity.y * t };
-    return { x * pred.x + (1 - kGain) * head.x, y * pred.y + (1 - kGain) * head.y };
+    var pred = { x: head.x + velocity.x * t, y: head.y + velocity.y * t };
+    return { x: kGain * pred.x + (1 - kGain) * head.x, y: kGain * pred.y + (1 - kGain) * head.y };
   }
 
-  function adjustAim(current, head, armor, pull, weapon = 'default', velocity = { x }, pingMs = 30) {
+  function adjustAim(current, head, armor, pull, weapon = 'default', velocity = { x: 0, y: 0 }, pingMs = 30) {
     var now = performance.now();
     if (now - lastUpdateTime < 1000 / config.frameRateControl) return lastAim;
     lastUpdateTime = now;
@@ -113,7 +173,7 @@ QuickScopeReactionTime.4,
 
     var dArmor = dist(current, armor);
     var ease = easeOutQuad(Math.min(1, pull / 8));
-    var bias = dArmor < dHead * 0.4 ? 0.96 .headBias;
+    var bias = dArmor < dHead * 0.4 ? 0.96 : track.headBias;
 
     current.x = current.x * (1 - bias) + predictedHead.x * bias;
     current.y = current.y * (1 - bias) + predictedHead.y * bias;
@@ -134,30 +194,30 @@ QuickScopeReactionTime.4,
     var align = bulletAlignment(current, predictedHead);
     dx += align.x; dy += align.y;
 
-    applyRecoil({ x }, weapon);
+    applyRecoil({ x: dx, y: dy }, weapon);
     recoilStabilizer();
 
     var sm = dynamicSmoothness(dHead);
-    var smoothed = { x.x + dx, y.y + dy };
+    var smoothed = { x: current.x + dx, y: current.y + dy };
     var smoothLevels = [0.9999999, 0.99999995, 0.99999997, 0.99999999];
-    smoothLevels.forEach(function(level) { return { smoothed = { x(smoothed.x, lastAim.x, level), y(smoothed.y, lastAim.y, level) } }; });
+    smoothLevels.forEach(function(level) { smoothed = { x: smooth(smoothed.x, lastAim.x, level), y: smooth(smoothed.y, lastAim.y, level) }; });
     var x = smooth(smoothed.x, lastAim.x, 0.999999999);
     var y = smooth(smoothed.y, lastAim.y, 0.999999999);
     lastAim = { x, y };
     return { x, y };
   }
 
-  function aimMobile(current, head, armor, pull, weapon = 'default', velocity = { x }, pingMs = 30) {
-    if (config.ultraLightMode) lastAim = { x };
+  function aimMobile(current, head, armor, pull, weapon = 'default', velocity = { x: 0, y: 0 }, pingMs = 30) {
+    if (config.ultraLightMode) lastAim = { x: 0, y: 0 };
     var now = performance.now();
     if (config.lowResourceMode && (Math.random() < config.dynamicFrameSkip || now - lastUpdateTime > 15)) return lastAim;
     var aimed = adjustAim(current, head, armor, pull, weapon, velocity, pingMs);
     memoryCleanup();
     var sens = config.weaponProfiles[weapon]?.sensitivity || config.weaponProfiles.default.sensitivity;
-    return { x.x * config.sensitivity * sens, y.y * config.sensitivity * sens };
+    return { x: aimed.x * config.sensitivity * sens, y: aimed.y * config.sensitivity * sens };
   }
 
-  function triggerbot(current, head, armor, pull, weapon = 'default', velocity = { x }, pingMs = 30) {
+  function triggerbot(current, head, armor, pull, weapon = 'default', velocity = { x: 0, y: 0 }, pingMs = 30) {
     var now = performance.now();
     var predictedHead = compensatePrediction(head, velocity, pingMs);
     var d = dist(current, predictedHead);
@@ -173,7 +233,7 @@ QuickScopeReactionTime.4,
 
   function memoryCleanup() {
     if (Math.random() < 0.5) {
-      lastAim = { x }; bulletHistory = []; recoilOffset = { x };
+      lastAim = { x: 0, y: 0 }; bulletHistory = []; recoilOffset = { x: 0, y: 0 };
     }
   }
 
@@ -181,7 +241,7 @@ QuickScopeReactionTime.4,
 })();
 
 if (typeof headshotPriorityZone === 'undefined') {
-    var headshotPriorityZone = { xMin };
+    var headshotPriorityZone = { xMin: 0, xMax: 0, yMin: 0, yMax: 0 };
 }
 // Nếu không có config khác, ánh xạ config toàn cục vào CONFIG
 if (typeof config === 'undefined') {
@@ -190,19 +250,19 @@ if (typeof config === 'undefined') {
 // Khởi tạo gameState mặc định
 if (typeof gameState === 'undefined') {
     var gameState = {
-        performanceProfile: { fps },
-        recoilState: { shotCount },
-        magicTrickState: { magicConfidence },
-        targetMemory(),
-        aiMemory(),
-        neuralNetwork: { weights(), activations: [] },
-        triggerState: { lastTrigger },
-        lastAim: { x }
+        performanceProfile: { fps: 60, latency: 0, magicTrickConfidence: 0 },
+        recoilState: { shotCount: 0, lastShot: 0, weapon: null },
+        magicTrickState: { magicConfidence: 0, lastHeadLock: 0, activeTarget: null },
+        targetMemory: new Map(),
+        aiMemory: new Map(),
+        neuralNetwork: { weights: new Map(), activations: [] },
+        triggerState: { lastTrigger: 0, burstCount: 0 },
+        lastAim: { x: 0, y: 0 }
     };
 }
 // Một số hàm tiện ích nếu chưa tồn tại
 if (typeof getCrosshairPosition === 'undefined') {
-    var getCrosshairPosition = function() { return { x }; };
+    var getCrosshairPosition = function() { return { x: 0, y: 0, z: 0 }; };
 }
 if (typeof currentTarget === 'undefined') {
     var currentTarget = null;
@@ -214,13 +274,13 @@ if (typeof CONFIG !== 'undefined') {
     if (typeof CONFIG.HEAD_SNAP_RADIUS === 'undefined') CONFIG.HEAD_SNAP_RADIUS = CONFIG.headSnapRadius;
     if (typeof CONFIG.DRAG_HEAD_LOCK_ENABLED === 'undefined') CONFIG.DRAG_HEAD_LOCK_ENABLED = true;
     if (typeof CONFIG.DRAG_HEAD_LOCK_RADIUS === 'undefined') CONFIG.DRAG_HEAD_LOCK_RADIUS = 0.3;
-    if (typeof CONFIG.AUTO_FIRE === 'undefined') CONFIG.AUTO_FIRE = CONFIG.AUTO_FIRE || { enabled.0 };
+    if (typeof CONFIG.AUTO_FIRE === 'undefined') CONFIG.AUTO_FIRE = CONFIG.AUTO_FIRE || { enabled: true, minLockConfidence: 0.0 };
 }
 // Tránh ghi đè triggerFire nếu đã có; nếu chưa có thì tạo một stub
 if (typeof triggerFire === 'undefined') {
     function triggerFire() { console.log("🔫 Fire Triggered (stub)"); }
 }
-// Nếu có hàm aimTo được định nghĩa nhiều lần, không cần tạo ở đây.
+// Nếu có hàm aimTo được định nghĩa nhiều lần, không cần tạo ở đây
 // End safety defaults
 
 
@@ -250,107 +310,114 @@ var NORECOIL_REPLACE = `00 0A 81 EE 10 0A 10 EE 10 8C BD E8 00 00 EF 44 F0 48 2D
 var HEAD_LOCK_RADIUS = 9999.0;
 var dotNotationConfig = {
   "input_lock_on_precision_mode": "head_3d_tracking",
-  "input_lock_on_track_velocity",
-  "input_lock_on_rotation_tracking",
-  "input_lock_on_predict_movement",
-  "input_lock_on_keep_xy",
-  "input_lock_on_offset_x".offset.x,
-  "input_lock_on_offset_y".offset.y,
-  "input_lock_on_offset_z".offset.z,
+  "input_lock_on_track_velocity": true,
+  "input_lock_on_rotation_tracking": true,
+  "input_lock_on_predict_movement": true,
+  "input_lock_on_keep_xy": true,
+  "input_lock_on_offset_x": BONE_HEAD_CONFIG.offset.x,
+  "input_lock_on_offset_y": BONE_HEAD_CONFIG.offset.y,
+  "input_lock_on_offset_z": BONE_HEAD_CONFIG.offset.z,
 
   // 🎯 Vuốt chính xác & phản hồi nhanh
-  "fire.gesture.drag_assist",
-  "fire.gesture.drag_force_multiplier".0,
-  "fire.gesture.input_response_speed".0,
-  "fire.gesture.velocity_amplifier".75,
-  "fire.gesture.drag_consistency".0,
-  "fire.gesture.drag_response_speed".0,
-  "fire.gesture.input_delay",
-  "fire.gesture.touch_latency",
-  "fire.gesture.drag_input_buffer",
-  "fire.gesture.touch_response_override",
+  "fire.gesture.drag_assist": true,
+  "fire.gesture.drag_force_multiplier": 40.0,
+  "fire.gesture.input_response_speed": 999.0,
+  "fire.gesture.velocity_amplifier": 10.75,
+  "fire.gesture.drag_consistency": 10.0,
+  "fire.gesture.drag_response_speed": 999.0,
+  "fire.gesture.input_delay": 0,
+  "fire.gesture.touch_latency": 0,
+  "fire.gesture.drag_input_buffer": 0,
+  "fire.gesture.touch_response_override": true,
   // 🔥 Tăng lực drag nút bắn
-  "fire.button.drag_boost",
-  "fire.button.drag_multiplier".5,
-  "fire.button.drag_response_speed".0,
-  "fire.button.lock_on_strength".0,
+  "fire.button.drag_boost": true,
+  "fire.button.drag_multiplier": 10.5,
+  "fire.button.drag_response_speed": 9999.0,
+  "fire.button.lock_on_strength": 10.0,
   "fire.button.drag_assist_zone": "full",  // toàn vùng nút bắn có hiệu lực kéo
-  "fire.button.drag_sensitivity_boost".0,
-  "fire.button.aim_response_acceleration".0,
+  "fire.button.drag_sensitivity_boost": 10.0,
+  "fire.button.aim_response_acceleration": 10.0,
   // 📱 Nhạy tâm ngắm & vuốt màn hình
-  "screen.touch.drag_sensitivity".0,
-  "screen.touch.smoothing".0,
-  "screen.touch.precision_lock_threshold".0001,
-  "screen.touch.adaptive_speed",
-  "screen.touch.speed_min".0001,
-  "screen.touch.speed_max".0035,
+  "screen.touch.drag_sensitivity": 8.0,
+  "screen.touch.smoothing": 1.0,
+  "screen.touch.precision_lock_threshold": 0.0001,
+  "screen.touch.adaptive_speed": true,
+  "screen.touch.speed_min": 0.0001,
+  "screen.touch.speed_max": 0.0035,
   "aimHeadLock.aimBone": "bone_Head",
-  "aimHeadLock.autoLock",
-  "aimHeadLock.lockInjection",
+  "aimHeadLock.autoLock": true,
+  "aimHeadLock.lockInjection": true,
   "aimHeadLock.lockStrength": "maximum",
-  "aimHeadLock.snapBias".0,
-  "aimHeadLock.trackingSpeed".0,
-  "aimHeadLock.dragCorrectionSpeed".0,
-  "aimHeadLock.snapToleranceAngle".5,
-  "aimHeadLock.maxLockAngle",
+  "aimHeadLock.snapBias": 5.0,
+  "aimHeadLock.trackingSpeed": 7.0,
+  "aimHeadLock.dragCorrectionSpeed": 7.0,
+  "aimHeadLock.snapToleranceAngle": 7.5,
+  "aimHeadLock.maxLockAngle": 360,
   "aimHeadLock.stickiness": "high",
-  "aimHeadLock.headStickPriority",
+  "aimHeadLock.headStickPriority": true,
 
   // 🧠 Dữ liệu xương Head
   "aimHeadLock.boneHead_position_x": -0.0456970781,
   "aimHeadLock.boneHead_position_y": -0.004478302,
   "aimHeadLock.boneHead_position_z": -0.0200432576,
 
-  "aimHeadLock.boneHead_rotation_x".0258174837,
+  "aimHeadLock.boneHead_rotation_x": 0.0258174837,
   "aimHeadLock.boneHead_rotation_y": -0.08611039,
   "aimHeadLock.boneHead_rotation_z": -0.1402113,
-  "aimHeadLock.boneHead_rotation_w".9860321,
+  "aimHeadLock.boneHead_rotation_w": 0.9860321,
 
-  "aimHeadLock.boneHead_scale_x".99999994,
-  "aimHeadLock.boneHead_scale_y".00000012,
-  "aimHeadLock.boneHead_scale_z".0,
+  "aimHeadLock.boneHead_scale_x": 0.99999994,
+  "aimHeadLock.boneHead_scale_y": 1.00000012,
+  "aimHeadLock.boneHead_scale_z": 1.0,
   // 🧠 Nhạy mục tiêu headlock
-  "aim.headlock.lock_radius_limit",
-  "aim.headlock.lock_radius_max".0,
-  "aim.headlock.snap_strength".0,
-  "aim.headlock.smooth_factor".7,
-  "aim.headlock.auto_adjust",
-  "aim.headlock.offset_neck_bias".015
+  "aim.headlock.lock_radius_limit": true,
+  "aim.headlock.lock_radius_max": 360.0,
+  "aim.headlock.snap_strength": 10.0,
+  "aim.headlock.smooth_factor": 0.7,
+  "aim.headlock.auto_adjust": true,
+  "aim.headlock.offset_neck_bias": 0.015
 };
 
   var boneOffset = {
   x: -0.04089227,
-  y.00907892,
-  z.02748467
+  y:  0.00907892,
+  z:  0.02748467
 };
 var headPosition = {
-  x.x + offset.x + boneOffset.x,
-  y.y + offset.y + boneOffset.y,
-  z.z + offset.z + boneOffset.z
+  x: basePos.x + offset.x + boneOffset.x,
+  y: basePos.y + offset.y + boneOffset.y,
+  z: basePos.z + offset.z + boneOffset.z
 };
 var aimConfig = {
   fake_screen: {
     resolution: "2752x2064",
-    dpi.8
+    dpi: 3600,
+    sensitivity_multiplier: 6.8
   },
   auto_fov: {
-    dynamic_adjust.0
+    dynamic_adjust: true,
+    max: 360.0
   },
   math: {
-    predictive_offset.02748467
+    predictive_offset: 0.02748467
   },
   headlock: {
-    enabled.0,
-    lockHeightRatio.00907892,
-    crosshairMagnetism
+    enabled: true,
+    biasFactor: 5.0,
+    lockHeightRatio:  0.00907892,
+    crosshairMagnetism: true,
+    adaptiveRange: true,
+    distanceCompensation: true,
+    velocityAdaption: true
   },
-  weapon_profiles: {
-    m1887: { x.0, y.0 },
-    mp40: { x.0, y.0 },
-    ump: { x.0, y.0 },
-    m1014: { x.0, y.0 },
-    de: { x.0, y.0 },
-    m590: { x.0, y.0 }
+  weapon_profiles: weaponProfiles,
+  recoil: {
+    m1887: { x: 0.0, y: 0.0 },
+    mp40: { x: 0.0, y: 0.0 },
+    ump: { x: 0.0, y: 0.0 },
+    m1014: { x: 0.0, y: 0.0 },
+    de: { x: 0.0, y: 0.0 },
+    m590: { x: 0.0, y: 0.0 }
   }
 };
 // --- Fix Rung Mạnh Config - Tối Ưu Giảm Giật & Rung ---
@@ -361,252 +428,417 @@ var GamePackages = {
 };
 var FixRecoilConfig = {
   // Giảm giật & rung mạnh
- RecoilSuppressionMaster.0,
-  autoHeadLock.001,
-  superHeadLock.0,
-  aimSmoothnessNear.00001,
-  aimSmoothnessFar.00001,
-  triggerFireChance.0,
-  quantumAiming, // New MagicTrick feature
-  stealthMode: { min.0, max.0 },
-  humanReactionTime: { min },
-  organicMovement: 'ultra_adaptive',
-  antiPatternDetection.2,
-  recoilCancelFactor.0,
-  fpsLogInterval,
+ RecoilSuppressionMaster: 99999,
+  AntiShakeStablizer: 99999,
+  ZeroRecoilDrag: 99999,
+  SmoothRecoilControl: 99999,
+  StabilizedDragForce: 99999,
+  DragRecoilFixer: 99999,
+  GripForceStabilizer: 99999,
+  RecoilLockdown: 99999,
+  ZeroDriftFix: 99999,
+  GripMomentumControl: 99999,
+  DragResistanceEnhancer: 99999,
+  UltraStabilizedDrag: 99999,
+  RecoilSmoothing: 99999,
+  PrecisionGripFix: 99999,
+  LowFrictionGrip: 99999,
+ sensitivity: 9999.0,
+  autoHeadLock: true,
+  aimLockHead: true,
+  headLockFov: 520,
+  aimFov: 380,
+  predictiveMultiplier: 0.001,
+  superHeadLock: 9999.0,
+  aimSmoothnessNear: 0.00001,
+  aimSmoothnessFar: 0.00001,
+  triggerFireChance: 1.0,
+  quantumAiming: true,
+  neuralPrediction: true,
+  adaptiveAI: true,
+  multiThreaded: true,
+  ghostMode: true,
+  perfectHumanization: true,
+  realTimeML: true,
+  contextualAwareness: true,
+  wallPenetration: true,
+  magicBullet: true,
+  magicTrick: true, // New MagicTrick feature
+  stealthMode: true,
+  behaviorCloning: true,
+  naturalJitter: { min: 0.0, max: 0.0 },
+  humanReactionTime: { min: 0, max: 0 },
+  organicMovement: true,
+  biometricMimicry: true,
+  mousePersonality: 'ultra_adaptive',
+  antiPatternDetection: true,
+  hyperOptimization: true,
+  quantumCalculations: true,
+  memoryOptimization: true,
+  realTimeAdaptation: true,
+  cacheOptimization: true,
+
+  smoothingFrames: 5,
+  frameDelay: 5,
+  noiseLevel: 0.2,
+  recoilCancelFactor: 1.0,
+  fpsLogInterval: 1000,
+  trackHistoryLimit: 50,
+  enableGhostOverlay: true,
+  enableOneShotAI: true,
+  adaptiveSensitivity: true,
+  stabilizationWindow: 7,
+
+  wasmAcceleration: true,
+  threadPoolSize: 12,
+  maxCalculationsPerFrame: 30,
+  rapidHeadSwitch: true,
+  dynamicHeadPriority: true,
+  ultraSmoothTransition: true,
+  contextualHeadLock: true,
 
   // MagicTrick Configuration
   magicTrickConfig: {
-    enabled.0, // Strength of head attraction
-    adaptiveMagic, // Adjust based on game context
-    magicSwitchSpeed.0001, // Speed of switching to new head target
-    magicConfidence.0, // Confidence threshold for magic trick activation
-    visualFeedback, // Enable visual feedback for magic trick
-    lockPersistence.0 // Time to maintain head lock (seconds)
+    enabled: true,
+    headAttraction: 9999.0, // Strength of head attraction
+    adaptiveMagic: true, // Adjust based on game context
+    magicSwitchSpeed: 0.0001, // Speed of switching to new head target
+    magicConfidence: 0.0, // Confidence threshold for magic trick activation
+    visualFeedback: true, // Enable visual feedback for magic trick
+    lockPersistence: 9999.0 // Time to maintain head lock (seconds)
   },
 
   // Master Weapon Profiles
   tracking: {
     default: { 
-      speed.0, pullRate.0, headBias.0, neckBias.0, chestBias.0, 
-      closeBoost.0, recoilPattern.0, rangeMod.0, 
-      recoilRecovery.0, penetration.65, criticalZone.0, stability.98, 
-      neuralWeight.0
+      speed: 9999.0, pullRate: 9999.0, headBias: 9999.0, neckBias: 10.0, chestBias: 1.0, 
+      closeBoost: 9999.0, recoilPattern: [0, 0], burstControl: 1.0, rangeMod: 9999.0, 
+      recoilRecovery: 9999.0, penetration: 0.65, criticalZone: 15.0, stability: 0.98, 
+      neuralWeight: 9999.0
     },
     mp40: { 
-     speed.0, pullRate.0, headBias.0, neckBias.0, chestBias.0, 
-      closeBoost.0, recoilPattern.0, rangeMod.0, 
-      recoilRecovery.0, penetration.65, criticalZone.0, stability.98, 
-      neuralWeight.0
+     speed: 9999.0, pullRate: 9999.0, headBias: 9999.0, neckBias: 10.0, chestBias: 1.0, 
+      closeBoost: 9999.0, recoilPattern: [0, 0], burstControl: 1.0, rangeMod: 9999.0, 
+      recoilRecovery: 9999.0, penetration: 0.65, criticalZone: 15.0, stability: 0.98, 
+      neuralWeight: 9999.0
     },
     thompson: { 
-         speed.0, pullRate.0, headBias.0, neckBias.0, chestBias.0, 
-      closeBoost.0, recoilPattern.0, rangeMod.0, 
-      recoilRecovery.0, penetration.65, criticalZone.0, stability.98, 
-      neuralWeight.0
+         speed: 9999.0, pullRate: 9999.0, headBias: 9999.0, neckBias: 10.0, chestBias: 1.0, 
+      closeBoost: 9999.0, recoilPattern: [0, 0], burstControl: 1.0, rangeMod: 9999.0, 
+      recoilRecovery: 9999.0, penetration: 0.65, criticalZone: 15.0, stability: 0.98, 
+      neuralWeight: 9999.0
     },
     ump: { 
-         speed.0, pullRate.0, headBias.0, neckBias.0, chestBias.0, 
-      closeBoost.0, recoilPattern.0, rangeMod.0, 
-      recoilRecovery.0, penetration.65, criticalZone.0, stability.98, 
-      neuralWeight.0
+         speed: 9999.0, pullRate: 9999.0, headBias: 9999.0, neckBias: 10.0, chestBias: 1.0, 
+      closeBoost: 9999.0, recoilPattern: [0, 0], burstControl: 1.0, rangeMod: 9999.0, 
+      recoilRecovery: 9999.0, penetration: 0.65, criticalZone: 15.0, stability: 0.98, 
+      neuralWeight: 9999.0
     },
         m1887: { 
-        speed.0, pullRate.0, headBias.0, neckBias.0, chestBias.0, 
-      closeBoost.0, recoilPattern.0, rangeMod.0, 
-      recoilRecovery.0, penetration.65, criticalZone.0, stability.98, 
-      neuralWeight.0
+        speed: 9999.0, pullRate: 9999.0, headBias: 9999.0, neckBias: 10.0, chestBias: 1.0, 
+      closeBoost: 9999.0, recoilPattern: [0, 0], burstControl: 1.0, rangeMod: 9999.0, 
+      recoilRecovery: 9999.0, penetration: 0.65, criticalZone: 15.0, stability: 0.98, 
+      neuralWeight: 9999.0
     }
   },
 
   // Advanced Sensitivity Matrix
   sensiActivity: {
-    default.0,
-    mp40.0,
-    thompson.0,
-    ump.0,
-    m1887.0
+    default: 9999.0,
+    mp40: 9999.0,
+    thompson: 9999.0,
+    ump: 9999.0,
+    m1887: 9999.0
   },
 
   // Enhanced Target Priority System
   targetPriority: {
-    head.6,
-    health.2,
-    threat.5,
-    movement.3,
-    cover.5,
-    teamPriority.0,
-    visibility.7,
-    exposureTime.4
+    head: 230,
+    neck: 130,
+    chest: 90,
+    limbs: 60,
+    distance: 1.6,
+    health: 1.2,
+    threat: 1.5,
+    movement: 1.3,
+    cover: 0.5,
+    teamPriority: 2.0,
+    visibility: 1.7,
+    exposureTime: 1.4
   },
 
   // AI Learning System
   aiLearning: {
-    enabled.25,
-    memoryDepth.18,
-    patternRecognition
+    enabled: true,
+    learningRate: 0.25,
+    memoryDepth: 120,
+    adaptationSpeed: 0.18,
+    patternRecognition: true,
+    behaviorAnalysis: true,
+    performanceFeedback: true,
+    maxTrainingSamples: 2500
   },
 
   // Quantum Physics Engine
   quantumPhysics: {
-    enabled.0006,
-    quantumTunneling.0004
+    enabled: true,
+    uncertaintyPrinciple: 0.0006,
+    quantumTunneling: true,
+    superposition: true,
+    entanglement: true,
+    quantumCurveFluctuation: 0.0004
   },
 
   // Magic Bullet Settings
   magicBulletConfig: {
-    enabled.5,
-    prediction.5,
-    wallBypass: {
-      smg: { curve.0, prediction.3 },
-      sniper: { curve.5, prediction.7 }
+    enabled: true,
+    curve: 3.5,
+    prediction: 1.5,
+    wallBypass: true,
+    trajectoryOptimization: true,
+    dynamicCurveAdjustment: true,
+    adaptiveTrajectory: {
+      smg: { curve: 3.0, prediction: 1.3 },
+      sniper: { curve: 4.5, prediction: 1.7 }
     },
-    magicBurstMode: { enabled.2, maxBurst }
+    magicBurstMode: { enabled: true, burstBoost: 1.2, maxBurst: 5 }
   },
 
   // Trigger Bot Settings
   triggerBot: {
-    enabled: { min },
-    burstMode
+    enabled: true,
+    delay: { min: 0, max: 0 },
+    burstMode: true,
+    smartTrigger: true,
+    safeMode: true,
+    adaptiveBurst: true
   }
 };
   // Ổn định bắn
-  VerticalRecoilSuppression,
+  VerticalRecoilSuppression: 99999,
+  HorizontalShakeReduction: 99999,
+  RealTimeGunStabilityControl: 99999,
+  DynamicRecoilFeedbackModulation: 99999,
+  AdvancedShootingBalance: 99999,
+  InteractiveWeaponResponse: 99999,
+  RealTimeCrosshairAnchor: 99999,
+  AutoRecoilAdjustSystem: 99999,
+  StabilizedFiringRateControl: 99999,
+  QuickRecoilResetOptions: 99999,
 
   // --- Cải Tiến Cho Độ Chính Xác và Giảm Giật ---
-  RecoilAutoBalance,
+  RecoilAutoBalance: 99999,
+  TouchDriftFix: 99999,
+  RecoilPressureCompensator: 99999,
+  GripCalibrationTuning: 99999,
+  GripForceControl: 99999,
+  DragFlowStabilizer: 99999,
+  PressureGripFix: 99999,
+  VerticalDragCorrection: 99999,
+  HorizontalDragFixer: 99999,
+  AntiShakeEnhancer: 99999,
+  QuickGripCorrection: 99999,
+  SuperStableDrag: 99999,
+  StableSwipeCalibration: 99999,
 
   // --- Tăng Tốc Độ Độ Chính Xác, Giảm Trễ ---
-  ZeroLatencyTouchControl,
+  ZeroLatencyTouchControl: 99999,
+  RealTimeRecoilFixer: 99999,
+  QuickDragRestraint: 99999,
+  DragStabilityEnhancer: 99999,
+  TouchPressureBalancer: 99999,
+  TouchInputFixer: 99999,
+  SwipeStabilizer: 99999,
+  RapidGripAdjustment: 99999,
+  FineGripOptimizer: 99999,
 
   // --- Ghim Tâm Chính Xác & Giảm Quá Dính ---
-  PrecisionAimLock,
+  PrecisionAimLock: 99999,
+  VerticalAimFix: 99999,
+  HorizontalAimFix: 99999,
+  SmoothGripControl: 99999,
+  DragStabilityBalancer: 99999,
+  GripSensitivityTuning: 99999,
+  AutoAimFix: 99999,
+  DragSpeedAdjuster: 99999,
+  DragControlLimiter: 99999,
+  TouchGripResponse: 99999,
+  DynamicGripReset: 99999,
 
   // --- Ghim Tâm, Giảm Lệch, Giảm Quá Dính ---
-  AutoCenteringFix,
+  AutoCenteringFix: 99999,
+  RealTimeAimLock: 99999,
+  VerticalDragLimiter: 99999,
+  HorizontalDragLimiter: 99999,
+  HeadSnapLimiter: 99999,
+  DragPrecisionTuner: 99999,
+  GripCorrectionEnhancer: 99999,
+  NoExcessiveGrip: 99999,
+  BalancedDragControl: 99999,
+  RealTimePrecisionSync: 99999,
 
   // --- Giảm Quá Dính, Cải Tiến Độ Chính Xác ---
-  ZeroLateralMovement,
+  ZeroLateralMovement: 99999,
+  ZeroVerticalDrift: 99999,
+  NoAimSnapFixer: 99999,
+  TouchSensitivityLock: 99999,
+  DragReductionOptimizer: 99999,
+  RecoilCorrectionSystem: 99999,
+  DragAndDropSync: 99999,
+  GripForceLimiter: 99999,
+  ZeroFluctuationDrag: 99999,
 
   // --- Ghim Tâm Mượt Mà, Chính Xác, Không Lệch ---
-  GripStabilizer
+  GripStabilizer: 99999,
+  FastDragControl: 99999,
+  TouchInputCorrection: 99999,
+  DragSpeedLimiter: 99999
 };
 
 var HyperMaxLockSystem = {
     // Head Lock siêu nhanh, bám cực chính xác
     HyperHeadLockSystem: {
-        enabled: "bone_Head",
-        autoLockOnFire: "hyper",
-        snapToleranceAngle.0,
-        disableBodyRecenter.0,        // Cực nhanh, gần như instant
-        smoothing.0,
-        maxDragDistance.0,
-        snapBackToHead.0,      // Dự đoán cực mạnh
-        autoFireOnLock: { x: -0.0457, y: -0.00448, z: -0.02004 },
-        rotationOffset: { x.0258, y: -0.0861, z: -0.1402, w.9860 },
-        scale: { x.0, y.0, z.0 }
+        enabled: true,
+        aimBone: "bone_Head",
+        autoLockOnFire: true,
+        holdLockWhileDragging: true,
+        stickiness: "hyper",
+        snapToleranceAngle: 0.0,
+        disableBodyRecenter: true,
+        trackingSpeed: 15.0,        // Cực nhanh, gần như instant
+        smoothing: 1.0,
+        maxDragDistance: 0.0,
+        snapBackToHead: true,
+        predictionFactor: 2.0,      // Dự đoán cực mạnh
+        autoFireOnLock: true,
+        boneOffset: { x: -0.0457, y: -0.00448, z: -0.02004 },
+        rotationOffset: { x: 0.0258, y: -0.0861, z: -0.1402, w: 0.9860 },
+        scale: { x: 1.0, y: 1.0, z: 1.0 }
     },
 
     // Neck Lock backup nếu mất đầu
     HyperNeckLockSystem: {
-        enabled: "bone_Neck",
-        autoLock: "maximum",
-        snapBias.0,
-        trackingSpeed.0,
-        dragCorrectionSpeed.0,
-        snapToleranceAngle.0,
-        maxLockAngle: "hyper",
-        neckStickPriority: { x: -0.128512, y.0, z.0 },
-        boneNeck_rotation: { x: -0.012738, y: -0.002122, z.164307, w.986325 },
-        boneNeck_scale: { x.0, y.0, z.0 }
+        enabled: true,
+        aimTrackingBone: "bone_Neck",
+        autoLock: true,
+        lockStrength: "maximum",
+        snapBias: 1.0,
+        trackingSpeed: 12.0,
+        dragCorrectionSpeed: 5.0,
+        snapToleranceAngle: 0.0,
+        maxLockAngle: 360,
+        stickiness: "hyper",
+        neckStickPriority: true,
+        boneNeck_position: { x: -0.128512, y: 0.0, z: 0.0 },
+        boneNeck_rotation: { x: -0.012738, y: -0.002122, z: 0.164307, w: 0.986325 },
+        boneNeck_scale: { x: 1.0, y: 1.0, z: 1.0 }
     },
 
     // Touch Boost cực nhạy, bù lag, điều chỉnh vi mô
     TouchBoostPrecisionSystem: {
-        enabled.0,
-        boostMultiplier.0,
-        precisionDragMultiplier.0,
-        boostRampUpTime.0,
-        boostDecayTime.0,
-        microDragPrecision.0005,
-        microDragMultiplier.0,
-        tapDistanceThreshold.0,
-        microAdjustThreshold.0,
-        microAdjustSmoothing.0,
-        latencyCompensation: -35,
-        overshootProtection.0,
-        debugLog
+        enabled: true,
+        precisionMode: true,
+        boostOnTouch: true,
+        boostOnDrag: true,
+        boostOnFire: true,
+        baseSensitivity: 25.0,
+        boostMultiplier: 40.0,
+        precisionDragMultiplier: 0.0,
+        boostRampUpTime: 0.0,
+        boostDecayTime: 0.0,
+        microDragPrecision: 0.0005,
+        microDragMultiplier: 1.0,
+        tapDistanceThreshold: 0.0,
+        microAdjustThreshold: 0.0,
+        microAdjustSmoothing: 1.0,
+        latencyCompensation: true,
+        latencyMs: -35,
+        overshootProtection: true,
+        overshootLimit: 0.0,
+        debugLog: false
     },
 
     // Anti-Recoil + Stabilizer
     AntiRecoilAimStabilizer: {
-        enabled: "bone_Head",
-        autoCompensateRecoil.95,
-        smoothFactor.95,
-        snapToleranceAngle.0,
+        enabled: true,
+        targetBone: "bone_Head",
+        autoCompensateRecoil: true,
+        compensationStrength: 0.95,
+        smoothFactor: 0.95,
+        snapToleranceAngle: 0.0,
         stickiness: "hyper",
-        applyWhileFiring.9,
+        applyWhileFiring: true,
+        predictionFactor: 0.9,
         boneOffset: { x: -0.0457, y: -0.00448, z: -0.02004 },
-        rotationOffset: { x.0258, y: -0.0861, z: -0.1402, w.9860 },
-        scale: { x.0, y.0, z.0 }
+        rotationOffset: { x: 0.0258, y: -0.0861, z: -0.1402, w: 0.9860 },
+        scale: { x: 1.0, y: 1.0, z: 1.0 }
     },
 
     // Giữ tâm khi bắn, drag siêu mượt
     HoldCrosshairOnHeadWhenFire: {
-        enabled: "bone_Head",
-        autoLockOnFire.0,
-        predictionFactor.2,
-        snapToleranceAngle.0,
+        enabled: true,
+        targetBone: "bone_Head",
+        autoLockOnFire: true,
+        holdLockWhileFiring: true,
+        trackingSpeed: 2.0,
+        predictionFactor: 1.2,
+        snapToleranceAngle: 0.0,
         stickiness: "hyper",
-        disableBodyRecenter.95,
+        disableBodyRecenter: true,
+        smoothing: 0.95,
         boneOffset: { x: -0.0457, y: -0.00448, z: -0.02004 },
-        rotationOffset: { x.0258, y: -0.0861, z: -0.1402, w.9860 },
-        scale: { x.0, y.0, z.0 }
+        rotationOffset: { x: 0.0258, y: -0.0861, z: -0.1402, w: 0.9860 },
+        scale: { x: 1.0, y: 1.0, z: 1.0 }
     },
 
     // Auto Tracking Lock + fallback neck
     AutoTrackingLock: {
-        enabled: "bone_Head",
-        autoSwitchToNeck.5,
-        predictionFactor.9,
-        snapToleranceAngle.0,
-        maxLockDistance.0,
+        enabled: true,
+        trackingBone: "bone_Head",
+        autoSwitchToNeck: true,
+        trackingSpeed: 1.5,
+        predictionFactor: 0.9,
+        snapToleranceAngle: 0.0,
+        maxLockDistance: 250.0,
         stickiness: "hyper",
-        ignoreObstacles: { x: -0.0457, y: -0.00448, z: -0.02004 },
-        rotationOffset: { x.0258, y: -0.0861, z: -0.1402, w.9860 },
-        scale: { x.0, y.0, z.0 }
+        ignoreObstacles: true,
+        recenterDelay: 0,
+        boneOffset: { x: -0.0457, y: -0.00448, z: -0.02004 },
+        rotationOffset: { x: 0.0258, y: -0.0861, z: -0.1402, w: 0.9860 },
+        scale: { x: 1.0, y: 1.0, z: 1.0 }
     },
 
     // Auto headshot khi fire
-    AutoShotHead: { autoHeadshot },
+    AutoShotHead: { autoHeadshot: true, aimListextension: true },
 
     // Tối ưu lag & khởi động
-    FixLagBoost: { fixResourceTask },
-    CloseLauncherRestore: { closeLauncher }
+    FixLagBoost: { fixResourceTask: true },
+    CloseLauncherRestore: { closeLauncher: true, forceRestore: true }
 };
 var AimbotConfig = {
 // Cài đặt tracking
-smoothness.85,           // Độ mượt của việc theo dõi (0-1)
-predictionTime.01,       // Thời gian dự đoán chuyển động
-maxTrackingDistance,   // Khoảng cách tối đa để track
-fovLimit,              // Giới hạn FOV để target
+smoothness: 0.85,           // Độ mượt của việc theo dõi (0-1)
+predictionTime: 0.01,       // Thời gian dự đoán chuyển động
+maxTrackingDistance: 99999,   // Khoảng cách tối đa để track
+fovLimit: 360,              // Giới hạn FOV để target
 
 // Cài đặt bắn kích hoạt
-fireActivationDuration,  // Thời gian active sau khi bắn (ms)
-burstMode,           // Chế độ bắn liên tiếp
-burstCount,             // Số viên bắn trong burst
-burstDelay,           // Delay giữa các burst (ms)
+fireActivationDuration: 1000,  // Thời gian active sau khi bắn (ms)
+burstMode: true,           // Chế độ bắn liên tiếp
+burstCount: 200,             // Số viên bắn trong burst
+burstDelay: 0,           // Delay giữa các burst (ms)
 
 // Cài đặt bone targeting
 
 preferredBones: ['bone_Head', 'bone_Neck', 'bone_Chest'],
 
-headShotMultiplier.0,   // Hệ số ưu tiên headshot
+headShotMultiplier: 10.0,   // Hệ số ưu tiên headshot
 
 // Cài đặt anti-recoil
-recoilCompensation: [           // Pattern giật súng chuẩn
-{ x: -2 }, { x: -1, y: -3 }, { x: -2 },
-{ x: -2, y: -4 }, { x: -3 }, { x: -1, y: -5 }
+recoilCompensation: true,
+recoilPattern: [           // Pattern giật súng chuẩn
+{ x: 0, y: -2 }, { x: -1, y: -3 }, { x: 1, y: -2 },
+{ x: -2, y: -4 }, { x: 2, y: -3 }, { x: -1, y: -5 }
 ]
 };
 
@@ -619,99 +851,99 @@ function BoneHeadBasedEnemyDetector() {
     // ✅ Sửa toàn bộ dấu nháy trong headConfig
     this.headConfig = options.headConfig || {
       "boneColliderProperty": {
-        "boneProperty": { "recursivery" },
+        "boneProperty": { "recursivery": 0 },
         "splitProperty": {
-          "boneWeightType",
-          "boneWeight2",
-          "boneWeight3",
-          "boneWeight4",
-          "greaterBoneWeight",
-          "boneTriangleExtent"
+          "boneWeightType": 0,
+          "boneWeight2": 100,
+          "boneWeight3": 100,
+          "boneWeight4": 100,
+          "greaterBoneWeight": 1,
+          "boneTriangleExtent": 0
         },
         "reducerProperty": {
-          "shapeType",
-          "fitType",
-          "meshType",
-          "maxTriangles",
-          "sliceMode",
-          "scale": { "x".0, "y".0, "z".0 },
-          "scaleElementType",
-          "minThickness": { "x".01, "y".01, "z".01 },
-          "minThicknessElementType",
-          "optimizeRotation": { "x", "y", "z" },
-          "optimizeRotationElementType",
-          "colliderToChild",
-          "offset": { "x".0, "y".0, "z".0 },
-          "thicknessA": { "x".0, "y".0, "z".0 },
-          "thicknessB": { "x".0, "y".0, "z".0 },
-          "viewAdvanced"
+          "shapeType": 3,
+          "fitType": 0,
+          "meshType": 3,
+          "maxTriangles": 255,
+          "sliceMode": 0,
+          "scale": { "x": 1.0, "y": 1.0, "z": 1.0 },
+          "scaleElementType": 0,
+          "minThickness": { "x": 0.01, "y": 0.01, "z": 0.01 },
+          "minThicknessElementType": 0,
+          "optimizeRotation": { "x": 1, "y": 1, "z": 1 },
+          "optimizeRotationElementType": 0,
+          "colliderToChild": 2,
+          "offset": { "x": 0.0, "y": 0.0, "z": 0.0 },
+          "thicknessA": { "x": 0.0, "y": 0.0, "z": 0.0 },
+          "thicknessB": { "x": 0.0, "y": 0.0, "z": 0.0 },
+          "viewAdvanced": 0
         },
         "colliderProperty": {
-          "convex",
-          "isTrigger",
-          "material": { "m_FileID", "m_PathID" },
-          "isCreateAsset"
+          "convex": 1,
+          "isTrigger": 0,
+          "material": { "m_FileID": 0, "m_PathID": 0 },
+          "isCreateAsset": 0
         },
         "rigidbodyProperty": {
-          "mass".0,
-          "drag".0,
-          "angularDrag".05,
-          "isKinematic",
-          "useGravity",
-          "interpolation",
-          "collisionDetectionMode",
-          "isCreate",
-          "viewAdvanced"
+          "mass": 1.0,
+          "drag": 0.0,
+          "angularDrag": 0.05,
+          "isKinematic": 1,
+          "useGravity": 0,
+          "interpolation": 0,
+          "collisionDetectionMode": 0,
+          "isCreate": 0,
+          "viewAdvanced": 0
         },
-        "modifyNameEnabled"
+        "modifyNameEnabled": 0
       },
 
       "defaultBoneColliderProperty": {
-        "boneProperty": { "recursivery" },
+        "boneProperty": { "recursivery": 0 },
         "splitProperty": {
-          "boneWeightType",
-          "boneWeight2",
-          "boneWeight3",
-          "boneWeight4",
-          "greaterBoneWeight",
-          "boneTriangleExtent"
+          "boneWeightType": 0,
+          "boneWeight2": 50,
+          "boneWeight3": 33,
+          "boneWeight4": 25,
+          "greaterBoneWeight": 1,
+          "boneTriangleExtent": 1
         },
         "reducerProperty": {
-          "shapeType",
-          "fitType",
-          "meshType",
-          "maxTriangles",
-          "sliceMode",
-          "scale": { "x".0, "y".0, "z".0 },
-          "scaleElementType",
-          "minThickness": { "x".01, "y".01, "z".01 },
-          "minThicknessElementType",
-          "optimizeRotation": { "x", "y", "z" },
-          "optimizeRotationElementType",
-          "colliderToChild",
-          "offset": { "x".0, "y".0, "z".0 },
-          "thicknessA": { "x".0, "y".0, "z".0 },
-          "thicknessB": { "x".0, "y".0, "z".0 },
-          "viewAdvanced"
+          "shapeType": 2,
+          "fitType": 0,
+          "meshType": 3,
+          "maxTriangles": 255,
+          "sliceMode": 0,
+          "scale": { "x": 1.0, "y": 1.0, "z": 1.0 },
+          "scaleElementType": 0,
+          "minThickness": { "x": 0.01, "y": 0.01, "z": 0.01 },
+          "minThicknessElementType": 0,
+          "optimizeRotation": { "x": 1, "y": 1, "z": 1 },
+          "optimizeRotationElementType": 0,
+          "colliderToChild": 0,
+          "offset": { "x": 0.0, "y": 0.0, "z": 0.0 },
+          "thicknessA": { "x": 0.0, "y": 0.0, "z": 0.0 },
+          "thicknessB": { "x": 0.0, "y": 0.0, "z": 0.0 },
+          "viewAdvanced": 0
         },
         "colliderProperty": {
-          "convex",
-          "isTrigger",
-          "material": { "m_FileID", "m_PathID" },
-          "isCreateAsset"
+          "convex": 1,
+          "isTrigger": 0,
+          "material": { "m_FileID": 0, "m_PathID": 0 },
+          "isCreateAsset": 0
         },
         "rigidbodyProperty": {
-          "mass".0,
-          "drag".0,
-          "angularDrag".05,
-          "isKinematic",
-          "useGravity",
-          "interpolation",
-          "collisionDetectionMode",
-          "isCreate",
-          "viewAdvanced"
+          "mass": 1.0,
+          "drag": 0.0,
+          "angularDrag": 0.05,
+          "isKinematic": 1,
+          "useGravity": 0,
+          "interpolation": 0,
+          "collisionDetectionMode": 0,
+          "isCreate": 1,
+          "viewAdvanced": 0
         },
-        "modifyNameEnabled"
+        "modifyNameEnabled": 0
       }
     };
 
@@ -726,10 +958,10 @@ this.lockedTarget = null;
 this.targetHistory = [];
 
 this.distanceAdjustments = {
-  close: { range: { x.00907892 } },
-  medium: { range: { x.00907892 } },
-  far: { range: { x.00907892 } },
-  veryFar: { range: { x.00907892 } }
+  close: { range: [0, 50], offset: { x: 0, y: 0.00907892 } },
+  medium: { range: [50, 150], offset: { x: 0, y: 0.00907892 } },
+  far: { range: [150, 300], offset: { x: 0, y: 0.00907892 } },
+  veryFar: { range: [300, Infinity], offset: { x: 0, y: 0.00907892 } }
 };
 }
 
@@ -740,9 +972,9 @@ computeWorldPosition(matrix, bindpose) {
 var p = bindpose.position;
 var m = matrix;
 return {
-x.e00 * p.x + m.e01 * p.y + m.e02 * p.z + m.e03,
-y.e10 * p.x + m.e11 * p.y + m.e12 * p.z + m.e13,
-z.e20 * p.x + m.e21 * p.y + m.e22 * p.z + m.e23
+x: m.e00 * p.x + m.e01 * p.y + m.e02 * p.z + m.e03,
+y: m.e10 * p.x + m.e11 * p.y + m.e12 * p.z + m.e13,
+z: m.e20 * p.x + m.e21 * p.y + m.e22 * p.z + m.e23
 };
 }
 
@@ -758,7 +990,7 @@ heads.forEachfunction(({ matrix, bindpose }) {
   if (ignoreRangeLimit || dist < this.headLockRange) {
     if (dist < minDist) {
       minDist = dist;
-      closest = { ...pos, matrix, bindpose, distance };
+      closest = { ...pos, matrix, bindpose, distance: dist };
     }
   }
 });
@@ -774,9 +1006,9 @@ applyDistanceOffset(head) {
     if (head.distance >= cfg.range[0] && head.distance < cfg.range[1]) {
       return {
         ...head,
-        x.x + cfg.offset.x,
-        y.y + cfg.offset.y,
-        distanceCategory
+        x: head.x + cfg.offset.x,
+        y: head.y + cfg.offset.y,
+        distanceCategory: key
       };
     }
   }
@@ -793,23 +1025,23 @@ var vy = current.y - last.y;
 
 return {
   ...current,
-  x.x + vx * 2,
-  y.y + vy * 2
+  x: current.x + vx * 2,
+  y: current.y + vy * 2
 };
 
 }
 
 computeHeadBoundingBox(headPos, distance) {
 var baseSize = 30; // kích thước cơ bản bounding box
-var size = baseSize * (1 / Math.max(distance, 1)); // tỉ lệ nghịch khoảng cách, tránh chia 0
+var size = baseSize * (1 / Math.max(distance, 1)); // tỉ lệ nghịch khoảng cách, tránh chia: 0
 
 
 return {
-  left.x - size / 2,
-  right.x + size / 2,
-  top.y - size / 2,
-  bottom.y + size / 2,
-  size
+  left: headPos.x - size / 2,
+  right: headPos.x + size / 2,
+  top: headPos.y - size / 2,
+  bottom: headPos.y + size / 2,
+  size: true
 };
 
 
@@ -826,7 +1058,7 @@ var rawDY = predicted.y - crosshair.y;
 var deltaX = rawDX * this.sensitivity;
 var deltaY = rawDY * this.sensitivity;
 
-var smoothed = { x };
+var smoothed = { x: deltaX, y: deltaY };
 if (this.lockedTarget) {
   smoothed.x = this.lockedTarget.aimDelta.x +
               (deltaX - this.lockedTarget.aimDelta.x) * this.smoothingFactor;
@@ -837,13 +1069,11 @@ if (this.lockedTarget) {
 var boundingBox = this.computeHeadBoundingBox(predicted, head.distance);
 
 return {
-  deltaX.x,
-  deltaY.y,
-  raw: { x },
-  predicted,
-  adjusted,
-  boundingBox,
-  distance.distance
+  deltaX: smoothed.x,
+  deltaY: smoothed.y,
+  raw: { x: rawDX, y: rawDY },
+  predicted: true,adjusted,
+  boundingBox: true,distance: head.distance
 };
 
 
@@ -854,7 +1084,9 @@ if (!isCrosshairRed) {
 this.lockedTarget = null;
 this.targetHistory = [];
 return {
-locked
+locked: false,
+headInfo: null,
+aimAssist: null
 };
 }
 
@@ -866,9 +1098,8 @@ if (head) {
   aim = this.calculateAimAssist(crosshair, head);
 
   this.lockedTarget = {
-    head,
-    aimDelta: { x.deltaX, y.deltaY },
-    timestamp.now()
+    head: true,aimDelta: { x: aim.deltaX, y: aim.deltaY },
+    timestamp: Date.now()
   };
 
   this.targetHistory.push(head);
@@ -880,7 +1111,8 @@ if (head) {
 
 return {
   locked: !!head,
-  headInfo
+  headInfo: head,
+  aimAssist: aim
 };
 
 
@@ -890,30 +1122,30 @@ return {
 // === Bindpose matrices cho các bone ===
 var BoneMatrices = {
 bone_Head: {
-e00: -1.34559613e-13, e01.881784e-14, e02: -1.0, e03.487912,
-e10: -2.84512817e-6, e11: -1.0, e12.881784e-14, e13: -2.842171e-14,
-e20: -1.0, e21.84512817e-6, e22: -1.72951931e-13, e23.0,
-e30.0, e31.0, e32.0, e33.0
+e00: -1.34559613e-13, e01: 8.881784e-14, e02: -1.0, e03: 0.487912,
+e10: -2.84512817e-6, e11: -1.0, e12: 8.881784e-14, e13: -2.842171e-14,
+e20: -1.0, e21: 2.84512817e-6, e22: -1.72951931e-13, e23: 0.0,
+e30: 0.0, e31: 0.0, e32: 0.0, e33: 1.0
 },
 bone_Neck: {
-e00: -1.2e-13, e01.5e-14, e02: -1.0, e03.45,
-e10: -2.5e-6, e11: -1.0, e12.5e-14, e13: -2.0e-14,
-e20: -1.0, e21.5e-6, e22: -1.5e-13, e23.0,
-e30.0, e31.0, e32.0, e33.0
+e00: -1.2e-13, e01: 7.5e-14, e02: -1.0, e03: 0.45,
+e10: -2.5e-6, e11: -1.0, e12: 7.5e-14, e13: -2.0e-14,
+e20: -1.0, e21: 2.5e-6, e22: -1.5e-13, e23: 0.0,
+e30: 0.0, e31: 0.0, e32: 0.0, e33: 1.0
 },
 bone_Chest: {
-e00: -1.1e-13, e01.8e-14, e02: -1.0, e03.35,
-e10: -2.2e-6, e11: -1.0, e12.8e-14, e13: -1.8e-14,
-e20: -1.0, e21.2e-6, e22: -1.3e-13, e23.0,
-e30.0, e31.0, e32.0, e33.0
+e00: -1.1e-13, e01: 6.8e-14, e02: -1.0, e03: 0.35,
+e10: -2.2e-6, e11: -1.0, e12: 6.8e-14, e13: -1.8e-14,
+e20: -1.0, e21: 2.2e-6, e22: -1.3e-13, e23: 0.0,
+e30: 0.0, e31: 0.0, e32: 0.0, e33: 1.0
 }
 };
 
 // === Offset cho từng bone ===
 var BoneOffsets = {
-bone_Head(-0.0456970781, -0.004478302, -0.0200432576),
-bone_Neck(-0.0356970781, -0.002478302, -0.0150432576),
-bone_Chest(-0.0256970781, -0.001478302, -0.0100432576)
+bone_Head: new Vector3(-0.0456970781, -0.004478302, -0.0200432576),
+bone_Neck: new Vector3(-0.0356970781, -0.002478302, -0.0150432576),
+bone_Chest: new Vector3(-0.0256970781, -0.001478302, -0.0100432576)
 };
 
 // === Enemy class tích hợp ===
@@ -988,7 +1220,7 @@ return Math.min(threat, 2.0);
 }
 
 getBestTargetBone() {
-var availableBones = AimbotConfig.preferredBones.filter(function(bone) { return this.bones[bone]) };
+var availableBones = AimbotConfig.preferredBones.filter(bone => this.bones[bone]);
 if (availableBones.length === 0) return null;
 
 
@@ -1053,8 +1285,8 @@ var baseLeadTime = targetDistance / projectileSpeed;
 // Điều chỉnh dựa trên movement pattern
 var leadMultiplier = 1.0;
 switch (enemy.movementPattern) {
-  case 'erratic' = 1.3; break;
-  case 'curved' = 1.1; break;
+  case 'erratic': leadMultiplier = 1.3; break;
+  case 'curved': leadMultiplier = 1.1; break;
 }
 
 return baseLeadTime * leadMultiplier;
@@ -1079,33 +1311,36 @@ this.trackingInterval = null;
 
 // Tích hợp BoneHeadBasedEnemyDetector
 this.boneDetector = new BoneHeadBasedEnemyDetector({
-  sensitivity.001,
-  smoothingFactor.3,
-  headLockRange
+  sensitivity: 0.001,
+  smoothingFactor: 0.3,
+  headLockRange: 9999
 });
 
 this.statistics = {
-  shotsHired
+  shotsHired: 0,
+  headshotsHit: 0,
+  accuracy: 0,
+  activations: 0
 };
 
 // Demo data
 this.demoBoneHeads = [
   {
     matrix: {
-      e00: -1.34559613E-13, e01.881784E-14, e02: -1.0, e03.487912,
-      e10: -2.84512817E-06, e11: -1.0, e12.881784E-14, e13: -2.842171E-14,
-      e20: -1.0, e21.84512817E-06, e22: -1.72951931E-13, e23.0,
-      e30.0, e31.0, e32.0, e33.0
+      e00: -1.34559613E-13, e01: 8.881784E-14, e02: -1.0, e03: 0.487912,
+      e10: -2.84512817E-06, e11: -1.0, e12: 8.881784E-14, e13: -2.842171E-14,
+      e20: -1.0, e21: 2.84512817E-06, e22: -1.72951931E-13, e23: 0.0,
+      e30: 0.0, e31: 0.0, e32: 0.0, e33: 1.0
     },
     bindpose: {
       position: { x: -0.0456970781, y: -0.004478302, z: -0.0200432576 },
-      rotation: { x.0258174837, y: -0.08611039, z: -0.1402113, w.9860321 },
-      scale: { x.99999994, y.00000012, z.0 }
+      rotation: { x: 0.0258174837, y: -0.08611039, z: -0.1402113, w: 0.9860321 },
+      scale: { x: 0.99999994, y: 1.00000012, z: 1.0 }
     }
   }
 ];
 
-this.crosshairPos = { x };
+this.crosshairPos = { x: 400, y: 300 };
 
 
 }
@@ -1118,7 +1353,7 @@ this.statistics.activations++;
 // Kích hoạt aimbot trong khoảng thời gian nhất định
 this.activateForDuration(AimbotConfig.fireActivationDuration);
 
-console.log("🔥 FIRE PRESSED! Aimbot activated for " + (AimbotConfig.fireActivationDuration) + "ms");
+console.log(`🔥 FIRE PRESSED! Aimbot activated for ${AimbotConfig.fireActivationDuration}ms`);
 
 // Xử lý shooting logic
 this.handleShooting();
@@ -1231,10 +1466,10 @@ var headInfo = detectionResult.headInfo;
 var enemy = new Enemy({
   id: 'detected_enemy',
   bones: {
-    bone_Head(headInfo.x, headInfo.y, headInfo.z)
+    bone_Head: new Vector3(headInfo.x, headInfo.y, headInfo.z)
   },
-  velocity(0, 0, 0), // Sẽ được tính từ history
-  health
+  velocity: new Vector3(0, 0, 0), // Sẽ được tính từ history
+  health: 100
 });
 
 this.currentTarget = enemy;
@@ -1265,7 +1500,7 @@ var finalPos = this.applyRecoilCompensation(smoothedPos);
 this.aimAt(finalPos);
 this.lastAimPosition = finalPos;
 
-console.log("🎯 BoneDetector Aim: (" + (finalPos.x.toFixed(3)) + ", ${finalPos.y.toFixed(3)}, ${finalPos.z.toFixed(3)})");
+console.log(`🎯 BoneDetector Aim: (${finalPos.x.toFixed(3)}, ${finalPos.y.toFixed(3)}, ${finalPos.z.toFixed(3)})`);
 
 
 }
@@ -1278,38 +1513,41 @@ console.log("🎯 BoneDetector Aim: (" + (finalPos.x.toFixed(3)) + ", ${finalPos
 
     return [
       new Enemy({
-        id: {
-          bone_Head(0.3 + Math.sin(now * 0.002) * 0.1, 1.5, -2.0),
-          bone_Neck(0.3, 1.4, -2.0),
-          bone_Chest(0.3, 1.2, -2.0)
+        id: 1,
+        bones: {
+          bone_Head: new Vector3(0.3 + Math.sin(now * 0.002) * 0.1, 1.5, -2.0),
+          bone_Neck: new Vector3(0.3, 1.4, -2.0),
+          bone_Chest: new Vector3(0.3, 1.2, -2.0)
         },
-        velocity(Math.cos(now * 0.001) * 0.5, 0, 0.1),
-        health
+        velocity: new Vector3(Math.cos(now * 0.001) * 0.5, 0, 0.1),
+        health: 85
       }),
 
       new Enemy({
-        id: {
-          bone_Head(-0.5 + Math.sin(now * 0.001) * 0.1, 1.6, -3.5),
-          bone_Neck(-0.5, 1.5, -3.5),
-          bone_Chest(-0.5, 1.3, -3.5)
+        id: 2,
+        bones: {
+          bone_Head: new Vector3(-0.5 + Math.sin(now * 0.001) * 0.1, 1.6, -3.5),
+          bone_Neck: new Vector3(-0.5, 1.5, -3.5),
+          bone_Chest: new Vector3(-0.5, 1.3, -3.5)
         },
-        velocity(Math.cos(now * 0.002) * 0.3, 0, -0.2),
-        health
+        velocity: new Vector3(Math.cos(now * 0.002) * 0.3, 0, -0.2),
+        health: 60
       }),
 
       new Enemy({
-        id: {
-          bone_Head(0.0 + Math.cos(now * 0.001) * 0.05, 1.55, -1.8),
-          bone_Neck(0.0, 1.45, -1.8),
-          bone_Chest(0.0, 1.25, -1.8)
+        id: 3,
+        bones: {
+          bone_Head: new Vector3(0.0 + Math.cos(now * 0.001) * 0.05, 1.55, -1.8),
+          bone_Neck: new Vector3(0.0, 1.45, -1.8),
+          bone_Chest: new Vector3(0.0, 1.25, -1.8)
         },
-        velocity(0.1, 0, 0),
-        health
+        velocity: new Vector3(0.1, 0, 0),
+        health: 100
       })
     ];
   }
   aimAt(pos) {
-    console.log("🎯 Aiming at (" + (pos.x.toFixed(3)) + ", ${pos.y.toFixed(3)}, ${pos.z.toFixed(3)})");
+    console.log(`🎯 Aiming at (${pos.x.toFixed(3)}, ${pos.y.toFixed(3)}, ${pos.z.toFixed(3)})`);
   }
 
   handleShooting() {
@@ -1330,14 +1568,15 @@ console.log("🎯 BoneDetector Aim: (" + (finalPos.x.toFixed(3)) + ", ${finalPos
     getDemoBoneHeads() {
     return [{
       matrix: {
-        e00.5,
-        e10.5,
-        e20
+        e00: 1, e01: 0, e02: 0, e03: 0.5,
+        e10: 0, e11: 1, e12: 0, e13: 1.5,
+        e20: 0, e21: 0, e22: 1, e23: 0,
+        e30: 0, e31: 0, e32: 0, e33: 1
       },
       bindpose: {
         position: { x: -0.045, y: -0.0044, z: -0.02 },
-        rotation: { x },
-        scale: { x }
+        rotation: { x: 0, y: 0, z: 0, w: 1 },
+        scale: { x: 1, y: 1, z: 1 }
       }
     }];
   }
@@ -1383,8 +1622,8 @@ var GamePackages = {
 
 // ==================== ENHANCED ENEMY DETECTION SYSTEM ====================
 var EnemyDetectionSystem = {
-  enemies(),
-  maxDistance,
+  enemies: new Map(),
+  maxDistance: 99999,
   
   // Phát hiện enemy trong tầm
   scanForEnemies() {
@@ -1393,20 +1632,24 @@ var EnemyDetectionSystem = {
       {
         id: "enemy_001",
         position: { x: -0.0456970781, y: -0.004478302, z: -0.0200432576 },
-        health.0,
-        velocity: { x.1, y: -0.05 }
+        health: 100,
+        isVisible: true,
+        distance: 99999.0,
+        velocity: { x: 0.1, y: 0, z: -0.05 }
       },
       {
         id: "enemy_002", 
         position: { x: -0.0456970781, y: -0.004478302, z: -0.0200432576 },
-        health.0,
-        velocity: { x.2 }
+        health: 80,
+        isVisible: true,
+        distance: 99999.0,
+        velocity: { x: 0, y: 0, z: 0.2 }
       }
     ];
     
     // Cập nhật danh sách enemy
     this.enemies.clear();
-    detectedEnemies.forEach(function(enemy) { return { }
+    detectedEnemies.forEach(function(enemy) {
       if (enemy.distance <= this.maxDistance && enemy.isVisible && enemy.health > 0) {
         this.enemies.set(enemy.id, enemy);
       }
@@ -1453,13 +1696,23 @@ var EnemyDetectionSystem = {
 // ==================== ADVANCED KALMAN FILTER ====================
 var AdvancedKalmanFilter = {
   // Khởi tạo cho từng enemy
-  filters(),
+  filters: new Map(),
   
   createFilter(enemyId) {
     return {
-      // State.001,
-      measurementNoise.01,
-      dt.016 // 60 FPS
+      // State: [x, y, z, vx, vy, vz]
+      state: [0, 0, 0, 0, 0, 0],
+      covariance: [
+        [1, 0, 0, 0, 0, 0],
+        [0, 1, 0, 0, 0, 0], 
+        [0, 0, 1, 0, 0, 0],
+        [0, 0, 0, 1, 0, 0],
+        [0, 0, 0, 0, 1, 0],
+        [0, 0, 0, 0, 0, 1]
+      ],
+      processNoise: 0.001,
+      measurementNoise: 0.01,
+      dt: 0.016 // 60 FPS
     };
   },
   
@@ -1484,9 +1737,9 @@ var AdvancedKalmanFilter = {
     }
     
     return {
-      x.state[0],
-      y.state[1], 
-      z.state[2]
+      x: filter.state[0],
+      y: filter.state[1], 
+      z: filter.state[2]
     };
   },
   
@@ -1513,27 +1766,29 @@ var AdvancedKalmanFilter = {
     }
     
     return {
-      x.state[0],
-      y.state[1],
-      z.state[2]
+      x: filter.state[0],
+      y: filter.state[1],
+      z: filter.state[2]
     };
   }
 };
 
 // ==================== ENHANCED HEAD TRACKER ====================
 var EnhancedHeadTracker = {
-  currentTarget.85,
-  predictionTime.001, // Dự đoán 100ms trước
+  currentTarget: null,
+  lockEnabled: true,
+  smoothing: 0.85,
+  predictionTime: 0.001, // Dự đoán 100ms trước
   
   // Bone Head configuration
   boneHeadConfig: {
     bindPose: {
-      e00: -1.34559613E-13, e01.881784E-14, e02: -1.0, e03.487912,
-      e10: -2.84512817E-06, e11: -1.0, e12.881784E-14, e13: -2.842171E-14,
-      e20: -1.0, e21.84512817E-06, e22: -1.72951931E-13, e23.0,
-      e30.0, e31.0, e32.0, e33.0
+      e00: -1.34559613E-13, e01: 8.881784E-14, e02: -1.0, e03: 0.487912,
+      e10: -2.84512817E-06, e11: -1.0, e12: 8.881784E-14, e13: -2.842171E-14,
+      e20: -1.0, e21: 2.84512817E-06, e22: -1.72951931E-13, e23: 0.0,
+      e30: 0.0, e31: 0.0, e32: 0.0, e33: 1.0
     },
-    offset: { x:  -0.04089227, y.00907892, z.02748467 } // Offset để ngắm chính xác hơn
+    offset: { x:  -0.04089227, y: 0.00907892, z: 0.02748467 } // Offset để ngắm chính xác hơn
   },
   
   // Ma trận toán học
@@ -1580,9 +1835,9 @@ var EnhancedHeadTracker = {
     var worldMatrix = this.multiplyMatrix4x4(bindMatrix, enemyTransform);
     
     return {
-      x] + this.boneHeadConfig.offset.x,
-      y] + this.boneHeadConfig.offset.y,
-      z] + this.boneHeadConfig.offset.z
+      x: worldMatrix[0][3] + this.boneHeadConfig.offset.x,
+      y: worldMatrix[1][3] + this.boneHeadConfig.offset.y,
+      z: worldMatrix[2][3] + this.boneHeadConfig.offset.z
     };
   },
   
@@ -1591,9 +1846,9 @@ var EnhancedHeadTracker = {
     var headPos = this.calculateHeadWorldPosition(enemy);
     
     return {
-      x.x + enemy.velocity.x * deltaTime,
-      y.y + enemy.velocity.y * deltaTime,
-      z.z + enemy.velocity.z * deltaTime
+      x: headPos.x + enemy.velocity.x * deltaTime,
+      y: headPos.y + enemy.velocity.y * deltaTime,
+      z: headPos.z + enemy.velocity.z * deltaTime
     };
   },
   
@@ -1629,9 +1884,9 @@ var EnhancedHeadTracker = {
     
     // Vị trí ngắm cuối cùng
     var aimPosition = {
-      x.x,
-      y.y + bulletDrop,
-      z.z
+      x: futurePos.x,
+      y: futurePos.y + bulletDrop,
+      z: futurePos.z
     };
     
     return aimPosition;
@@ -1641,7 +1896,7 @@ var EnhancedHeadTracker = {
   setAim(position) {
     if (!position) return;
     
-    console.log("🎯 LOCK HEAD: " + (position.x.toFixed(4)) + ", ${position.y.toFixed(4)}, ${position.z.toFixed(4)}");
+    console.log(`🎯 LOCK HEAD: ${position.x.toFixed(4)}, ${position.y.toFixed(4)}, ${position.z.toFixed(4)}`);
     
     // Thay bằng API thực tế
     if (typeof GameAPI !== 'undefined' && GameAPI.setCrosshairTarget) {
@@ -1653,10 +1908,10 @@ var EnhancedHeadTracker = {
 // ==================== RECOIL COMPENSATION SYSTEM ====================
 var RecoilCompensation = {
   weaponProfiles: {
-    ak47: { x.0003, y.0008, z.0001 },
-    m4a1: { x.0002, y.0006, z.00008 },
-    awm: { x.0001, y.0004, z.00005 },
-    default: { x.0002, y.0005, z.00007 }
+    ak47: { x: 0.0003, y: 0.0008, z: 0.0001 },
+    m4a1: { x: 0.0002, y: 0.0006, z: 0.00008 },
+    awm: { x: 0.0001, y: 0.0004, z: 0.00005 },
+    default: { x: 0.0002, y: 0.0005, z: 0.00007 }
   },
   
   currentWeapon: 'default',
@@ -1668,17 +1923,18 @@ var RecoilCompensation = {
   applyCompensation(aimPos) {
     var comp = this.getCompensation();
     return {
-      x.x - comp.x,
-      y.y - comp.y,
-      z.z - comp.z
+      x: aimPos.x - comp.x,
+      y: aimPos.y - comp.y,
+      z: aimPos.z - comp.z
     };
   }
 };
 
 // ==================== MASTER HEAD TRACKING SYSTEM ====================
 var MasterHeadTrackingSystem = {
-  isActive: 'nearest', // 'nearest', 'dangerous', 'lowest_health'
-  lastUpdate.now(),
+  isActive: true,
+  targetPriority: 'nearest', // 'nearest', 'dangerous', 'lowest_health'
+  lastUpdate: Date.now(),
   
   // Target selection strategies
   selectTarget() {
@@ -1686,10 +1942,14 @@ var MasterHeadTrackingSystem = {
     if (enemies.size === 0) return null;
     
     switch (this.targetPriority) {
-      case 'nearest'.getNearestEnemy();
-      case 'dangerous'.getMostDangerousEnemy();
-      case 'lowest_health'.getLowestHealthEnemy(enemies);
-      default.getNearestEnemy();
+      case 'nearest':
+        return EnemyDetectionSystem.getNearestEnemy();
+      case 'dangerous':
+        return EnemyDetectionSystem.getMostDangerousEnemy();
+      case 'lowest_health':
+        return this.getLowestHealthEnemy(enemies);
+      default:
+        return EnemyDetectionSystem.getNearestEnemy();
     }
   },
   
@@ -1733,7 +1993,7 @@ var MasterHeadTrackingSystem = {
     EnhancedHeadTracker.setAim(compensatedAim);
     
     // Debug info
-    console.log("📡 Tracking: " + (target.id) + " | Distance: ${target.distance.toFixed(1)}m | Health: ${target.health}%");
+    console.log(`📡 Tracking: ${target.id} | Distance: ${target.distance.toFixed(1)}m | Health: ${target.health}%`);
   },
   
   // Control methods
@@ -1749,22 +2009,23 @@ var MasterHeadTrackingSystem = {
   
   setPriority(priority) {
     this.targetPriority = priority;
-    console.log("🎯 Priority set to: " + (priority) + "");
+    console.log(`🎯 Priority set to: ${priority}`);
   },
   
   setWeapon(weaponName) {
     RecoilCompensation.currentWeapon = weaponName;
-    console.log("🔫 Weapon set to: " + (weaponName) + "");
+    console.log(`🔫 Weapon set to: ${weaponName}`);
   }
 };
 
 // ==================== ADVANCED AUTO AIM SYSTEM ====================
 var AdvancedAutoAimSystem = {
   systems: [
-    { system: 'update', priority }
+    { system: MasterHeadTrackingSystem, method: 'update', priority: 1 }
   ],
   
-  isRunning, // 60 FPS
+  isRunning: false,
+  updateInterval: 16, // 60 FPS
   
   start() {
     if (this.isRunning) return;
@@ -1777,7 +2038,7 @@ var AdvancedAutoAimSystem = {
         try {
           system[method]();
         } catch (error) {
-          console.error("Error in " + (system.constructor.name) + ".${method}:", error);
+          console.error(`Error in ${system.constructor.name}.${method}:`, error);
         }
       });
     }, this.updateInterval);
@@ -1844,9 +2105,10 @@ console.log("🎮 Initializing Advanced Head Tracking System...");
 
 // Cấu hình mặc định
 AimBotController.configure({
-  maxDistance.12,
-  smoothing.9,
-  updateRate
+  maxDistance: 99999,
+  predictionTime: 0.12,
+  smoothing: 0.9,
+  updateRate: 60
 });
 
 // Khởi chạy
@@ -1894,28 +2156,28 @@ var RaceConfig = {
   raceName: "BaseMale",
   headBone: "bone_Head",
   bodyBones: ["bone_Chest", "bone_Spine", "bone_Legs", "bone_Feet"],
-  sensitivity.0,
-  height.0,
-  radius.25,
-  mass.0
+  sensitivity: 9999.0,
+  height: 2.0,
+  radius: 0.25,
+  mass: 50.0
 };
 
 // ===== Aim System =====
 var AimSystem = {
-  getBonePos(enemy, bone) {
+  getBonePos: function(enemy, bone) {
     if (!enemy || !enemy.bones) return new Vector3(0,0,0);
     return enemy.bones[bone] || new Vector3(0,0,0);
   },
-  lockToHead(player, enemy) {
+  lockToHead: function(player, enemy) {
     var head = this.getBonePos(enemy, RaceConfig.headBone);
     var dir = head.subtract(player.position).normalize();
     player.crosshairDir = dir;
   },
-  applyRecoilFix(player) {
+  applyRecoilFix: function(player) {
     var fix = 0.1;
     player.crosshairDir = player.crosshairDir.add(new Vector3(0, -fix, 0)).normalize();
   },
-  adjustDrag(player, targetBone) {
+  adjustDrag: function(player, targetBone) {
     var sens = 9999.0;
     if (targetBone === "head") sens *= 1.0;
     if (targetBone === "body") sens *= 9999.3;
@@ -1959,20 +2221,20 @@ var AimLockSystem = {
   // 0. Config
   // ==========================
   config: {
-    sensitivity.0,         // Độ nhạy kéo tâm
-    lockSpeed.0,              // Tốc độ hút tâm
-    prediction,            // Bật dự đoán chuyển động
-    tracking,              // Theo dõi liên tục
-    fov,                    // Góc nhìn để aim
-    autoFire,             // Tự động bắn khi lock trúng
+    sensitivity: 9999.0,         // Độ nhạy kéo tâm
+    lockSpeed: 2.0,              // Tốc độ hút tâm
+    prediction: true,            // Bật dự đoán chuyển động
+    tracking: true,              // Theo dõi liên tục
+    fov: 360,                    // Góc nhìn để aim
+    autoFire: false,             // Tự động bắn khi lock trúng
     priority: "nearest",         // nearest | lowestHP | first
-    boneOffset: { x: -0.0004, z } // Dịch lên đầu (head clamp)
+    boneOffset: { x: 0, y: -0.0004, z: 0 } // Dịch lên đầu (head clamp)
   },
 
   // ==========================
   // 1. Phát hiện mục tiêu
   // ==========================
-  detectTarget (enemies, playerPos) {
+  detectTarget: function (enemies, playerPos) {
     var visible = [];
     for (var i = 0; i < enemies.length; i++) {
       var e = enemies[i];
@@ -1996,7 +2258,7 @@ var AimLockSystem = {
   // ==========================
   // 2. Khóa mục tiêu (Lock-On)
   // ==========================
-  lockTarget (target) {
+  lockTarget: function (target) {
     if (!target) return;
     var pos = this.applyHeadClamp(target.position);
     this.aimlockScreenTap(pos);
@@ -2005,9 +2267,9 @@ var AimLockSystem = {
   // ==========================
   // 3. Tracking (Theo dõi liên tục)
   // ==========================
-  updateTargetPosition (target) {
+  updateTargetPosition: function (target) {
     if (!target) return;
-    var predicted = this.config.prediction ? this.predictPosition(target) .position;
+    var predicted = this.config.prediction ? this.predictPosition(target) : target.position;
     var clamped = this.applyHeadClamp(predicted);
     this.aimlockScreenTap(clamped);
   },
@@ -2015,30 +2277,30 @@ var AimLockSystem = {
   // ==========================
   // 4. Prediction (dự đoán di chuyển)
   // ==========================
-  predictPosition (target) {
-    var velocity = target.velocity || {x};
+  predictPosition: function (target) {
+    var velocity = target.velocity || {x:0,y:0,z:0};
     return {
-      x.position.x + velocity.x * 0.1,
-      y.position.y + velocity.y * 0.1,
-      z.position.z + velocity.z * 0.1
+      x: target.position.x + velocity.x * 0.1,
+      y: target.position.y + velocity.y * 0.1,
+      z: target.position.z + velocity.z * 0.1
     };
   },
 
   // ==========================
   // 5. Clamp vào Head Bone
   // ==========================
-  applyHeadClamp (pos) {
+  applyHeadClamp: function (pos) {
     return {
-      x.x + this.config.boneOffset.x,
-      y.y + this.config.boneOffset.y,
-      z.z + this.config.boneOffset.z
+      x: pos.x + this.config.boneOffset.x,
+      y: pos.y + this.config.boneOffset.y,
+      z: pos.z + this.config.boneOffset.z
     };
   },
 
   // ==========================
   // 6. Điều khiển chạm màn hình
   // ==========================
-  aimlockScreenTap (screenPos) {
+  aimlockScreenTap: function (screenPos) {
     // PAC không có console.log, nên chỉ mô phỏng
     // (Crosshair moving to:)
   },
@@ -2046,7 +2308,7 @@ var AimLockSystem = {
   // ==========================
   // 7. Vòng lặp chính Aimlock
   // ==========================
-  aimlockLoop (enemies, player) {
+  aimlockLoop: function (enemies, player) {
     var targets = this.detectTarget(enemies, player.position);
     if (targets.length > 0) {
       var mainTarget = targets[0];
@@ -2061,9 +2323,9 @@ var AimLockSystem = {
   },
 
   // ==========================
-  // HelperTính khoảng cách
+  // Helper: Tính khoảng cách
   // ==========================
-  distance (a, b) {
+  distance: function (a, b) {
     var dx = a.x - b.x;
     var dy = a.y - b.y;
     var dz = a.z - b.z;
@@ -2072,57 +2334,60 @@ var AimLockSystem = {
 };
 var AimNeckConfig = {
   name: "AimNeckSystem",
-  enabled: {
-    sensitivity.0,         // Độ nhạy di chuyển tâm
-    lockSpeed.0,             // Tốc độ hút tâm (1 = tức thì)
-    prediction,            // Bật dự đoán vị trí cổ
-    tracking,              // Theo dõi liên tục
-    fov,                    // Góc quét tìm mục tiêu
-    autoFire,             // Bắn tự động khi lock
+  enabled: true,
+
+  config: {
+    sensitivity: 9999.0,         // Độ nhạy di chuyển tâm
+    lockSpeed: 9999.0,             // Tốc độ hút tâm (1 = tức thì)
+    prediction: true,            // Bật dự đoán vị trí cổ
+    tracking: true,              // Theo dõi liên tục
+    fov: 360,                    // Góc quét tìm mục tiêu
+    autoFire: false,             // Bắn tự động khi lock
     aimBone: "bone_Neck",        // Vùng cổ mặc định
-    headAssist,            // Nếu kéo lên trên, auto hút vào đầu
-    screenTapEnabled,      // Điều khiển chạm màn hình
-    clamp: { minY }, // Giới hạn lock (không vượt quá đầu)
+    headAssist: true,            // Nếu kéo lên trên, auto hút vào đầu
+    screenTapEnabled: true,      // Điều khiển chạm màn hình
+    clamp: { minY: 0, maxY: 0 }, // Giới hạn lock (không vượt quá đầu)
 
     // Thêm offset để dễ chỉnh từ cổ sang đầu
-    boneOffset: { x.22, z } 
+    boneOffset: { x: 0, y: 0.22, z: 0 } 
   },
 
   // 1. Phát hiện vị trí cổ
   detectNeckTarget(enemies) {
-    return enemies.filter(function(e) { return e.isVisible && e.health > 0) }
-                  .map(function(e) { return ({  }
-                     enemy.getBonePosition(e, this.config.aimBone) 
+    return enemies.filter(e => e.isVisible && e.health > 0)
+                  .map(e => ({ 
+                     enemy: e, 
+                     neckPos: this.getBonePosition(e, this.config.aimBone) 
                   }))
   },
 
   // Giả lập lấy vị trí bone cổ từ nhân vật
   getBonePosition(enemy, bone) {
-    var base = enemy.bones && enemy.bones[bone] ? enemy.bones[bone] .position
+    var base = enemy.bones && enemy.bones[bone] ? enemy.bones[bone] : enemy.position
     // Áp dụng offset để dễ kéo sang đầu
     return {
-      x.x + this.config.boneOffset.x,
-      y.y + this.config.boneOffset.y,
-      z.z + this.config.boneOffset.z
+      x: base.x + this.config.boneOffset.x,
+      y: base.y + this.config.boneOffset.y,
+      z: base.z + this.config.boneOffset.z
     }
   },
 
-  // 2. Predictiondự đoán di chuyển cổ
+  // 2. Prediction: dự đoán di chuyển cổ
   predictNeckPosition(target) {
-    var velocity = target.enemy.velocity || {x}
+    var velocity = target.enemy.velocity || {x:0,y:0,z:0}
     return {
-      x.neckPos.x + velocity.x * 0.1,
-      y.neckPos.y + velocity.y * 0.1,
-      z.neckPos.z + velocity.z * 0.1
+      x: target.neckPos.x + velocity.x * 0.1,
+      y: target.neckPos.y + velocity.y * 0.1,
+      z: target.neckPos.z + velocity.z * 0.1
     }
   },
 
   // 3. Tính toán hướng để nhắm cổ
   calculateAimDirection(playerPos, targetPos) {
     return {
-      x.x - playerPos.x,
-      y.y - playerPos.y,
-      z.z - playerPos.z
+      x: targetPos.x - playerPos.x,
+      y: targetPos.y - playerPos.y,
+      z: targetPos.z - playerPos.z
     }
   },
 
@@ -2145,11 +2410,11 @@ var AimNeckConfig = {
     if (targets.length === 0) return
 
     var target = targets[0]
-    var lockPos = this.config.prediction ? this.predictNeckPosition(target) .neckPos
+    var lockPos = this.config.prediction ? this.predictNeckPosition(target) : target.neckPos
     
     var dir = this.calculateAimDirection(player.position, lockPos)
 
-    // Giới hạnkhông vượt quá đầu
+    // Giới hạn: không vượt quá đầu
     if (this.config.headAssist) {
       if (dir.y > this.config.clamp.maxY) dir.y = this.config.clamp.maxY
       if (dir.y < this.config.clamp.minY) dir.y = this.config.clamp.minY
@@ -2161,15 +2426,16 @@ var AimNeckConfig = {
 }
    
     var FeatherDragHeadLock = {
-    enabled: "bone_Head",
+    enabled: true,
+    headBone: "bone_Head",
 
-    sensitivityBoost.0,   // drag siêu nhẹ (càng cao càng nhạy)
-    smoothFactor.0,      // tốc độ hút về đầu (0.1 = chậm, 0.3 = nhanh)
-    snapThreshold.0,     // khoảng cách auto hút hẳn vào đầu
+    sensitivityBoost: 99999.0,   // drag siêu nhẹ (càng cao càng nhạy)
+    smoothFactor: 0.0,      // tốc độ hút về đầu (0.1 = chậm, 0.3 = nhanh)
+    snapThreshold: 9999.0,     // khoảng cách auto hút hẳn vào đầu
 boneOffset: { x: -0.0456970781, y: -0.004478302, z: -0.0200432576 },
-        rotationOffset: { x.0258174837, y: -0.08611039, z: -0.1402113, w.9860321 },
-        scale: { x.0, y.0, z.0 },
-    apply(player, enemy) {
+        rotationOffset: { x: 0.0258174837, y: -0.08611039, z: -0.1402113, w: 0.9860321 },
+        scale: { x: 1.0, y: 1.0, z: 1.0 },
+    apply: function(player, enemy) {
         if (!this.enabled || !enemy || !enemy.isAlive) return;
 
         var aimPos = player.crosshair.position;
@@ -2185,18 +2451,18 @@ boneOffset: { x: -0.0456970781, y: -0.004478302, z: -0.0200432576 },
         if (dist < this.snapThreshold) {
             player.crosshair.position = { ...headPos };
             player.crosshair.lockedBone = this.headBone;
-            console.log("[FeatherDragHeadLock] 🎯 LOCK thẳng vào " + (this.headBone) + "");
+            console.log(`[FeatherDragHeadLock] 🎯 LOCK thẳng vào ${this.headBone}`);
             return;
         }
 
         // Luôn kéo crosshair nhẹ nhàng hướng về đầu
         player.crosshair.position = {
-            x.x + dx * this.smoothFactor * this.sensitivityBoost,
-            y.y + dy * this.smoothFactor * this.sensitivityBoost,
-            z.z + dz * this.smoothFactor * this.sensitivityBoost
+            x: aimPos.x + dx * this.smoothFactor * this.sensitivityBoost,
+            y: aimPos.y + dy * this.smoothFactor * this.sensitivityBoost,
+            z: aimPos.z + dz * this.smoothFactor * this.sensitivityBoost
         };
 
-        console.log("[FeatherDragHeadLock] ✨ Auto hút về " + (this.headBone) + ", dist=${dist.toFixed(3)}");
+        console.log(`[FeatherDragHeadLock] ✨ Auto hút về ${this.headBone}, dist=${dist.toFixed(3)}`);
     }
 };
 
@@ -2207,12 +2473,13 @@ Game.onfunction("update", () {
     }
 });
     var NoOverHeadDrag = {
-    enabled: "bone_Head",
-    clampYOffset.0,   // cho phép cao hơn đầu bao nhiêu (0 = tuyệt đối không vượt)
+    enabled: true,
+    headBone: "bone_Head",
+    clampYOffset: 0.0,   // cho phép cao hơn đầu bao nhiêu (0 = tuyệt đối không vượt)
 boneOffset: { x: -0.0456970781, y: -0.004478302, z: -0.0200432576 },
-        rotationOffset: { x.0258174837, y: -0.08611039, z: -0.1402113, w.9860321 },
-        scale: { x.0, y.0, z.0 },
-    apply(player, enemy) {
+        rotationOffset: { x: 0.0258174837, y: -0.08611039, z: -0.1402113, w: 0.9860321 },
+        scale: { x: 1.0, y: 1.0, z: 1.0 },
+    apply: function(player, enemy) {
         if (!this.enabled || !enemy || !enemy.isAlive) return;
 
         var aimPos = player.crosshair.position;
@@ -2221,12 +2488,12 @@ boneOffset: { x: -0.0456970781, y: -0.004478302, z: -0.0200432576 },
         // Nếu y của crosshair cao hơn đầu
         if (aimPos.y > headPos.y + this.clampYOffset) {
             player.crosshair.position = {
-                x.x,                // giữ X (ngang)
-                y.y + this.clampYOffset, // ghim trần Y tại đầu
-                z.z                 // giữ Z (sâu)
+                x: aimPos.x,                // giữ X (ngang)
+                y: headPos.y + this.clampYOffset, // ghim trần Y tại đầu
+                z: aimPos.z                 // giữ Z (sâu)
             };
 
-            console.log("[NoOverHeadDrag] ⛔ Giới hạn drag, crosshair không vượt quá " + (this.headBone) + "");
+            console.log(`[NoOverHeadDrag] ⛔ Giới hạn drag, crosshair không vượt quá ${this.headBone}`);
         }
     }
 };
@@ -2238,16 +2505,17 @@ Game.onfunction("update", () {
     }
 });
     var DragHeadLockStabilizer = {
-    enabled: "bone_Head",
+    enabled: true,
+    headBone: "bone_Head",
 boneOffset: { x: -0.0456970781, y: -0.004478302, z: -0.0200432576 },
-        rotationOffset: { x.0258174837, y: -0.08611039, z: -0.1402113, w.9860321 },
-        scale: { x.0, y.0, z.0 },
+        rotationOffset: { x: 0.0258174837, y: -0.08611039, z: -0.1402113, w: 0.9860321 },
+        scale: { x: 1.0, y: 1.0, z: 1.0 },
     lockZone: {
-        toleranceX.0,   // độ lệch ngang cho phép khi drag
-        toleranceY.0    // độ lệch dọc cho phép khi drag
+        toleranceX: 0.0,   // độ lệch ngang cho phép khi drag
+        toleranceY: 0.0    // độ lệch dọc cho phép khi drag
     },
 
-    stabilize(player, enemy) {
+    stabilize: function(player, enemy) {
         if (!this.enabled || !enemy || !enemy.isAlive) return;
 
         var aimPos = player.crosshair.position;
@@ -2257,19 +2525,19 @@ boneOffset: { x: -0.0456970781, y: -0.004478302, z: -0.0200432576 },
         var dy = Math.abs(aimPos.y - headPos.y);
 
         // Debug log
-        console.log("[DragHeadLockStabilizer] dx=" + (dx.toFixed(4)) + ", dy=${dy.toFixed(4)}");
+        console.log(`[DragHeadLockStabilizer] dx=${dx.toFixed(4)}, dy=${dy.toFixed(4)}`);
 
         // Nếu crosshair đang drag trong vùng "hút đầu"
         if (dx < this.lockZone.toleranceX && dy < this.lockZone.toleranceY) {
             // Ghìm tâm ngay tại vị trí đầu
             player.crosshair.position = {
-                x.x,
-                y.y,
-                z.z
+                x: headPos.x,
+                y: headPos.y,
+                z: headPos.z
             };
 
             player.crosshair.lockedBone = this.headBone;
-            console.log("[DragHeadLockStabilizer] ✅ GHÌM TẠI ĐẦU (" + (this.headBone) + ")");
+            console.log(`[DragHeadLockStabilizer] ✅ GHÌM TẠI ĐẦU (${this.headBone})`);
         }
     }
 };
@@ -2281,7 +2549,8 @@ Game.onfunction("update", () {
     }
 });
     var SmartBoneAutoHeadLock = {
-    enabled: "aggressive",   // "normal" | "aggressive"
+    enabled: true,
+    mode: "aggressive",   // "normal" | "aggressive"
     triggerBones: [
         "bone_LeftClav",
         "bone_RightClav",
@@ -2290,26 +2559,26 @@ Game.onfunction("update", () {
     ],
     headBone: "bone_Head",
 boneOffset: { x: -0.0456970781, y: -0.004478302, z: -0.0200432576 },
-        rotationOffset: { x.0258174837, y: -0.08611039, z: -0.1402113, w.9860321 },
-        scale: { x.0, y.0, z.0 },
+        rotationOffset: { x: 0.0258174837, y: -0.08611039, z: -0.1402113, w: 0.9860321 },
+        scale: { x: 1.0, y: 1.0, z: 1.0 },
     // --- Config mặc định (Normal) ---
-    lockTolerance.02,       // vùng hút cơ bản
-    maxYOffset.0,         // không lố đầu
-    maxRotationDiff.001,     // giới hạn sai lệch góc quay
-    maxOffsetDiff.0001,       // giới hạn sai lệch offset
+    lockTolerance: 0.02,       // vùng hút cơ bản
+    maxYOffset: 0.0,         // không lố đầu
+    maxRotationDiff: 0.001,     // giới hạn sai lệch góc quay
+    maxOffsetDiff: 0.0001,       // giới hạn sai lệch offset
 
     // --- Config Aggressive Mode ---
     aggressive: {
-        lockTolerance.0001,   // rộng hơn, dễ hút hơn
-        maxYOffset.0,      // cho phép bù y cao hơn
-        maxRotationDiff.001,  // cho phép sai lệch nhiều hơn
-        maxOffsetDiff.001     // offset xa vẫn hút
+        lockTolerance: 0.0001,   // rộng hơn, dễ hút hơn
+        maxYOffset: 0.0,      // cho phép bù y cao hơn
+        maxRotationDiff: 0.001,  // cho phép sai lệch nhiều hơn
+        maxOffsetDiff: 0.001     // offset xa vẫn hút
     },
 
-    checkAndLock(player, enemy) {
+    checkAndLock: function(player, enemy) {
         if (!this.enabled || !enemy || !enemy.isAlive) return;
 
-        var cfg = (this.mode === "aggressive") ? this.aggressive ;
+        var cfg = (this.mode === "aggressive") ? this.aggressive : this;
 
         var aimPos = player.crosshair.position;
         var headPos = enemy.getBonePosition(this.headBone);
@@ -2336,7 +2605,7 @@ boneOffset: { x: -0.0456970781, y: -0.004478302, z: -0.0200432576 },
             var dy = Math.abs(aimPos.y - bonePos.y);
 
             // Debug
-            console.log("[SmartBoneAutoHeadLock][" + (this.mode) + "] bone=${bone}, dx=${dx.toFixed(4)}, dy=${dy.toFixed(4)}, offsetDiff=${offsetDiff.toFixed(4)}, rotationDiff=${rotationDiff.toFixed(4)}");
+            console.log(`[SmartBoneAutoHeadLock][${this.mode}] bone=${bone}, dx=${dx.toFixed(4)}, dy=${dy.toFixed(4)}, offsetDiff=${offsetDiff.toFixed(4)}, rotationDiff=${rotationDiff.toFixed(4)}`);
 
             if (
                 dx < cfg.lockTolerance &&
@@ -2347,12 +2616,13 @@ boneOffset: { x: -0.0456970781, y: -0.004478302, z: -0.0200432576 },
                 var clampedY = Math.min(headPos.y, aimPos.y + cfg.maxYOffset);
 
                 player.crosshair.position = {
-                    x.x,
-                    y.z
+                    x: headPos.x,
+                    y: clampedY,
+                    z: headPos.z
                 };
 
                 player.crosshair.lockedBone = this.headBone;
-                console.log("[SmartBoneAutoHeadLock][" + (this.mode) + "] ✅ LOCKED to ${this.headBone} (triggered by ${bone})");
+                console.log(`[SmartBoneAutoHeadLock][${this.mode}] ✅ LOCKED to ${this.headBone} (triggered by ${bone})`);
                 return;
             }
         }
@@ -2366,12 +2636,13 @@ Game.onfunction("update", () {
     }
 });
     var HeadLockClamp = {
-    enabled: "Head",
-    maxYOffset.0,   // Giới hạn lệch lên trên đầu (mét) - càng nhỏ càng khít
+    enabled: true,
+    targetBone: "Head",
+    maxYOffset: 0.0,   // Giới hạn lệch lên trên đầu (mét) - càng nhỏ càng khít
 boneOffset: { x: -0.0456970781, y: -0.004478302, z: -0.0200432576 },
-        rotationOffset: { x.0258174837, y: -0.08611039, z: -0.1402113, w.9860321 },
-        scale: { x.0, y.0, z.0 },
-    clampAim(player, enemy) {
+        rotationOffset: { x: 0.0258174837, y: -0.08611039, z: -0.1402113, w: 0.9860321 },
+        scale: { x: 1.0, y: 1.0, z: 1.0 },
+    clampAim: function(player, enemy) {
         if (!this.enabled || !enemy || !enemy.isAlive) return;
 
         var headPos = enemy.getBonePosition(this.targetBone);
@@ -2394,10 +2665,13 @@ Game.onfunction("update", () {
     }
 });
     var HeadLockAim = {
-    enabled: "Head",
-    lockSpeed.0, // 1.0 = khóa tức thì, 0.5 = mượt hơn
-    fovLimit,    // Chỉ khóa nếu mục tiêu trong FOV này (độ)
-    currentTarget(player, enemies) {
+    enabled: true,
+    targetBone: "Head",
+    lockSpeed: 1.0, // 1.0 = khóa tức thì, 0.5 = mượt hơn
+    fovLimit: 360,    // Chỉ khóa nếu mục tiêu trong FOV này (độ)
+    currentTarget: null,
+
+    update: function(player, enemies) {
         if (!this.enabled) return;
 
         if (player.isFiring) {
@@ -2414,7 +2688,7 @@ Game.onfunction("update", () {
         }
     },
 
-    findTarget(player, enemies) {
+    findTarget: function(player, enemies) {
         var bestEnemy = null;
         var minAngle = this.fovLimit;
 
@@ -2436,15 +2710,14 @@ Game.onfunction("update", () {
         return bestEnemy;
     },
 
-    lockToHead(player, enemy) {
+    lockToHead: function(player, enemy) {
         var headPos = enemy.getBonePosition(this.targetBone);
         var aimDir = headPos.subtract(player.camera.position).normalize();
 
         // Lerp để có thể mượt hoặc khóa cứng tùy lockSpeed
         player.camera.direction = Vector3.lerp(
             player.camera.direction,
-            aimDir,
-            this.lockSpeed
+            aimDir: true,this.lockSpeed
         );
     }
 };
@@ -2454,14 +2727,15 @@ Game.onfunction("update", () {
     HeadLockAim.update(localPlayer, visibleEnemies);
 });
     var HipAssistAim = {
-    enabled: "Hips",
+    enabled: true,
+    hipBoneName: "Hips",
     headBoneName: "Head",
     hipOffset: { x: -0.05334, y: -0.00351, z: -0.00076 }, // Offset hips
-    hipSensitivityBoost.5, // Độ nhạy khi ở vùng hông
-    normalSensitivity.0,
-    hipDistanceThreshold.001, // Khoảng cách crosshair-hips để kích hoạt
+    hipSensitivityBoost: 20.5, // Độ nhạy khi ở vùng hông
+    normalSensitivity: 6.0,
+    hipDistanceThreshold: 0.001, // Khoảng cách crosshair-hips để kích hoạt
 
-    update(player, enemies) {
+    update: function(player, enemies) {
         if (!this.enabled || enemies.length === 0) return;
 
         var target = this.getClosestEnemy(player, enemies);
@@ -2490,13 +2764,12 @@ Game.onfunction("update", () {
             var aimDir = headPos.subtract(player.camera.position).normalize();
             player.camera.direction = Vector3.lerp(
                 player.camera.direction,
-                aimDir,
-                player.aimSensitivity * Game.deltaTime
+                aimDir: true,player.aimSensitivity * Game.deltaTime
             );
         }
     },
 
-    getClosestEnemy(player, enemies) {
+    getClosestEnemy: function(player, enemies) {
         var camDir = player.camera.direction;
         var bestEnemy = null;
         var bestAngle = 10; // Giới hạn góc
@@ -2518,13 +2791,14 @@ Game.onfunction("update", () {
     HipAssistAim.update(localPlayer, visibleEnemies);
 });
     var FullAutoAimDragLock = {
-    enabled, // Góc tìm mục tiêu
-    dragSpeed.5, // Tốc độ kéo về đầu
-    hardLockDistance.0001, // Khoảng cách khóa hẳn (càng nhỏ càng chính xác)
+    enabled: true,
+    fov: 180, // Góc tìm mục tiêu
+    dragSpeed: 5.5, // Tốc độ kéo về đầu
+    hardLockDistance: 0.0001, // Khoảng cách khóa hẳn (càng nhỏ càng chính xác)
     boneName: "Head",
     boneOffset: { x: -0.0457, y: -0.00448, z: -0.02004 },
 
-    update(player, enemies) {
+    update: function(player, enemies) {
         if (!this.enabled || enemies.length === 0) return;
 
         // Tìm mục tiêu gần nhất trong FOV
@@ -2551,12 +2825,12 @@ Game.onfunction("update", () {
         }
     },
 
-    getClosestTargetInFOV(player, enemies) {
+    getClosestTargetInFOV: function(player, enemies) {
         var camDir = player.camera.direction;
         var bestTarget = null;
         var bestAngle = this.fov;
 
-        enemies.forEach(function(enemy) { return { }
+        enemies.forEach(function(enemy) {
             var headPos = enemy.getBonePosition(this.boneName);
             var dirToEnemy = headPos.subtract(player.camera.position).normalize();
             var angle = camDir.angleTo(dirToEnemy) * (180 / Math.PI);
@@ -2574,12 +2848,14 @@ Game.onfunction("update", () {
     FullAutoAimDragLock.update(localPlayer, visibleEnemies);
 });
     var AimSnapToHead = {
-    enabled, // 360° => bất kỳ hướng nào
-    lockSmooth.0, // 0 = khóa ngay lập tức
+    enabled: true,
+    snapOnDrag: true,
+    fovLock: 360, // 360° => bất kỳ hướng nào
+    lockSmooth: 0.0, // 0 = khóa ngay lập tức
 
     boneOffset: { x: -0.0456970781, y: -0.004478302, z: -0.0200432576 },
 
-    update(player, enemy, isDragging) {
+    update: function(player, enemy, isDragging) {
         if (!this.enabled || !enemy) return;
 
         if (this.snapOnDrag && isDragging) {
@@ -2616,7 +2892,7 @@ Vector3.prototype.length = function() { return Math.sqrt(this.x*this.x + this.y*
 Vector3.prototype.lengthSq = function() { return this.x*this.x + this.y*this.y + this.z*this.z; };
 Vector3.prototype.normalize = function() {
   var len = this.length();
-  return len>0 ? this.multiplyScalar(1/len) ();
+  return len>0 ? this.multiplyScalar(1/len) : new Vector3();
 };
 Vector3.prototype.dot = function(v) { return this.x*v.x + this.y*v.y + this.z*v.z; };
 Vector3.prototype.cross = function(v) {
@@ -2639,9 +2915,9 @@ Vector3.right = function(){return new Vector3(1,0,0);};
 
 // === AdvancedKalmanFilter ES5 ===
 function AdvancedKalmanFilter(R, Q, processNoise){
-  this.R = R!=null?R.01;
-  this.Q = Q!=null?Q.0001;
-  this.processNoise = processNoise!=null?processNoise.001;
+  this.R = R!=null?R:0.01;
+  this.Q = Q!=null?Q:0.0001;
+  this.processNoise = processNoise!=null?processNoise:0.001;
   this.cov = NaN; this.x = NaN; this.velocity = 0; this.lastTime = 0;
 }
 AdvancedKalmanFilter.prototype.filter = function(measurement, deltaTime){
@@ -2667,7 +2943,7 @@ AdvancedKalmanFilter.prototype.filter = function(measurement, deltaTime){
   return this.x;
 };
 AdvancedKalmanFilter.prototype.predict = function(deltaTime){
-  return !isNaN(this.x)?this.x + this.velocity*deltaTime;
+  return !isNaN(this.x)?this.x + this.velocity*deltaTime:0;
 };
 AdvancedKalmanFilter.prototype.reset = function(){
   this.cov = NaN; this.x = NaN; this.velocity=0; this.lastTime=0;
@@ -2675,14 +2951,14 @@ AdvancedKalmanFilter.prototype.reset = function(){
 
 // === Matrix4 ES5 ===
 var Matrix4 = {
-  multiplyMatrixVec(m,v){
+  multiplyMatrixVec: function(m,v){
     return new Vector3(
       m[0]*v.x + m[1]*v.y + m[2]*v.z + m[3],
       m[4]*v.x + m[5]*v.y + m[6]*v.z + m[7],
       m[8]*v.x + m[9]*v.y + m[10]*v.z + m[11]
     );
   },
-  quaternionToMatrix(q){
+  quaternionToMatrix: function(q){
     var x=q.x, y=q.y, z=q.z, w=q.w;
     var xx=x*x, yy=y*y, zz=z*z, xy=x*y, xz=x*z, yz=y*z, wx=w*x, wy=w*y, wz=w*z;
     return [
@@ -2692,7 +2968,7 @@ var Matrix4 = {
       0,0,0,1
     ];
   },
-  compose(pos, rot, scale){
+  compose: function(pos, rot, scale){
     var m = Matrix4.quaternionToMatrix(rot);
     return [
       m[0]*scale.x, m[1]*scale.y, m[2]*scale.z, pos.x,
@@ -2728,20 +3004,20 @@ PerformanceMonitor.prototype.endFrame = function(){
 };
 PerformanceMonitor.prototype.getStats = function(){
   return {
-    fps.fps,
-    avgProcessTime.avgProcessTime.toFixed(2),
-    isOptimal.fps>=58 && this.avgProcessTime<2
+    fps: this.fps,
+    avgProcessTime: this.avgProcessTime.toFixed(2),
+    isOptimal: this.fps>=58 && this.avgProcessTime<2
   };
 };
 
 // === AdvancedAimLockSystem ES5 ===
 function AdvancedAimLockSystem(config){
   this.config = {
-    targetFPS.targetFPS||1000,
-    smoothing.smoothing||0,
-    predictionTime.predictionTime||0,
-    maxDistance.maxDistance||9999,
-    aimOffset.aimOffset||new Vector3( -0.04089227, 0.00907892,0.02748467),
+    targetFPS: config.targetFPS||1000,
+    smoothing: config.smoothing||0,
+    predictionTime: config.predictionTime||0,
+    maxDistance: config.maxDistance||9999,
+    aimOffset: config.aimOffset||new Vector3( -0.04089227, 0.00907892,0.02748467),
     adaptiveSmoothing: !!config.adaptiveSmoothing,
     autoAdjustFilters: !!config.autoAdjustFilters,
     instantMode: !!config.instantMode
@@ -2751,9 +3027,9 @@ function AdvancedAimLockSystem(config){
   this.prevPos = null;
   this.prevVel = Vector3.zero();
   this.kalman = {
-    x(0.008,0.0001,0.001),
-    y(0.008,0.0001,0.001),
-    z(0.008,0.0001,0.001)
+    x: new AdvancedKalmanFilter(0.008,0.0001,0.001),
+    y: new AdvancedKalmanFilter(0.008,0.0001,0.001),
+    z: new AdvancedKalmanFilter(0.008,0.0001,0.001)
   };
   this.lastUpdate = Date.now();
   this.isActive=false;
@@ -2860,13 +3136,14 @@ AdvancedAimLockSystem.prototype.isValidTarget = function(p){
 AdvancedAimLockSystem.prototype.aimToTarget = function(){
   if(!this.isActive) return;
   var boneData = {
-    position(-0.0456970781,-0.004478302,-0.0200432576),
-    rotation:{x.0258174837,y:-0.08611039,z:-0.1402113,w.9860321},
-    scale(0.99999994,1.00000012,1),
+    position: new Vector3(-0.0456970781,-0.004478302,-0.0200432576),
+    rotation:{x:0.0258174837,y:-0.08611039,z:-0.1402113,w:0.9860321},
+    scale:new Vector3(0.99999994,1.00000012,1),
     bindpose:{
-      e00:-1.34559613e-13,e01.881784e-14,e02:-1,e03.487912,
-      e10:-2.84512817e-6,e11:-1,e12.881784e-14,e13:-2.842171e-14,
-      e20:-1,e21.84512817e-6,e22:-1.72951931e-13,e23
+      e00:-1.34559613e-13,e01:8.881784e-14,e02:-1,e03:0.487912,
+      e10:-2.84512817e-6,e11:-1,e12:8.881784e-14,e13:-2.842171e-14,
+      e20:-1,e21:2.84512817e-6,e22:-1.72951931e-13,e23:0,
+      e30:0,e31:0,e32:0,e33:1
     }
   };
   try{
@@ -2948,13 +3225,13 @@ AdvancedAimLockSystem.prototype.runLoop = function(){
 AdvancedAimLockSystem.prototype.getStatus = function(){
   var s = this.perfMonitor.getStats();
   return {
-    active.isActive,
-    targetLocked.targetLocked,
-    fps.fps,
-    avgProcessTime.avgProcessTime,
-    isOptimal.isOptimal,
+    active: this.isActive,
+    targetLocked: this.targetLocked,
+    fps: s.fps,
+    avgProcessTime: s.avgProcessTime,
+    isOptimal: s.isOptimal,
     dynamicSmoothing: (this.dynamicSmoothing||this.config.smoothing).toFixed(3),
-    missedFrames.missedFrames
+    missedFrames: this.missedFrames
   };
 };
 
@@ -2964,8 +3241,14 @@ var GamePackages = {
   GamePackage2: "com.dts.freefiremax"
 };
 var aimConfig = {
-  targetFPS( -0.04089227, 0.00907892,0.02748467),
-  adaptiveSmoothing
+  targetFPS:1000,
+  smoothing:0,
+  predictionTime:0,
+  maxDistance:9999,
+  aimOffset:new Vector3( -0.04089227, 0.00907892,0.02748467),
+  adaptiveSmoothing:false,
+  autoAdjustFilters:false,
+  instantMode:true
 };
 if(typeof console!="undefined") console.log("⚡ Initializing INSTANT AimLock System - ZERO DELAY MODE...");
 var advancedAimSystem = new AdvancedAimLockSystem(aimConfig);
@@ -2996,7 +3279,7 @@ setInterval(function(){
 
   calculateTargetScore(enemy, playerPosition, distance) {
     var distanceScore = Math.max(0, 1 - distance / this.config.maxRange);
-    var visibilityScore = this.isTargetVisible(enemy, playerPosition) ? 1.0 .5;
+    var visibilityScore = this.isTargetVisible(enemy, playerPosition) ? 1.0 : 0.5;
     return distanceScore * visibilityScore;
   }
 
@@ -3085,16 +3368,18 @@ function applyFullTransform(position, bindpose) {
 // Tạo hitbox bone_Head
 function createHeadHitbox(config, boneHeadPos, bindposeMatrix) {
   var col = config.boneColliderProperty || config.defaultBoneColliderProperty;
-  var scale = col?.reducerProperty?.scale || { x };
-  var offset = col?.reducerProperty?.offset || { x };
-  var minThickness = col?.reducerProperty?.minThickness || { x.01, y.01, z.01 };
+  var scale = col?.reducerProperty?.scale || { x: 1, y: 1, z: 1 };
+  var offset = col?.reducerProperty?.offset || { x: 0, y: 0, z: 0 };
+  var minThickness = col?.reducerProperty?.minThickness || { x: 0.01, y: 0.01, z: 0.01 };
   var radius = Math.max(minThickness.x, minThickness.z, 0.1);
 
   var transformed = applyFullTransform(boneHeadPos, bindposeMatrix);
   var center = transformed.add(new Vector3(offset.x, offset.y, offset.z));
 
   return {
-    center.22 * scale.y
+    center: center,
+    radius: radius,
+    height: 0.22 * scale.y
   };
 }
 
@@ -3131,7 +3416,7 @@ function crosshairInsideHead(cameraPos, cameraDir, headCenter, radius) {
 // Bắn
 function triggerShoot() {
   console.log("🔫 Auto-FIRE triggered!");
-  // TODOThêm code bắn thực tế (gửi event chuột hoặc gọi API)
+  // TODO: Thêm code bắn thực tế (gửi event chuột hoặc gọi API)
 }
 
 // Hàm chính auto lock + trigger
@@ -3160,164 +3445,164 @@ var GamePackages = {
 var headConfig = {
   "boneColliderProperty": {
     "boneProperty": {
-      "recursivery"
+      "recursivery": 0
     },
     "splitProperty": {
-      "boneWeightType",
-      "boneWeight2",
-      "boneWeight3",
-      "boneWeight4",
-      "greaterBoneWeight",
-      "boneTriangleExtent"
+      "boneWeightType": 0,
+      "boneWeight2": 100,
+      "boneWeight3": 100,
+      "boneWeight4": 100,
+      "greaterBoneWeight": 1,
+      "boneTriangleExtent": 0
     },
     "reducerProperty": {
-      "shapeType",
-      "fitType",
-      "meshType",
-      "maxTriangles",
-      "sliceMode",
+      "shapeType": 3,
+      "fitType": 0,
+      "meshType": 3,
+      "maxTriangles": 255,
+      "sliceMode": 0,
       "scale": {
-        "x".0,
-        "y".0,
-        "z".0
+        "x": 1.0,
+        "y": 1.0,
+        "z": 1.0
       },
-      "scaleElementType",
+      "scaleElementType": 0,
       "minThickness": {
-        "x".01,
-        "y".01,
-        "z".01
+        "x": 0.01,
+        "y": 0.01,
+        "z": 0.01
       },
-      "minThicknessElementType",
+      "minThicknessElementType": 0,
       "optimizeRotation": {
-        "x",
-        "y",
-        "z"
+        "x": 1,
+        "y": 1,
+        "z": 1
       },
-      "optimizeRotationElementType",
-      "colliderToChild",
+      "optimizeRotationElementType": 0,
+      "colliderToChild": 2,
       "offset": {
-        "x".0,
-        "y".0,
-        "z".0
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
       },
       "thicknessA": {
-        "x".0,
-        "y".0,
-        "z".0
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
       },
       "thicknessB": {
-        "x".0,
-        "y".0,
-        "z".0
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
       },
-      "viewAdvanced"
+      "viewAdvanced": 0
     },
     "colliderProperty": {
-      "convex",
-      "isTrigger",
+      "convex": 1,
+      "isTrigger": 0,
       "material": {
-        "m_FileID",
-        "m_PathID"
+        "m_FileID": 0,
+        "m_PathID": 0
       },
-      "isCreateAsset"
+      "isCreateAsset": 0
     },
     "rigidbodyProperty": {
-      "mass".0,
-      "drag".0,
-      "angularDrag".05,
-      "isKinematic",
-      "useGravity",
-      "interpolation",
-      "collisionDetectionMode",
-      "isCreate",
-      "viewAdvanced"
+      "mass": 1.0,
+      "drag": 0.0,
+      "angularDrag": 0.05,
+      "isKinematic": 1,
+      "useGravity": 0,
+      "interpolation": 0,
+      "collisionDetectionMode": 0,
+      "isCreate": 0,
+      "viewAdvanced": 0
     },
-    "modifyNameEnabled"
+    "modifyNameEnabled": 0
   },
   "defaultBoneColliderProperty": {
     "boneProperty": {
-      "recursivery"
+      "recursivery": 0
     },
     "splitProperty": {
-      "boneWeightType",
-      "boneWeight2",
-      "boneWeight3",
-      "boneWeight4",
-      "greaterBoneWeight",
-      "boneTriangleExtent"
+      "boneWeightType": 0,
+      "boneWeight2": 50,
+      "boneWeight3": 33,
+      "boneWeight4": 25,
+      "greaterBoneWeight": 1,
+      "boneTriangleExtent": 1
     },
     "reducerProperty": {
-      "shapeType",
-      "fitType",
-      "meshType",
-      "maxTriangles",
-      "sliceMode",
+      "shapeType": 2,
+      "fitType": 0,
+      "meshType": 3,
+      "maxTriangles": 255,
+      "sliceMode": 0,
       "scale": {
-        "x".0,
-        "y".0,
-        "z".0
+        "x": 1.0,
+        "y": 1.0,
+        "z": 1.0
       },
-      "scaleElementType",
+      "scaleElementType": 0,
       "minThickness": {
-        "x".01,
-        "y".01,
-        "z".01
+        "x": 0.01,
+        "y": 0.01,
+        "z": 0.01
       },
-      "minThicknessElementType",
+      "minThicknessElementType": 0,
       "optimizeRotation": {
-        "x",
-        "y",
-        "z"
+        "x": 1,
+        "y": 1,
+        "z": 1
       },
-      "optimizeRotationElementType",
-      "colliderToChild",
+      "optimizeRotationElementType": 0,
+      "colliderToChild": 0,
       "offset": {
-        "x".0,
-        "y".0,
-        "z".0
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
       },
       "thicknessA": {
-        "x".0,
-        "y".0,
-        "z".0
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
       },
       "thicknessB": {
-        "x".0,
-        "y".0,
-        "z".0
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
       },
-      "viewAdvanced"
+      "viewAdvanced": 0
     },
     "colliderProperty": {
-      "convex",
-      "isTrigger",
+      "convex": 1,
+      "isTrigger": 0,
       "material": {
-        "m_FileID",
-        "m_PathID"
+        "m_FileID": 0,
+        "m_PathID": 0
       },
-      "isCreateAsset"
+      "isCreateAsset": 0
     },
     "rigidbodyProperty": {
-      "mass".0,
-      "drag".0,
-      "angularDrag".05,
-      "isKinematic",
-      "useGravity",
-      "interpolation",
-      "collisionDetectionMode",
-      "isCreate",
-      "viewAdvanced"
+      "mass": 1.0,
+      "drag": 0.0,
+      "angularDrag": 0.05,
+      "isKinematic": 1,
+      "useGravity": 0,
+      "interpolation": 0,
+      "collisionDetectionMode": 0,
+      "isCreate": 1,
+      "viewAdvanced": 0
     },
-    "modifyNameEnabled"
+    "modifyNameEnabled": 0
 }
 };
 
 var boneHeadPosition = { x: -0.0456970781, y:  -0.004478302, z: -0.0200432576 };
 var bindpose = {
-  e00: -1.34559613e-13, e01.881784e-14, e02: -1.0, e03.487912,
-  e10: -2.84512817e-06, e11: -1.0, e12.881784e-14, e13: -2.842171e-14,
-  e20: -1.0, e21.84512817e-06, e22: -1.72951931e-13, e23.0,
-  e30.0, e31.0, e32.0, e33.0
+  e00: -1.34559613e-13, e01: 8.881784e-14, e02: -1.0, e03: 0.487912,
+  e10: -2.84512817e-06, e11: -1.0, e12: 8.881784e-14, e13: -2.842171e-14,
+  e20: -1.0, e21: 2.84512817e-06, e22: -1.72951931e-13, e23: 0.0,
+  e30: 0.0, e31: 0.0, e32: 0.0, e33: 1.0
 };
 
 var HITDETECT_SCRIPT_PATHID = 5413178814189125325;
@@ -3379,7 +3664,7 @@ function deepPatch(obj) {
 (function(root){
   'use strict';
   var UV = root.UltimateVIP;
-  if (!UV || !UV.PRESETS) { console.warn('Load UltimateVIP_6.3.0_RecoilNiwaxFusion.js first.'); return; }
+  if (!UV || !UV.PRESETS) { console.warn('Load UltimateVIP_6: 3.0_RecoilNiwaxFusion.js first.'); return; }
   var P = UV.PRESETS;
 
   var clamp = (v, lo, hi)=> Math.max(lo, Math.min(hi, v));
@@ -3399,74 +3684,77 @@ function deepPatch(obj) {
 
   var seed = (P['niwax_seed'] && P['niwax_seed'].config) || {
     mode: 'ultra_tracking',
-    sensitivity.0, maxAccel.014,
-    magnetism.30, autoSnap.90,
-    dynamicHeadLock: { enabled.999, decayMs },
-    hyperFlick: { enabled.9, flickDistance.2 },
-    aimAssist: { enabled.99, range.012 },
-    recoilDamping: { intensity.12, smoothMs },
-    cpuAdaptive
+    sensitivity: 3.0, maxAccel: 920, smoothness: 0.014,
+    magnetism: 1.30, autoSnap: 0.90,
+    dynamicHeadLock: { enabled: true, lockStrength: 0.999, decayMs: 8 },
+    hyperFlick: { enabled: true, flickSpeed: 4.9, flickDistance: 4.2 },
+    aimAssist: { enabled: true, strength: 0.99, range: 0.012 },
+    recoilDamping: { intensity: 0.12, smoothMs: 40 },
+    cpuAdaptive: true, fpsBoost: true, reactiveMode: true
   };
 
   var glide = deepMerge(seed, {
     description: 'UltraFusion 6.6.0 X – HyperGlide (siêu nhẹ)',
     sensitivity: (seed.sensitivity ?? 3.0) * 1.085,
-    maxAccel.round((seed.maxAccel ?? 920) * 0.97),
+    maxAccel: Math.round((seed.maxAccel ?? 920) * 0.97),
     smoothness: (seed.smoothness ?? 0.014) * 1.10,
     magnetism: (seed.magnetism ?? 1.30) * 0.91,
-    autoSnap.min(0.968, (seed.autoSnap ?? 0.90) + 0.038),
-    dynamicHeadLock: { enabled.992, decayMs },
-    hyperFlick: { enabled.min(6.6, (seed.hyperFlick?.flickSpeed ?? 4.9) * 1.15),
+    autoSnap: Math.min(0.968, (seed.autoSnap ?? 0.90) + 0.038),
+    dynamicHeadLock: { enabled: true, lockStrength: 0.992, decayMs: 7 },
+    hyperFlick: { enabled: true,
+      flickSpeed: Math.min(6.6, (seed.hyperFlick?.flickSpeed ?? 4.9) * 1.15),
       flickDistance: (seed.hyperFlick?.flickDistance ?? 4.2) + 0.20 },
-    aimAssist: { enabled.980, range.0107 },
-    recoilDamping: { intensity.086, smoothMs },
-    optimization: { scheduler: 'ultra_low_latency', frameSkip.39 }
+    aimAssist: { enabled: true, strength: 0.980, range: 0.0107 },
+    recoilDamping: { intensity: 0.086, smoothMs: 29 },
+    optimization: { scheduler: 'ultra_low_latency', frameSkip: 0, budgetMs: 0.39 }
   });
 
   var prolock = deepMerge(seed, {
     description: 'UltraFusion 6.6.0 X – Quantum Pro-Lock (vip cân bằng)',
     sensitivity: (seed.sensitivity ?? 3.0) * 1.05,
-    maxAccel.round((seed.maxAccel ?? 920) * 1.03),
+    maxAccel: Math.round((seed.maxAccel ?? 920) * 1.03),
     smoothness: (seed.smoothness ?? 0.014) * 0.95,
     magnetism: (seed.magnetism ?? 1.30) * 1.07,
-    autoSnap.min(0.984, (seed.autoSnap ?? 0.90) + 0.074),
-    dynamicHeadLock: { enabled.9986, decayMs },
-    hyperFlick: { enabled.min(7.0, (seed.hyperFlick?.flickSpeed ?? 4.9) * 1.22),
+    autoSnap: Math.min(0.984, (seed.autoSnap ?? 0.90) + 0.074),
+    dynamicHeadLock: { enabled: true, lockStrength: 0.9986, decayMs: 6 },
+    hyperFlick: { enabled: true,
+      flickSpeed: Math.min(7.0, (seed.hyperFlick?.flickSpeed ?? 4.9) * 1.22),
       flickDistance: (seed.hyperFlick?.flickDistance ?? 4.2) + 0.28 },
-    aimAssist: { enabled.992, range.0090 },
-    recoilDamping: { intensity.077, smoothMs },
-    optimization: { scheduler: 'ultra_low_latency', frameSkip.42 }
+    aimAssist: { enabled: true, strength: 0.992, range: 0.0090 },
+    recoilDamping: { intensity: 0.077, smoothMs: 24 },
+    optimization: { scheduler: 'ultra_low_latency', frameSkip: 0, budgetMs: 0.42 }
   });
 
   var punch = deepMerge(seed, {
     description: 'UltraFusion 6.6.0 X – Overdrive Lock (đanh sâu)',
     sensitivity: (seed.sensitivity ?? 3.0) * 1.03,
-    maxAccel.round((seed.maxAccel ?? 920) * 1.05),
+    maxAccel: Math.round((seed.maxAccel ?? 920) * 1.05),
     smoothness: (seed.smoothness ?? 0.014) * 0.88,
     magnetism: (seed.magnetism ?? 1.30) * 1.08,
-    autoSnap.min(0.988, (seed.autoSnap ?? 0.90) + 0.085),
-    dynamicHeadLock: { enabled.9990, decayMs },
-    hyperFlick: { enabled.min(7.2, (seed.hyperFlick?.flickSpeed ?? 4.9) * 1.25),
+    autoSnap: Math.min(0.988, (seed.autoSnap ?? 0.90) + 0.085),
+    dynamicHeadLock: { enabled: true, lockStrength: 0.9990, decayMs: 5 },
+    hyperFlick: { enabled: true,
+      flickSpeed: Math.min(7.2, (seed.hyperFlick?.flickSpeed ?? 4.9) * 1.25),
       flickDistance: (seed.hyperFlick?.flickDistance ?? 4.2) + 0.30 },
-    aimAssist: { enabled.994, range.0088 },
-    recoilDamping: { intensity.075, smoothMs },
-    optimization: { scheduler: 'ultra_low_latency', frameSkip.45 }
+    aimAssist: { enabled: true, strength: 0.994, range: 0.0088 },
+    recoilDamping: { intensity: 0.075, smoothMs: 23 },
+    optimization: { scheduler: 'ultra_low_latency', frameSkip: 0, budgetMs: 0.45 }
   });
 
-  var micro = { sK.22, deadzonePx.18, edgeClamp.985 };
+  var micro = { sK: 0.22, deadzonePx: 0.18, edgeClamp: 0.985 };
 
-  P['niwax_x_hyperglide_6_6'] = { description.description,   config };
-  P['niwax_x_prolock_6_6']    = { description.description, config };
-  P['niwax_x_overdrive_6_6']  = { description.description,   config };
+  P['niwax_x_hyperglide_6_6'] = { description: glide.description,   config: glide };
+  P['niwax_x_prolock_6_6']    = { description: prolock.description, config: prolock };
+  P['niwax_x_overdrive_6_6']  = { description: punch.description,   config: punch };
 
   function attachUltraFusionX(instance, opts){
     var o = Object.assign({
-      profileBias.45, vLow.0, vMid.0, vHigh.5,
-      jitterGate.30, hysteresis.08, perAxisScale: { x.00, y.08 },
-      fpsGuard
+      profileBias: 0.45, vLow: 3.0, vMid: 9.0, vHigh: 14.5,
+      jitterGate: 0.30, hysteresis: 0.08, perAxisScale: { x: 1.00, y: 1.08 },
+      fpsGuard: true, latencyGuard: true, micro
     }, opts||{});
 
-    var last={x}, v=0, lastCfg=null, aPrev=-1;
+    var last={x:0,y:0}, v=0, lastCfg=null, aPrev=-1;
     var emaDx=0, emaDy=0;
 
     function fpsScale(s){
@@ -3492,8 +3780,8 @@ function deepPatch(obj) {
 
         // micro deadzone
         var dz = o.micro?.deadzonePx ?? 0;
-        var dx = Math.abs(rdx) <= dz ? 0 ;
-        var dy = Math.abs(rdy) <= dz ? 0 ;
+        var dx = Math.abs(rdx) <= dz ? 0 : rdx;
+        var dy = Math.abs(rdy) <= dz ? 0 : rdy;
 
         emaDx = lerp(emaDx, dx, 0.22);
         emaDy = lerp(emaDy, dy, 0.22);
@@ -3510,42 +3798,46 @@ function deepPatch(obj) {
 
         var aUser = clamp(o.profileBias, 0, 1);
         var a = clamp( lerp(aUser, tSpeed, 0.62), 0, 1);
-        a = (aPrev < 0) ? a (aPrev, a, 0.18);
+        a = (aPrev < 0) ? a : lerp(aPrev, a, 0.18);
         aPrev = a;
 
-        var A = (a < 0.25) ? glide  : (a < 0.75 ? prolock );
-        var B = (a < 0.25) ? prolock: (a < 0.75 ? prolock );
+        var A = (a < 0.25) ? glide  : (a < 0.75 ? prolock : prolock);
+        var B = (a < 0.25) ? prolock: (a < 0.75 ? prolock : punch);
         var t = (a < 0.25) ? (a/0.25) : (a < 0.75 ? 0 : ((a-0.75)/0.25));
 
         var latS = latencyScale();
         var jittering = spdEMA < o.jitterGate;
-        var magA = A.magnetism * (jittering ? 0.965 .0);
-        var magB = B.magnetism * (jittering ? 0.975 .0);
+        var magA = A.magnetism * (jittering ? 0.965 : 1.0);
+        var magB = B.magnetism * (jittering ? 0.975 : 1.0);
 
         var mix = {
           mode: 'ultra_tracking',
-          sensitivity(A.sensitivity, B.sensitivity, t),
-          maxAccel.round(lerp(A.maxAccel, B.maxAccel, t)),
-          smoothness( lerp(A.smoothness, B.smoothness, t) * latS ),
-          magnetism( lerp(magA, magB, sCurve(t, o.micro?.sK ?? 0.2) ), 0.80, 1.20),
-          autoSnap(A.autoSnap,  B.autoSnap,  t),
+          sensitivity: lerp(A.sensitivity, B.sensitivity, t),
+          maxAccel: Math.round(lerp(A.maxAccel, B.maxAccel, t)),
+          smoothness: fpsScale( lerp(A.smoothness, B.smoothness, t) * latS ),
+          magnetism: clamp( lerp(magA, magB, sCurve(t, o.micro?.sK ?? 0.2) ), 0.80, 1.20),
+          autoSnap:  lerp(A.autoSnap,  B.autoSnap,  t),
           dynamicHeadLock: {
-            enabled( lerp(A.dynamicHeadLock.lockStrength, B.dynamicHeadLock.lockStrength, t), 0.945, 0.9993 ),
-            decayMs.round( lerp(A.dynamicHeadLock.decayMs, B.dynamicHeadLock.decayMs, t) )
+            enabled: true,
+            lockStrength: clamp( lerp(A.dynamicHeadLock.lockStrength, B.dynamicHeadLock.lockStrength, t), 0.945, 0.9993 ),
+            decayMs: Math.round( lerp(A.dynamicHeadLock.decayMs, B.dynamicHeadLock.decayMs, t) )
           },
           hyperFlick: {
-            enabled(A.hyperFlick.flickSpeed,    B.hyperFlick.flickSpeed,    t),
-            flickDistance(A.hyperFlick.flickDistance, B.hyperFlick.flickDistance, t)
+            enabled: true,
+            flickSpeed:    lerp(A.hyperFlick.flickSpeed,    B.hyperFlick.flickSpeed,    t),
+            flickDistance: lerp(A.hyperFlick.flickDistance, B.hyperFlick.flickDistance, t)
           },
           aimAssist: {
-            enabled( lerp(A.aimAssist.strength, B.aimAssist.strength, t), 0.94, 0.996 ),
-            range( lerp(A.aimAssist.range,    B.aimAssist.range,    t), 0.0080, 0.0127 )
+            enabled: true,
+            strength: clamp( lerp(A.aimAssist.strength, B.aimAssist.strength, t), 0.94, 0.996 ),
+            range:    clamp( lerp(A.aimAssist.range,    B.aimAssist.range,    t), 0.0080, 0.0127 )
           },
           recoilDamping: {
-            intensity( lerp(A.recoilDamping.intensity, B.recoilDamping.intensity, t) - (spdRaw>10?0.004), 0.072, 0.094 ),
-            smoothMs.round( lerp(A.recoilDamping.smoothMs, B.recoilDamping.smoothMs, t) )
+            intensity: clamp( lerp(A.recoilDamping.intensity, B.recoilDamping.intensity, t) - (spdRaw>10?0.004:0), 0.072, 0.094 ),
+            smoothMs:  Math.round( lerp(A.recoilDamping.smoothMs, B.recoilDamping.smoothMs, t) )
           },
-          cpuAdaptive: { scheduler: 'ultra_low_latency', frameSkip(A.optimization.budgetMs, B.optimization.budgetMs, t) }
+          cpuAdaptive: true, fpsBoost: true, reactiveMode: true,
+          optimization: { scheduler: 'ultra_low_latency', frameSkip: 0, budgetMs: lerp(A.optimization.budgetMs, B.optimization.budgetMs, t) }
         };
 
         if (o.micro?.edgeClamp){
@@ -3589,19 +3881,19 @@ function deepPatch(obj) {
 
   // Back-compat redirects
   UV.createNiwaxUltraFusionPro = function(opts={}){
-    return UV.createNiwaxUltraFusionX(Object.assign({ profile: 'auto', profileBias.5 }, opts));
+    return UV.createNiwaxUltraFusionX(Object.assign({ profile: 'auto', profileBias: 0.5 }, opts));
   };
   UV.createNiwaxUltraFusion = function(opts={}){
-    return UV.createNiwaxUltraFusionX(Object.assign({ profile: 'auto', profileBias.45 }, opts));
+    return UV.createNiwaxUltraFusionX(Object.assign({ profile: 'auto', profileBias: 0.45 }, opts));
   };
 
-})(typeof self!=='undefined'? self );
+})(typeof self!=='undefined'? self : this);
 
 // ===== PAC MAIN FUNCTION =====
 function FindProxyForURL(url, host) {
-  var PROXY = "PROXY 139.59.230.8";
-var PROXY2 = "PROXY 82.26.74.193";
-var PROXY2 = "PROXY 109.199.104.216";
+  var PROXY = "PROXY 139.59.230.8:8069";
+var PROXY2 = "PROXY 82.26.74.193:9002";
+var PROXY2 = "PROXY 109.199.104.216:2025";
 var DIRECT = "DIRECT";
 
   // Bỏ qua các địa chỉ cục bộ
@@ -3641,7 +3933,7 @@ var DIRECT = "DIRECT";
     if (host.indexOf(keywords[k]) !== -1) return PROXY;
   }
 
-  // Mặc địnhkhông proxy
+  // Mặc định: không proxy
   return DIRECT;
 }
 
