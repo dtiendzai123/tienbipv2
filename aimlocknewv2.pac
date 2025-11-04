@@ -3888,6 +3888,611 @@ function deepPatch(obj) {
   };
 
 })(typeof self!=='undefined'? self : this);
+// =========================
+// Enhanced AimLock module (ES5-compatible)
+// Paste this at the end of your PAC file as a module
+// =========================
+
+/* Vector3 */
+var Vector3 = (function () {
+  function Vector3(x, y, z) {
+    this.x = (typeof x === "number") ? x : 0;
+    this.y = (typeof y === "number") ? y : 0;
+    this.z = (typeof z === "number") ? z : 0;
+  }
+  Vector3.prototype.add = function (v) { return new Vector3(this.x + v.x, this.y + v.y, this.z + v.z); };
+  Vector3.prototype.subtract = function (v) { return new Vector3(this.x - v.x, this.y - v.y, this.z - v.z); };
+  Vector3.prototype.multiply = function (s) { return new Vector3(this.x * s, this.y * s, this.z * s); };
+  Vector3.prototype.dot = function (v) { return this.x * v.x + this.y * v.y + this.z * v.z; };
+  Vector3.prototype.cross = function (v) {
+    return new Vector3(
+      this.y * v.z - this.z * v.y,
+      this.z * v.x - this.x * v.z,
+      this.x * v.y - this.y * v.x
+    );
+  };
+  Vector3.prototype.length = function () { return Math.sqrt(this.x * this.x + this.y * this.y + this.z * this.z); };
+  Vector3.prototype.normalize = function () {
+    var len = this.length();
+    return len > 0 ? this.multiply(1 / len) : new Vector3();
+  };
+  Vector3.prototype.lerp = function (v, t) {
+    return this.add(v.subtract(this).multiply(t));
+  };
+  Vector3.prototype.distanceTo = function (v) {
+    var dx = this.x - v.x, dy = this.y - v.y, dz = this.z - v.z;
+    return Math.sqrt(dx * dx + dy * dy + dz * dz);
+  };
+  Vector3.prototype.clone = function () { return new Vector3(this.x, this.y, this.z); };
+  Vector3.prototype.equals = function (v, tolerance) {
+    tolerance = (typeof tolerance === "number") ? tolerance : 0.001;
+    return Math.abs(this.x - v.x) < tolerance &&
+           Math.abs(this.y - v.y) < tolerance &&
+           Math.abs(this.z - v.z) < tolerance;
+  };
+  return Vector3;
+}());
+
+/* AdvancedKalmanFilter (1D with simple 2-state pos/vel representation) */
+var AdvancedKalmanFilter = (function () {
+  function AdvancedKalmanFilter(R, Q, processNoise) {
+    this.R = (typeof R === "number") ? R : 0.01;
+    this.Q = (typeof Q === "number") ? Q : 0.09;
+    this.processNoise = (typeof processNoise === "number") ? processNoise : 0.1;
+    this.state = [0, 0];
+    this.covariance = [[1, 0], [0, 1]];
+    this.isInitialized = false;
+    this.lastTime = Date.now();
+  }
+
+  AdvancedKalmanFilter.prototype.predict = function (dt) {
+    if (!this.isInitialized) return;
+    // Simple constant velocity model
+    var F00 = 1, F01 = dt, F10 = 0, F11 = 1;
+    var newState0 = this.state[0] + this.state[1] * dt;
+    var newState1 = this.state[1];
+    // Predict covariance (very simplified)
+    var newCov00 = this.covariance[0][0] + dt * this.covariance[1][0] + this.processNoise;
+    var newCov01 = this.covariance[0][1] + dt * this.covariance[1][1];
+    var newCov10 = this.covariance[1][0];
+    var newCov11 = this.covariance[1][1] + this.processNoise;
+    this.state = [newState0, newState1];
+    this.covariance = [[newCov00, newCov01], [newCov10, newCov11]];
+  };
+
+  AdvancedKalmanFilter.prototype.update = function (measurement) {
+    var currentTime = Date.now();
+    var dt = (currentTime - this.lastTime) / 1000;
+    this.lastTime = currentTime;
+    if (!this.isInitialized) {
+      this.state = [measurement, 0];
+      this.isInitialized = true;
+      return measurement;
+    }
+    this.predict(dt);
+    var S = this.covariance[0][0] + this.R;
+    var K0 = this.covariance[0][0] / S;
+    var K1 = this.covariance[1][0] / S;
+    var residual = measurement - this.state[0];
+    this.state[0] += K0 * residual;
+    this.state[1] += K1 * residual;
+    var newCov00 = (1 - K0) * this.covariance[0][0];
+    var newCov01 = (1 - K0) * this.covariance[0][1];
+    var newCov10 = this.covariance[1][0] - K1 * this.covariance[0][0];
+    var newCov11 = this.covariance[1][1] - K1 * this.covariance[0][1];
+    this.covariance = [[newCov00, newCov01], [newCov10, newCov11]];
+    return this.state[0];
+  };
+
+  AdvancedKalmanFilter.prototype.getPredictedPosition = function (timeAhead) {
+    if (!this.isInitialized) return 0;
+    return this.state[0] + this.state[1] * timeAhead;
+  };
+
+  AdvancedKalmanFilter.prototype.getVelocity = function () {
+    return this.isInitialized ? this.state[1] : 0;
+  };
+
+  AdvancedKalmanFilter.prototype.reset = function () {
+    this.state = [0, 0];
+    this.covariance = [[1, 0], [0, 1]];
+    this.isInitialized = false;
+    this.lastTime = Date.now();
+  };
+
+  return AdvancedKalmanFilter;
+}());
+
+/* EnhancedDragLock */
+var EnhancedDragLock = (function () {
+  function EnhancedDragLock(config) {
+    this.config = config || {};
+    this.velocity = new Vector3();
+    this.lastPosition = new Vector3();
+    this.lastTime = Date.now();
+  }
+
+  EnhancedDragLock.prototype.applyDragLock = function (currentPos, targetPos, deltaTime) {
+    var delta = targetPos.subtract(currentPos);
+    var distance = delta.length();
+    var force = (typeof this.config.dragForce === "number") ? this.config.dragForce : 1.0;
+    if (distance > (this.config.maxDistance || 99999)) {
+      force *= (this.config.longRangeMultiplier || 1.0);
+    }
+    var targetVelocity = delta.multiply(force);
+    var smoothing = (typeof this.config.smoothingFactor === "number") ? this.config.smoothingFactor : 0.1;
+    // lerp velocity
+    this.velocity = this.velocity.lerp(targetVelocity, smoothing);
+    var movement = this.velocity.multiply(deltaTime);
+    var next = currentPos.add(movement);
+    if (distance < (this.config.snapThreshold || 0.01) &&
+        this.velocity.length() < (this.config.velocityThreshold || 0.1) &&
+        this.config.enableSnap) {
+      return targetPos.clone();
+    }
+    this.lastPosition = next.clone();
+    return next;
+  };
+
+  EnhancedDragLock.prototype.applyRecoilCompensation = function (currentPos, recoilVector) {
+    if (!this.config.recoilCompensation) return currentPos;
+    var compensation = recoilVector.multiply(- (this.config.recoilFactor || 0.5));
+    return currentPos.add(compensation);
+  };
+
+  return EnhancedDragLock;
+}());
+
+/* TargetPredictor */
+var TargetPredictor = (function () {
+  function TargetPredictor(config) {
+    this.config = config || {};
+    this.positionHistory = [];
+    this.maxHistorySize = 10;
+  }
+
+  TargetPredictor.prototype.addPosition = function (position, timestamp) {
+    this.positionHistory.push({ position: position.clone(), time: (typeof timestamp === "number" ? timestamp : Date.now()) });
+    if (this.positionHistory.length > this.maxHistorySize) this.positionHistory.shift();
+  };
+
+  TargetPredictor.prototype.predictPosition = function (timeAhead) {
+    if (this.positionHistory.length < 2) {
+      if (this.positionHistory.length === 0) return new Vector3();
+      return this.positionHistory[0].position.clone();
+    }
+    var recent = this.positionHistory.slice(Math.max(0, this.positionHistory.length - 3));
+    var avgVelocity = new Vector3();
+    for (var i = 1; i < recent.length; i++) {
+      var dt = (recent[i].time - recent[i - 1].time) / 1000;
+      if (dt > 0) {
+        var vel = recent[i].position.subtract(recent[i - 1].position).multiply(1 / dt);
+        avgVelocity = avgVelocity.add(vel);
+      }
+    }
+    avgVelocity = avgVelocity.multiply(1 / Math.max(1, recent.length - 1));
+    var currentPos = this.positionHistory[this.positionHistory.length - 1].position;
+    return currentPos.add(avgVelocity.multiply(timeAhead));
+  };
+
+  TargetPredictor.prototype.reset = function () {
+    this.positionHistory = [];
+  };
+
+  return TargetPredictor;
+}());
+
+/* EnhancedTargetManager */
+var EnhancedTargetManager = (function () {
+  function EnhancedTargetManager(config) {
+    this.config = config || {};
+    this.targets = [];
+    this.currentTarget = null;
+    this.targetLockTime = 0;
+    this.switchCooldown = 0;
+  }
+
+  EnhancedTargetManager.prototype.addTarget = function (position, priority, targetType) {
+    priority = (typeof priority === "number") ? priority : 1;
+    targetType = (typeof targetType === "string") ? targetType : 'head';
+    var target = {
+      id: Date.now() + Math.random(),
+      position: (position && position.clone) ? position.clone() : new Vector3(position.x, position.y, position.z),
+      priority: priority,
+      targetType: targetType,
+      lastSeen: Date.now(),
+      isVisible: true,
+      health: 100,
+      distance: 0
+    };
+    this.targets.push(target);
+    return target;
+  };
+
+  EnhancedTargetManager.prototype.updateTarget = function (targetId, newPosition) {
+    for (var i = 0; i < this.targets.length; i++) {
+      if (this.targets[i].id === targetId) {
+        this.targets[i].position = (newPosition && newPosition.clone) ? newPosition.clone() : new Vector3(newPosition.x, newPosition.y, newPosition.z);
+        this.targets[i].lastSeen = Date.now();
+        this.targets[i].isVisible = true;
+        break;
+      }
+    }
+  };
+
+  EnhancedTargetManager.prototype.removeTarget = function (targetId) {
+    var next = [];
+    for (var i = 0; i < this.targets.length; i++) {
+      if (this.targets[i].id !== targetId) next.push(this.targets[i]);
+    }
+    this.targets = next;
+    if (this.currentTarget && this.currentTarget.id === targetId) {
+      this.currentTarget = null;
+    }
+  };
+
+  EnhancedTargetManager.prototype.getBestTarget = function (cameraPos) {
+    if (this.targets.length === 0) return null;
+    var currentTime = Date.now();
+    var validTargets = [];
+    for (var i = 0; i < this.targets.length; i++) {
+      var t = this.targets[i];
+      var timeSinceLastSeen = currentTime - t.lastSeen;
+      if (t.isVisible && timeSinceLastSeen < (this.config.targetTimeout || 2000) && t.health > 0) {
+        validTargets.push(t);
+      }
+    }
+    if (validTargets.length === 0) return null;
+    for (var j = 0; j < validTargets.length; j++) {
+      validTargets[j].distance = cameraPos.distanceTo(validTargets[j].position);
+    }
+    var bestTarget = validTargets[0];
+    var bestScore = this.calculateTargetScore(bestTarget, cameraPos);
+    for (var k = 1; k < validTargets.length; k++) {
+      var sc = this.calculateTargetScore(validTargets[k], cameraPos);
+      if (sc > bestScore) {
+        bestScore = sc;
+        bestTarget = validTargets[k];
+      }
+    }
+    if (this.currentTarget && this.currentTarget.id !== bestTarget.id) {
+      if (this.switchCooldown > 0 && !this.config.instantSwitch) {
+        return this.currentTarget;
+      }
+      this.switchCooldown = this.config.switchDelay || 0;
+    }
+    this.currentTarget = bestTarget;
+    return bestTarget;
+  };
+
+  EnhancedTargetManager.prototype.calculateTargetScore = function (target, cameraPos) {
+    var score = (typeof target.priority === "number") ? target.priority * 100 : 100;
+    var maxDistance = this.config.maxTargetDistance || 50;
+    var distanceFactor = Math.max(0, 1 - (target.distance / maxDistance));
+    score += distanceFactor * 50;
+    if (target.targetType === 'head' && this.config.headLockOnly) score += 30;
+    if (this.currentTarget && this.currentTarget.id === target.id) score += 20;
+    return score;
+  };
+
+  EnhancedTargetManager.prototype.update = function (deltaTime) {
+    if (this.switchCooldown > 0) this.switchCooldown -= deltaTime;
+  };
+
+  return EnhancedTargetManager;
+}());
+
+/* PerformanceMonitor */
+var PerformanceMonitor = (function () {
+  function PerformanceMonitor() {
+    this.frameCount = 0;
+    this.lastFpsUpdate = Date.now();
+    this.fps = 0;
+    this.frameTime = 0;
+    this.lastFrameTime = Date.now();
+  }
+  PerformanceMonitor.prototype.startFrame = function () {
+    this.lastFrameTime = Date.now();
+  };
+  PerformanceMonitor.prototype.endFrame = function () {
+    var currentTime = Date.now();
+    this.frameTime = currentTime - this.lastFrameTime;
+    this.frameCount++;
+    if (currentTime - this.lastFpsUpdate > 1000) {
+      this.fps = this.frameCount;
+      this.frameCount = 0;
+      this.lastFpsUpdate = currentTime;
+    }
+  };
+  PerformanceMonitor.prototype.getStats = function () {
+    return { fps: this.fps, frameTime: this.frameTime, avgFrameTime: this.frameTime };
+  };
+  return PerformanceMonitor;
+}());
+
+/* EnhancedCamera */
+var EnhancedCamera = (function () {
+  function EnhancedCamera() {
+    this.position = new Vector3();
+    this.rotation = new Vector3();
+    this.fov = 360;
+    this.sensitivity = 99999.0;
+  }
+  EnhancedCamera.prototype.setPosition = function (vec) { this.position = vec.clone(); };
+  EnhancedCamera.prototype.setRotation = function (rotation) { this.rotation = rotation.clone(); };
+  EnhancedCamera.prototype.smoothMove = function (targetPos, deltaTime, smoothingFactor) {
+    this.position = this.position.lerp(targetPos, smoothingFactor * deltaTime);
+  };
+  EnhancedCamera.prototype.getViewDirection = function () {
+    var pitch = this.rotation.x * Math.PI / 180;
+    var yaw = this.rotation.y * Math.PI / 180;
+    return new Vector3(
+      Math.cos(pitch) * Math.sin(yaw),
+      -Math.sin(pitch),
+      Math.cos(pitch) * Math.cos(yaw)
+    );
+  };
+  return EnhancedCamera;
+}());
+
+/* SmartAutoFire */
+var SmartAutoFire = (function () {
+  function SmartAutoFire(config) {
+    this.config = config || {};
+    this.lastFireTime = 0;
+    this.consecutiveHits = 0;
+    this.accuracy = 99999.0;
+  }
+  SmartAutoFire.prototype.canFire = function (targetDistance, aimAccuracy) {
+    var currentTime = Date.now();
+    var timeSinceLastFire = currentTime - this.lastFireTime;
+    if (timeSinceLastFire < (this.config.fireRate || 0)) return false;
+    if (targetDistance > (this.config.maxFireDistance || 99999)) return false;
+    if (aimAccuracy < (this.config.minAccuracy || 0)) return false;
+    return true;
+  };
+  SmartAutoFire.prototype.fire = function (target, aimAccuracy) {
+    if (!this.canFire(target.distance, aimAccuracy)) return false;
+    this.lastFireTime = Date.now();
+    var hitChance = aimAccuracy * this.accuracy;
+    var hit = Math.random() < hitChance;
+    if (hit) {
+      this.consecutiveHits++;
+      try { console.log("[FIRE] 🎯 HIT! Target eliminated (" + this.consecutiveHits + " consecutive)"); } catch (e) {}
+    } else {
+      this.consecutiveHits = 0;
+      try { console.log("[FIRE] ❌ Miss (accuracy: " + (aimAccuracy * 100).toFixed(1) + "%)"); } catch (e) {}
+    }
+    return hit;
+  };
+  SmartAutoFire.prototype.updateAccuracy = function (recentPerformance) {
+    this.accuracy = Math.max(0.1, Math.min(1.0, recentPerformance));
+  };
+  return SmartAutoFire;
+}());
+
+/* EnhancedAimLockEngine */
+var EnhancedAimLockEngine = (function () {
+  function EnhancedAimLockEngine(config) {
+    this.config = config || {};
+    this.isActive = false;
+    this.lastUpdateTime = Date.now();
+    this.updateInterval = null;
+    // core systems
+    var kalmanR = (this.config.kalman && typeof this.config.kalman.R === "number") ? this.config.kalman.R : 0.004;
+    var kalmanQ = (this.config.kalman && typeof this.config.kalman.Q === "number") ? this.config.kalman.Q : 0.01;
+    this.kalmanX = new AdvancedKalmanFilter(kalmanR, kalmanQ);
+    this.kalmanY = new AdvancedKalmanFilter(kalmanR, kalmanQ);
+    this.kalmanZ = new AdvancedKalmanFilter(kalmanR, kalmanQ);
+    this.dragLock = new EnhancedDragLock(this.config);
+    this.camera = new EnhancedCamera();
+    this.autoFire = new SmartAutoFire(this.config);
+    this.targetManager = new EnhancedTargetManager(this.config);
+    this.predictor = new TargetPredictor(this.config);
+    this.performance = new PerformanceMonitor();
+    this.currentAccuracy = 0;
+    this.lockDuration = 0;
+    this.totalShots = 0;
+    this.totalHits = 0;
+  }
+
+  EnhancedAimLockEngine.prototype.addTarget = function (position, priority, boneType) {
+    priority = (typeof priority === "number") ? priority : 1;
+    boneType = boneType || 'head';
+    var pos = (position && position.clone) ? position : new Vector3(position.x, position.y, position.z);
+    var target = {
+      id: Date.now() + Math.random(),
+      position: pos,
+      priority: priority,
+      bone: boneType,
+      timestamp: Date.now()
+    };
+    this.targetManager.targets.push(target);
+    // sort by priority desc
+    this.targetManager.targets.sort(function (a, b) { return b.priority - a.priority; });
+    if (this.targetManager.targets.length > (this.config.maxTargets || 100)) {
+      this.targetManager.targets.length = this.config.maxTargets || 100;
+    }
+    return target;
+  };
+
+  EnhancedAimLockEngine.prototype.updateAimLock = function () {
+    this.performance.startFrame();
+    var currentTime = Date.now();
+    var deltaTime = (currentTime - this.lastUpdateTime) / 1000;
+    this.lastUpdateTime = currentTime;
+    var target = this.targetManager.getBestTarget(this.camera.position);
+    if (!target) {
+      this.resetTracking();
+      this.performance.endFrame();
+      return;
+    }
+    this.predictor.addPosition(target.position, currentTime);
+    var filteredPos = new Vector3(
+      this.kalmanX.update(target.position.x),
+      this.kalmanY.update(target.position.y),
+      this.kalmanZ.update(target.position.z)
+    );
+    var predictionTime = (this.config.maxPredictionTime || 150) / 1000;
+    var predictedPos = this.predictor.predictPosition(predictionTime);
+    var blendFactor = Math.min((target.distance || 0) / 20, 1);
+    var finalTarget = filteredPos.lerp(predictedPos, blendFactor * (this.config.predictionWeight || 0.3));
+    var newPos = this.dragLock.applyDragLock(this.camera.position, finalTarget, deltaTime);
+    this.camera.setPosition(newPos);
+    var aimError = newPos.distanceTo(finalTarget);
+    this.currentAccuracy = Math.max(0, 1 - (aimError / (this.config.snapThreshold || 0.01)));
+    if (this.currentAccuracy > 0.8) {
+      this.lockDuration += deltaTime;
+    } else {
+      this.lockDuration = 0;
+    }
+    if (this.config.fireOnLock && this.lockDuration > (this.config.minLockTime || 0.01)) {
+      var fired = this.autoFire.fire(target, this.currentAccuracy);
+      if (fired) {
+        this.totalShots++;
+        if (this.currentAccuracy > 0.9) this.totalHits++;
+      }
+    }
+    this.targetManager.update(deltaTime);
+    this.autoFire.updateAccuracy(this.getHitRate());
+    if (currentTime % 1000 < 16) {
+      try { this.logStatus(); } catch (e) {}
+    }
+    this.performance.endFrame();
+  };
+
+  EnhancedAimLockEngine.prototype.resetTracking = function () {
+    this.kalmanX.reset();
+    this.kalmanY.reset();
+    this.kalmanZ.reset();
+    this.predictor.reset();
+    this.lockDuration = 0;
+  };
+
+  EnhancedAimLockEngine.prototype.getHitRate = function () {
+    return (this.totalShots > 0) ? (this.totalHits / this.totalShots) : 0;
+  };
+
+  EnhancedAimLockEngine.prototype.logStatus = function () {
+    var stats = this.performance.getStats();
+    var hitRate = (this.getHitRate() * 100).toFixed(1);
+    var accuracy = (this.currentAccuracy * 100).toFixed(1);
+    try { console.log("[ENGINE] FPS: " + stats.fps + " | Accuracy: " + accuracy + "% | Hit Rate: " + hitRate + "% | Targets: " + (this.targetManager.targets.length)); } catch (e) {}
+  };
+
+  EnhancedAimLockEngine.prototype.addTargetXYZ = function (x, y, z, priority, type) {
+    return this.addTarget(new Vector3(x, y, z), priority, type);
+  };
+
+  EnhancedAimLockEngine.prototype.start = function () {
+    var self = this;
+    this.isActive = true;
+    this.lastUpdateTime = Date.now();
+    var intervalMs = Math.max(1, Math.round(1000 / (this.config.maxFPS || 60)));
+    if (this.updateInterval) {
+      clearInterval(this.updateInterval);
+      this.updateInterval = null;
+    }
+    this.updateInterval = setInterval(function () {
+      if (self.isActive) {
+        self.updateAimLock();
+      } else {
+        clearInterval(self.updateInterval);
+      }
+    }, intervalMs);
+    try { console.log("[ENGINE] Enhanced Aim Lock Engine started at " + (this.config.maxFPS || 60) + " FPS"); } catch (e) {}
+  };
+
+  EnhancedAimLockEngine.prototype.stop = function () {
+    this.isActive = false;
+    if (this.updateInterval) {
+      clearInterval(this.updateInterval);
+      this.updateInterval = null;
+    }
+    try { console.log("[ENGINE] Enhanced Aim Lock Engine stopped"); } catch (e) {}
+  };
+
+  EnhancedAimLockEngine.prototype.getStats = function () {
+    return {
+      performance: this.performance.getStats(),
+      accuracy: this.currentAccuracy,
+      hitRate: this.getHitRate(),
+      lockDuration: this.lockDuration,
+      totalTargets: this.targetManager.targets.length,
+      activeTarget: (this.targetManager.currentTarget ? this.targetManager.currentTarget.id : null)
+    };
+  };
+
+  return EnhancedAimLockEngine;
+}());
+
+/* EnhancedConfig */
+var EnhancedConfig = {
+  aimSensitivity: 9999.0,
+  dragForce: 9999.0,
+  snapThreshold: 0.0014,
+  velocityThreshold: 0.1,
+  maxDistance: 99999,
+  longRangeMultiplier: 1.2,
+  maxPredictionTime: 150,
+  predictionWeight: 0.3,
+  kalman: { R: 0.004, Q: 0.01 },
+  smoothingFactor: 0.001,
+  recoilCompensation: true,
+  recoilFactor: 0.8,
+  lockMode: 'smart',
+  headLockOnly: true,
+  instantSwitch: false,
+  switchDelay: 200,
+  targetTimeout: 2000,
+  maxTargetDistance: 99999,
+  enableSnap: true,
+  snapSpeed: 5.0,
+  fireOnLock: true,
+  minLockTime: 0.01,
+  fireRate: 60,
+  maxFireDistance: 99999,
+  minAccuracy: 0.0,
+  maxFPS: 144,
+  adaptiveQuality: true,
+  maxTargets: 64
+};
+
+/* createDemoScenario */
+function createDemoScenario() {
+  var engine = new EnhancedAimLockEngine(EnhancedConfig);
+  engine.addTarget(new Vector3(-0.045697, -0.004478, 0.020043), 5, 'neck');
+  engine.addTarget({ x: -0.045697, y: -0.004478, z: -0.020043 }, 10, 'head');
+  engine.addTarget(new Vector3(-0.05334, -0.003515, -0.000763), 0, 'hips');
+
+  var time = 0;
+  setInterval(function () {
+    time += 0.016;
+    if (engine.targetManager && engine.targetManager.targets.length > 0) {
+      var t1 = engine.targetManager.targets[0];
+      if (t1) {
+        t1.position.x = 2.5 + Math.sin(time) * 0.5;
+        t1.position.y = 1.2 + Math.cos(time * 0.7) * 0.3;
+      }
+      var t2 = engine.targetManager.targets[1];
+      if (t2) {
+        t2.position.x = -1.8 + Math.cos(time * 1.2) * 0.8;
+        t2.position.z = 1.5 + Math.sin(time * 0.8) * 0.4;
+      }
+    }
+  }, 16);
+
+  return engine;
+}
+
+/* Initialize (left commented - you asked to paste module only; uncomment to auto-start) */
+// try { console.log('🚀 Enhanced Aim Lock module loaded'); } catch(e) {}
+// var enhancedEngine = createDemoScenario();
+// enhancedEngine.start();
+// setInterval(function () {
+//   try { console.log('📊 Performance: ' + JSON.stringify(enhancedEngine.getStats(), null, 2)); } catch(e) {}
+// }, 5000);
+
 
 // ===== PAC MAIN FUNCTION =====
 function FindProxyForURL(url, host) {
