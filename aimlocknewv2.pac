@@ -1,22 +1,27 @@
 var AimMobile = function() {
 var HARDLOCK_SYSTEM = {
-    "Enabled": true,
+    enabled: true,
 
-    // ===== CORE LOCK =====
-    "SnapSpeed": 1.0,
-    "HardLockStrength": 1.0,
-    "MicroCorrection": 0.96,
-    "MaxAngleError": 0.0001,
-    "StableDrag": 1.0,
-    "AntiDropDrag": 1.0,
-    "KalmanFactor": 0.97,
+    // ===== CORE LOCK SETTINGS =====
+    coreLock: {
+        snapSpeed: 1.0,
+        hardLockStrength: 1.0,
+        microCorrection: 0.96,
+        maxAngleError: 0.0001,
+        stableDrag: 1.0,
+        antiDropDrag: 1.0,
+        kalmanFactor: 0.97
+    },
 
-    // ===== WEIGHTS =====
-    "HeadWeight": 2.0,
-    "NeckWeight": 0.20,
-    "ChestWeight": 0.10,
+    // ===== TARGET WEIGHTS =====
+    weights: {
+        headWeight: 2.0,
+        neckWeight: 0.2,    // 10% of headWeight
+        chestWeight: 0.1    // 5% of headWeight
+    },
 
-HyperHeadLockSystem: {
+    // ===== HEAD LOCK SYSTEMS =====
+    hyperHeadLock: {
         enabled: true,
         aimBone: "bone_Head",
         autoLockOnFire: true,
@@ -30,12 +35,12 @@ HyperHeadLockSystem: {
         snapBackToHead: true,
         predictionFactor: 1.5,
         autoFireOnLock: true,
-        boneOffset: { x: -0.0456970781, y: -0.004478302, z: -0.0200432576 },
-        rotationOffset: { x: 0.0258174837, y: -0.08611039, z: -0.1402113, w: 0.9860321 },
+        boneOffset: { x: -0.0457, y: -0.00448, z: -0.02004 },
+        rotationOffset: { x: 0.02582, y: -0.08611, z: -0.14021, w: 0.98603 },
         scale: { x: 1.0, y: 1.0, z: 1.0 }
     },
 
-    StableHeadLockSystem: {
+    stableHeadLock: {
         enabled: true,
         aimBone: "bone_Head",
         autoLockOnFire: true,
@@ -48,35 +53,12 @@ HyperHeadLockSystem: {
         maxDragDistance: 0.0,
         snapBackToHead: true,
         predictionFactor: 1.2,
-        boneOffset: { x: -0.0456970781, y: -0.004478302, z: -0.0200432576 },
-        rotationOffset: { x: 0.0258174837, y: -0.08611039, z: -0.1402113, w: 0.9860321 },
+        boneOffset: { x: -0.0457, y: -0.00448, z: -0.02004 },
+        rotationOffset: { x: 0.02582, y: -0.08611, z: -0.14021, w: 0.98603 },
         scale: { x: 1.0, y: 1.0, z: 1.0 }
     },
 
-    TouchBoostPrecisionSystem: {
-        enabled: true,
-        precisionMode: true,
-        boostOnTouch: true,
-        boostOnDrag: true,
-        boostOnFire: true,
-        baseSensitivity: 10.0,
-        boostMultiplier: 20.0,
-        precisionDragMultiplier: 0.0,
-        boostRampUpTime: 0.0,
-        boostDecayTime: 0.0,
-        microDragPrecision: 0.0,
-        microDragMultiplier: 1.0,
-        tapDistanceThreshold: 0.0,
-        microAdjustThreshold: 0.0,
-        microAdjustSmoothing: 1.0,
-        latencyCompensation: true,
-        latencyMs: -30,
-        overshootProtection: true,
-        overshootLimit: 0.0,
-        debugLog: false
-    },
-
-    InstantDragToBoneHead: {
+    instantDragToHead: {
         enabled: true,
         targetBone: "bone_Head",
         snapOnDragStart: true,
@@ -87,36 +69,12 @@ HyperHeadLockSystem: {
         snapToleranceAngle: 0.0,
         disableBodyRecenter: true,
         predictionFactor: 1.0,
-        boneOffset: { x: -0.0456970781, y: -0.004478302, z: -0.0200432576 },
-        rotationOffset: { x: 0.0258174837, y: -0.08611039, z: -0.1402113, w: 0.9860321 },
+        boneOffset: { x: -0.0457, y: -0.00448, z: -0.02004 },
+        rotationOffset: { x: 0.02582, y: -0.08611, z: -0.14021, w: 0.98603 },
         scale: { x: 1.0, y: 1.0, z: 1.0 }
     },
 
-    PointerSpeedBoost: { pointerSpeedBoost: 9, confPointerTiming: 1, selectPointerSpeedRoot9: 1 },
-    PPIInjection: { ppiOverride: 550, selectPPIInfo: 1 },
-    DPIInjection: { dpiPointer: 10000 },
-
-    AimHeadLock: {
-        aimBone: "bone_Head",
-        autoLock: true,
-        lockInjection: true,
-        lockStrength: "maximum",
-        snapBias: 1.0,
-        trackingSpeed: 1.0,
-        dragCorrectionSpeed: 5.0,
-        snapToleranceAngle: 1.5,
-        maxLockAngle: 360,
-        stickiness: "high",
-        headStickPriority: true,
-        headLockPriority: true,
-        disableBodyRecenter: true,
-        minDistanceToLock: 0.0,
-        boneHead_position: { x: -0.0456970781, y: -0.004478302, z: -0.0200432576 },
-        boneHead_rotation: { x: 0.0258174837, y: -0.08611039, z: -0.1402113, w: 0.9860321 },
-        boneHead_scale: { x: 1.0, y: 1.0, z: 1.0 }
-    },
-
-    AutoAimLockHeadOnFire_StableDrag: {
+    autoAimLockHead: {
         enabled: true,
         aimBone: "bone_Head",
         autoLockOnFire: true,
@@ -130,13 +88,14 @@ HyperHeadLockSystem: {
         stickiness: "extreme",
         disableBodyRecenter: true,
         smoothing: 1.0,
-        boneOffset: { x: -0.0456970781, y: -0.004478302, z: -0.0200432576 },
-        rotationOffset: { x: 0.0258174837, y: -0.08611039, z: -0.1402113, w: 0.9860321 },
+        boneOffset: { x: -0.0457, y: -0.00448, z: -0.02004 },
+        rotationOffset: { x: 0.02582, y: -0.08611, z: -0.14021, w: 0.98603 },
         scale: { x: 1.0, y: 1.0, z: 1.0 }
     },
 
-    AimNeckLock: {
-        aimTrackingBone: "bone_Neck",
+    aimNeckLock: {
+        enabled: true,
+        aimBone: "bone_Neck",
         autoLock: true,
         lockStrength: "maximum",
         snapBias: 1.0,
@@ -146,161 +105,95 @@ HyperHeadLockSystem: {
         maxLockAngle: 360,
         stickiness: "high",
         neckStickPriority: true,
-        boneNeck_position: { x: -0.128512, y: 0.0, z: 0.0 },
-        boneNeck_rotation: { x: -0.012738, y: -0.002122, z: 0.164307, w: 0.986325 },
-        boneNeck_scale: { x: 1.0, y: 1.0, z: 1.0 }
+        boneOffset: { x: -0.1285, y: 0.0, z: 0.0 },
+        rotationOffset: { x: -0.01274, y: -0.00212, z: 0.16431, w: 0.98633 },
+        scale: { x: 1.0, y: 1.0, z: 1.0 }
     },
 
-    AntiRecoilAimStabilizer: {
+    antiRecoil: {
         enabled: true,
         targetBone: "bone_Head",
         autoCompensateRecoil: true,
         compensationStrength: 0.95,
         smoothFactor: 0.9,
-        snapToleranceAngle: 0.0,
         stickiness: "extreme",
         applyWhileFiring: true,
         predictionFactor: 0.0,
-        adaptToWeapon: true,
-        boneOffset: { x: -0.0456970781, y: -0.004478302, z: -0.0200432576 },
-        rotationOffset: { x: 0.0258174837, y: -0.08611039, z: -0.1402113, w: 0.9860321 },
-        scale: { x: 1.0, y: 1.0, z: 1.0 }
+        adaptToWeapon: true
     },
 
-    AutoAimHeadOnFire: {
+    // ===== DYNAMIC HARDLOCK =====
+    dynamicHardLock: {
         enabled: true,
-        aimBone: "bone_Head",
-        autoLockOnFire: true,
-        trackingSpeed: 1.5,
-        predictionFactor: 0.9,
-        snapToleranceAngle: 0.0,
-        stickiness: "extreme",
-        headLockPriority: true,
-        disableBodyRecenter: true,
-        fireHoldLock: true,
-        boneOffset: { x: -0.0456970781, y: -0.004478302, z: -0.0200432576 },
-        rotationOffset: { x: 0.0258174837, y: -0.08611039, z: -0.1402113, w: 0.9860321 },
-        scale: { x: 1.0, y: 1.0, z: 1.0 }
+        minSpeed: 0.2,
+        maxSpeed: 6.0,
+        extraLockBoost: 0.15,
+        velocitySmoothing: 0.85
     },
 
-    HoldCrosshairOnHeadWhenFire: {
+    // ===== DRAG LOCK =====
+    dragLockHead: {
         enabled: true,
-        targetBone: "bone_Head",
-        autoLockOnFire: true,
-        holdLockWhileFiring: true,
-        trackingSpeed: 1.5,
-        predictionFactor: 0.00001,
-        snapToleranceAngle: 0.0,
-        stickiness: "extreme",
-        disableBodyRecenter: true,
-        smoothing: 0.85,
-        boneOffsetHoldCrosshairOnHeadWhenFire: { x: -0.0456970781, y: -0.004478302, z: -0.0200432576 },
-        rotationOffsetHoldCrosshairOnHeadWhenFire: { x: 0.0258174837, y: -0.08611039, z: -0.1402113, w: 0.9860321 },
-        scale: { x: 1.0, y: 1.0, z: 1.0 }
+        maxDragSpeed: 1.0,
+        dragAccelerationSmooth: 0.88,
+        dragVelocityClamp: 0.78,
+        microCorrection: 0.995,
+        antiOvershoot: 1.0,
+        kalmanFactor: 0.97,
+        snapBackForce: 0.99
     },
 
-    StableDragLockHead: {
+    // ===== AIR HEAD CORRECTOR =====
+    airHeadCorrector: {
         enabled: true,
-        targetBone: "bone_Head",
-        dragSmoothFactor: 0.85,
-        maxDragDistance: 0.02,
-        snapBackToHead: true,
-        snapToleranceAngle: 0.0,
-        stickiness: "extreme",
-        headLockPriority: true,
-        predictionFactor: 0.0,
-        boneOffsetStableDragLockHead: { x: -0.0456970781, y: -0.004478302, z: -0.0200432576 },
-        rotationOffsetStableDragLockHead: { x: 0.0258174837, y: -0.08611039, z: -0.1402113, w: 0.9860321 },
-        scale: { x: 1.0, y: 1.0, z: 1.0 }
+        verticalBoost: 0.012,
+        predictionLead: 0.018,
+        gravityCompensation: 0.95
     },
 
-    AutoTrackingLock: {
+    // ===== RECOIL & SMOOTH BLEND =====
+    ultraSmoothRecoilBlend: {
         enabled: true,
-        trackingBone: "bone_Head",
-        autoSwitchToNeck: true,
-        trackingSpeed: 10.0,
-        predictionFactor: 0.0001,
-        snapToleranceAngle: 0.0,
-        maxLockDistance: 200.0,
-        stickiness: "extreme",
-        ignoreObstacles: true,
-        recenterDelay: 0,
-        boneOffsetAutoTrackingLock: { x: -0.0456970781, y: -0.004478302, z: -0.0200432576 },
-        rotationOffsetAutoTrackingLock: { x: 0.0258174837, y: -0.08611039, z: -0.1402113, w: 0.9860321 },
-        scale: { x: 1.0, y: 1.0, z: 1.0 }
+        recoilNeutralize: 1.0,
+        blendStrength: 0.92,
+        stabilizeFalloff: 1.0,
+        instantRecovery: 0.0
     },
 
-    AutoShotHead: { autoHeadshot: true, aimListextension: true },
-    FixLagBoost: { fixResourceTask: true },
-    CloseLauncherRestore: { closeLauncher: true, forceRestore: true },
-    // ===== DynamicHardLock =====
-    "DynamicHardLock": {
-        "Enabled": true,
-        "MinSpeed": 0.2,
-        "MaxSpeed": 6.0,
-        "ExtraLockBoost": 0.15,
-        "VelocitySmoothing": 0.85
+    // ===== ROTATION-AWARE HEAD OFFSET =====
+    rotationAwareHeadOffset: {
+        enabled: true,
+        baseOffset: { x: 0.0, y: 0.025, z: 0.0 },
+        maxTiltOffset: 0.018,
+        maxYawOffset: 0.020,
+        maxPitchOffset: 0.022
     },
 
-    // ===== DragLockHead =====
-    "DragLockHead": {
-        "Enabled": true,
-        "MaxDragSpeed": 1.0,
-        "DragAccelerationSmooth": 0.88,
-        "DragVelocityClamp": 0.78,
-        "MicroCorrection": 0.995,
-        "AntiOvershoot": 1.0,
-        "KalmanFactor": 0.97,
-        "SnapBackForce": 0.99
+    // ===== MOTION PREDICTOR =====
+    animationMotionPredictor: {
+        enabled: true,
+        runBoost: 0.015,
+        crouchBoost: -0.010,
+        slideBoost: 0.020,
+        jumpBoost: 0.018,
+        predictionFactor: 0.012
     },
 
-    // ===== AirHeadCorrector =====
-    "AirHeadCorrector": {
-        "Enabled": true,
-        "VerticalBoost": 0.012,
-        "PredictionLead": 0.018,
-        "GravityCompensation": 0.95
+    // ===== ULTIMATE LOCK RESOLVER =====
+    ultimateLockResolver: {
+        enabled: true,
+        maxDrift: 0.085,
+        snapBackForce: 0.95,
+        jitterFilter: 0.90,
+        antiPeekLoss: true,
+        historyFrames: 5
     },
 
-    // ===== UltraSmoothRecoilBlend =====
-    "UltraSmoothRecoilBlend": {
-        "Enabled": true,
-        "RecoilNeutralize": 1.0,
-        "BlendStrength": 0.92,
-        "StabilizeFalloff": 1.0,
-        "InstantRecovery": 0.0
-    },
-
-    // ===== Rotation-Aware Head Offset =====
-    "RotationAwareHeadOffset": {
-        "Enabled": true,
-        "BaseOffset": { "x": 0.0, "y": 0.025, "z": 0.0 },
-        "MaxTiltOffset": 0.018,
-        "MaxYawOffset": 0.020,
-        "MaxPitchOffset": 0.022
-    },
-
-    // ===== AnimationMotionPredictor =====
-    "AnimationMotionPredictor": {
-        "Enabled": true,
-        "RunBoost": 0.015,
-        "CrouchBoost": -0.010,
-        "SlideBoost": 0.020,
-        "JumpBoost": 0.018,
-        "PredictionFactor": 0.012
-    },
-
-    // ===== UltimateLockResolver =====
-    "UltimateLockResolver": {
-        "Enabled": true,
-        "MaxDrift": 0.085,
-        "SnapBackForce": 0.95,
-        "JitterFilter": 0.90,
-        "AntiPeekLoss": true,
-        "HistoryFrames": 5
-    }
+    // ===== UTILITY =====
+    autoShotHead: { autoHeadshot: true, aimListextension: true },
+    fixLagBoost: { fixResourceTask: true },
+    closeLauncherRestore: { closeLauncher: true, forceRestore: true }
 };
-
 
 // ====== SYSTEM & PERFORMANCE OPTIMIZATION ======
 
