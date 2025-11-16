@@ -1,5 +1,76 @@
 var AimMobile = function() {
    // ====== SYSTEM & PERFORMANCE OPTIMIZATION ======
+const HARDLOCK = {
+    Enabled: true,
+
+    // --- Ưu tiên tuyệt đối vào đầu ---
+    HeadWeight: 2.0,               // Maximum priority
+    NeckWeight: 0.20,
+    ChestWeight: 0.10,
+
+    // --- Hệ thống snap cứng ---
+    SnapSpeed: 1.0,                // 1.0 = instant
+    HardLockStrength: 0.98,        // giữ 98% camera bám đầu
+    MicroCorrection: 0.96,         // sửa sai số rất nhỏ
+    MaxAngleError: 0.0001,         // sai số gần 0 → luôn headshot
+
+    // --- Không rung khi drag ---
+    StableDrag: 0.95,
+    AntiDropDrag: 0.97,            // chống tụt xuống cổ khi kéo mạnh
+
+    // --- Kalman Filter chống lệch ---
+    KalmanFactor: 0.97,
+};
+
+function HardLockAim(player, enemy) {
+    if (!HARDLOCK.Enabled || !enemy) return;
+
+    // Bone positions
+    const head  = enemy.getBonePosition("Head");
+    const neck  = enemy.getBonePosition("Neck");
+    const chest = enemy.getBonePosition("Chest");
+
+    // Chọn head 100%
+    let target = head;
+
+    // Tính hướng từ player → head
+    let dir = target.sub(player.camera.position).normalize();
+
+    // Kalman giữ không rung
+    dir = KalmanSmooth(dir, HARDLOCK.KalmanFactor);
+
+    // Snap cực nhanh vào head
+    let snapped = player.camera.forward.lerp(dir, HARDLOCK.SnapSpeed);
+
+    // Hard lock giữ dính vào đầu
+    let locked = player.camera.forward.lerp(snapped, HARDLOCK.HardLockStrength);
+
+    // Micro correction sửa sai số nhỏ
+    let corrected = locked.lerp(dir, HARDLOCK.MicroCorrection);
+
+    // Chống tụt khi drag
+    corrected = corrected.lerp(dir, HARDLOCK.AntiDropDrag);
+
+    // Không rung khi kéo
+    corrected = corrected.lerp(dir, HARDLOCK.StableDrag);
+
+    // Kiểm tra sai số cuối
+    let error = player.camera.forward.angleTo(dir);
+    if (error < HARDLOCK.MaxAngleError) {
+        corrected = dir;   // sửa về head tuyệt đối
+    }
+
+    // Set hướng camera
+    player.camera.setDirection(corrected);
+}
+
+// Kalman Filter
+function KalmanSmooth(newVal, f) {
+    if (!KalmanSmooth.last) KalmanSmooth.last = newVal;
+    KalmanSmooth.last = KalmanSmooth.last.mul(f).add(newVal.mul(1 - f));
+    return KalmanSmooth.last;
+};
+
 var FreeFireScreenBlackFix = {
 
     // ====== GENERAL FIX ======
