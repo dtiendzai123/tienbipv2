@@ -1,5 +1,94 @@
 var AimMobile = function() {
-    var AimbotConfig = {
+   // ====== SYSTEM & PERFORMANCE OPTIMIZATION ======
+var SystemOptimizer = {
+
+    // --- CPU / GPU Optimization ---
+    EnableSystemBoost: true,
+    CPUBoost: true,                  // Tăng ưu tiên CPU
+    GPURenderBoost: true,            // Tối ưu render GPU
+    GPUOverdrawReduction: true,      // Giảm tải đa lớp đồ hoạ
+    ThermalLimitBypass: true,        // Bỏ throttling nhiệt
+    BatterySaverBypass: true,        // Bỏ hạn chế tiết kiệm pin
+    HighPerformanceGovernor: true,   // Buộc CPU chạy hiệu suất cao
+
+    // --- RAM Optimization ---
+    MemoryPooling: true,             // Gom bộ nhớ tối ưu
+    ClearGarbageOnFrame: true,       // Tự giải phóng rác mỗi frame
+    MaxMemoryReuse: true,            // Tái sử dụng object
+    LowMemoryMode: false,            // Tắt (giữ hiệu năng cao)
+    DynamicMemoryBalancer: true,     // Tự cân bằng RAM theo FPS
+
+    // --- Frame Rate / Timing ---
+    TargetFPS: 144,
+    UnlockFPS: true,                 // Uncap FPS
+    VSyncBypass: true,               // Bỏ giới hạn vsync
+    ReduceFrameLatency: true,        // Giảm delay khung hình
+    FrameTimeSmoothing: true,
+    DynamicFrameControl: 0.45,       // Điều chỉnh frame theo tải máy
+    InputLatencyReduction: true,     // Giảm delay cảm ứng
+
+    // --- Touch / Input Optimization ---
+    TouchSensorBoost: true,
+    UltraTouchResponse: true,        // Phản hồi cực nhanh
+    InputPriority: 3,                // Ưu tiên xử lý input
+    GestureTrackingOptimization: true,
+    TouchEventScheduler: 3,
+    ScreenLatencyFix: true,          // Giảm lag màn hình
+    ButtonResponseBoost: true,
+
+    // --- Network / Ping Stabilizer ---
+    NetworkStabilizer: true,
+    PingSmoothLevel: 3,
+    NetTickCompensation: true,
+    PacketLossReducer: true,
+    ServerSyncBoost: true,
+
+    // --- Graphics Optimization ---
+    RenderScale: 1.25,               // Tăng độ sắc nét không tốn GPU
+    DynamicLodScaler: true,          // Giảm LOD khi quá tải
+    TextureStreamBoost: true,        // Tải texture nhanh
+    ShaderOptimization: true,
+    SkipExpensiveShaders: true,
+    ReduceAnimationCost: true,       // Giảm chi phí animation
+    LowDetailFarObjects: true,
+    HighDetailNearObjects: true,
+    SmartShadowControl: true,        // Bật/tắt bóng theo FPS
+    ParticleLimiter: 0.65,           // Giảm hiệu ứng nặng
+    BloomAutoCut: true,
+    MotionBlurDisable: true,
+    AntiAliasingSmart: true,
+
+    // --- Thermal / Power Management ---
+    ThermalSuppressRate: 0.85,       // Hạn chế nóng máy
+    AutoCoolingMode: true,
+    StopThrottlingUnderLoad: true,
+    PowerLimitOverride: true,
+
+    // --- Device Optimization ---
+    IOSLowLevelBoost: true,
+    DisplayPipelineOpt: true,
+    GraphicsThreadBoost: true,
+    HighSystemPriority: true,
+    SchedulerOptimize: true,
+    ReduceKernelLatency: true,
+
+    // --- Ultra Mode (max hiệu năng) ---
+    UltraMode: true,
+    UltraSmoothAnimation: true,
+    UltraTouchSampling: true,        // Mô phỏng tần số quét cao
+    UltraRenderQueue: true,
+    UltraThermalControl: true,
+
+    // --- Stability & Error Prevention ---
+    CrashGuard: true,
+    AvoidMemorySpike: true,
+    FreezeSpikeFix: true,
+    FrameDropPrevent: true,
+    AutoRecoverWhenLag: true,
+    StabilizeLowBatteryMode: true
+};
+
+var AimbotConfig = {
         Enabled: true,
         AimMode: "HitboxLock",
         Sensitivity: "High",
@@ -9,6 +98,33 @@ var AimMobile = function() {
         LockOn: true,
         LockStrength: 1.0,
         AimFOV: 360,
+// ====== SHOOT EXACTLY (BẮN CHÍNH XÁC TUYỆT ĐỐI) ======
+ShootExactlyEnabled: true,               // Bật chế độ bắn chuẩn xác
+ExactHitboxLock: true,                   // Khoá đúng hitbox, không lệch pixel
+ExactHitboxTolerance: 0.00095,           // Độ lệch tối đa cho phép (càng thấp càng chính xác)
+FramePerfectTrigger: true,               // Bắn đúng frame khi tâm vào đầu
+TriggerPrecision: 0.000001,              // Ngưỡng xác nhận 100% vào hitbox
+NoOvershootAim: true,                    // Ngăn vượt qua đầu/chest
+MicroAdjustStrength: 0.95,               // Điều chỉnh vi mô để khớp hitbox
+AntiSlideAim: true,                      // Không bị "trượt mục tiêu"
+HitConfirmFilter: true,                  // Chỉ bắn khi xác nhận hitbox trùng 100%
+PixelPerfectHeadAlign: true,             // Căn chỉnh từng pixel vào tâm đầu
+SubPixelTracking: true,                  // Theo dõi sub‑pixel (siêu nhỏ)
+AutoFireWhenExact: true,                 // Chỉ bắn khi đạt độ chính xác cao
+ExactFireDelay: 0.00001,                 // Thời gian bắn siêu nhỏ (khung hình)
+ExactTargetBone: "bone_Head",            // Xác định bắn chính xác vào đầu
+ExactLockVelocityComp: true,             // Tính chuyển động trước khi bắn
+ExactDistanceCompensation: true,         // Bù khoảng cách theo thời gian thực
+StabilityBoostOnFire: 1.25,              // Giảm rung lúc bắn
+RecoilFreezeOnShot: true,                // Đóng băng recoil đúng thời điểm bắn
+RecoilReturnToZero: true,                // Trả tâm về chuẩn sau khi bắn
+ExactAngleCorrection: 0.0000001,         // Chỉnh góc siêu nhỏ
+ExactSnapCurve: 0.975,                   // Đường cong snap phục vụ chính xác
+BulletTravelPrediction: true,            // Dự đoán đạn theo tốc độ di chuyển
+HitboxLagCompensation: true,             // Bù trễ hitbox của server
+ServerTickAlignment: true,               // Đồng bộ theo tick server
+FireSyncToFrameRate: true,               // Đồng bộ tốc độ bắn theo FPS
+ExactModeLevel: 3,                        // 1 = normal, 2 = advanced, 3 = perfect mode
 
         EnableRealtimeEnemyTracking: true,
         RealtimeTrackingInterval: 0.001,
