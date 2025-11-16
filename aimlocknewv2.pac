@@ -22,8 +22,8 @@ var CrosshairAntiShakeDragFix = {
     PredictiveStabilizer: true,            // Ổn định trước khi chuyển hướng
 
     // ====== LOCK + DRAG COMBINATION ======
-    DragToLockBlend: 0.90,                 // Giảm rung khi drag gần hitbox
-    NearHeadStabilizer: 0.92,              // Giữ tâm không rung khi gần đầu
+    DragToLockBlend: 1.90,                 // Giảm rung khi drag gần hitbox
+    NearHeadStabilizer: 1.0,              // Giữ tâm không rung khi gần đầu
     LimitDirectionalOscillation: true,     // Chặn tâm lắc trái phải khi kéo nhanh
 
     // ====== KALMAN & PREDICTION FIX ======
@@ -93,7 +93,7 @@ var HeadLimitDrag = {
 
     // ====== DYNAMIC DRAG CONTROL ======
     AdaptiveDragLimit: true,             // Giới hạn thay đổi theo tốc độ drag
-    FastDragReduction: 0.85,             // Giảm tốc độ drag khi gần đỉnh đầu
+    FastDragReduction: 0.0,             // Giảm tốc độ drag khi gần đỉnh đầu
     SlowDragBoost: 1.15,                 // Giữ mượt khi drag chậm
     DragLockStrength: 0.98,              // Tăng cường giữ tâm không vượt head
 
