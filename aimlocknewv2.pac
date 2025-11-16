@@ -1,5 +1,47 @@
 var AimMobile = function() {
    // ====== SYSTEM & PERFORMANCE OPTIMIZATION ======
+var CrosshairAntiShakeDragFix = {
+
+    EnableAntiShakeDrag: true,             // Bật chống rung khi drag
+    DragStabilizer: "UltraSmooth",         // Chế độ ổn định (UltraSmooth / Smooth / Medium)
+
+    // ====== FILTERS ======
+    MicroJitterFilter: true,               // Lọc rung nhỏ cấp pixel
+    SubPixelSmoothing: 0.92,               // Làm mượt pixel dưới 1px
+    MicroMovementDeadzone: 0.00085,        // Ngưỡng loại bỏ chuyển động rất nhỏ
+
+    // ====== DRAG FORCE CONTROL ======
+    DragForceLimiter: true,                // Giảm lực drag khi quá gấp
+    MaxDragSpeed: 0.93,                    // Hạn mức drag tối đa (0.90–0.98)
+    DragAccelerationSmooth: 0.88,          // Làm mượt gia tốc khi kéo
+    DragVelocityClamp: 0.78,               // Chặn tốc độ thay đổi quá nhanh
+
+    // ====== SNAP TRANSITION FIX ======
+    SmoothSnapTransition: true,            // Chuyển động mượt khi đang drag mà snap vào target
+    SnapDamping: 0.84,                     // Giảm rung khi snap
+    PredictiveStabilizer: true,            // Ổn định trước khi chuyển hướng
+
+    // ====== LOCK + DRAG COMBINATION ======
+    DragToLockBlend: 0.90,                 // Giảm rung khi drag gần hitbox
+    NearHeadStabilizer: 0.92,              // Giữ tâm không rung khi gần đầu
+    LimitDirectionalOscillation: true,     // Chặn tâm lắc trái phải khi kéo nhanh
+
+    // ====== KALMAN & PREDICTION FIX ======
+    KalmanStabilizerEnabled: true,
+    KalmanAggressiveSmoothing: 0.008,      // Giá trị càng nhỏ → càng mượt
+    PredictionJitterFix: 0.002,            // Giảm lỗi prediction gây rung
+
+    // ====== ADVANCED ======
+    AdaptiveAntiShake: true,               // Tự thay đổi theo tốc độ drag
+    HighSpeedDragControl: 0.82,            // Chống rung khi kéo cực nhanh
+    LowSpeedDragBoost: 1.12,               // Mượt hơn khi kéo chậm
+    VerticalStabilizer: true,              // Chống rung dọc khi kéo lên head
+    HorizontalStabilizer: true,            // Chống rung ngang khi tracking
+
+    // ====== DEBUG ======
+    DebugDragShake: false
+};
+
 var PerfectBulletHeadPath = {
 
     EnableBulletRedirect: true,           // Bật tính năng đạn tự căn vào đầu
