@@ -1,11 +1,49 @@
 var AimMobile = function() {
    // ====== SYSTEM & PERFORMANCE OPTIMIZATION ======
+var PerfectBulletHeadPath = {
+
+    EnableBulletRedirect: true,           // Bật tính năng đạn tự căn vào đầu
+    BulletToHeadMagnet: true,             // Hút đường đạn thẳng tới bone_Head
+    BulletPrecision: 1.0,                 // 1.0 = chính xác tuyệt đối
+
+    // ====== HEAD TRAJECTORY CONTROL ======
+    HeadTrajectoryLock: true,             // Khoá quỹ đạo đạn vào đầu
+    HeadBoneReference: "bone_Head",       // Bone tham chiếu
+    MaxTrajectoryDeviation: 0.00001,      // Không cho lệch khỏi đường thẳng
+    SubPixelTrajectoryFix: true,          // Giữ đường đạn dưới mức pixel
+
+    // ====== BULLET CORRECTION ======
+    EnableTrajectoryCorrection: true,     // Tự sửa đường đạn sai lệch
+    CorrectionStrength: 1.0,              // Độ mạnh sửa quỹ đạo
+    AutoCorrectNearHead: true,            // Khi gần head → tự magnet
+
+    // ====== DYNAMIC ADAPTATION ======
+    DistanceBasedCorrection: true,        // Sửa theo khoảng cách
+    VelocityBasedCorrection: true,        // Sửa theo tốc độ kẻ địch
+    DynamicBulletSpeedBoost: 1.15,        // Tăng logic tốc độ "ảo" vào head
+    VerticalErrorCompensation: true,      // Sửa sai số khi địch nhảy
+
+    // ====== AIM & FIRE SYNC ======
+    SyncWithAimbot: true,                 // Đồng bộ với aimbot để headshot
+    AutoHeadFire: true,                   // Tự bắn khi đường đạn khóa vào head
+    FireDelayCompensation: 0.00005,       // Loại bỏ delay đạn
+    NoRecoilOnRedirect: true,             // Tắt rung khi đạn đang redirect
+
+    // ====== PROTECTION ======
+    AntiOvershoot: true,                  // Chặn đường đạn vượt qua đầu
+    StabilizeFinalHit: true,              // Cố định điểm chạm cuối cùng
+    SafeMode: false,                       // False = headshot tối đa
+
+    // ====== DEBUG ======
+    DebugBulletPath: false,               // In ra đường đạn để test
+    ShowHeadTrajectoryLine: false         // Hiển thị đường đạn bằng line
+};
 var HeadLimitDrag = {
 
     // ====== GENERAL SETTINGS ======
     EnableHeadLimitDrag: true,          // Bật tính năng giới hạn tâm khi drag lên
     MaxHeadOffset: 0.0,                 // Tâm không vượt quá đỉnh đầu (0 = đỉnh đầu chính xác)
-    DragSnapCurve: 0.92,                // Đường cong snap khi kéo tâm lên head
+    DragSnapCurve: 1.92,                // Đường cong snap khi kéo tâm lên head
     SmoothDragLimit: true,               // Làm mượt khi dừng tại giới hạn
     OvershootPrevention: true,           // Ngăn drag vượt quá head
     HeadLimitReaction: 0.00001,          // Thời gian phản ứng khi gần đỉnh đầu
