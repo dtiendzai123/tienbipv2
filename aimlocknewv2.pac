@@ -23,7 +23,7 @@ var CrosshairAntiShakeDragFix = {
 
     // ====== LOCK + DRAG COMBINATION ======
     DragToLockBlend: 1.90,                 // Giảm rung khi drag gần hitbox
-    NearHeadStabilizer: 1.0,              // Giữ tâm không rung khi gần đầu
+    NearHeadStabilizer: 2.0,              // Giữ tâm không rung khi gần đầu
     LimitDirectionalOscillation: true,     // Chặn tâm lắc trái phải khi kéo nhanh
 
     // ====== KALMAN & PREDICTION FIX ======
@@ -326,8 +326,8 @@ ExactModeLevel: 3,                        // 1 = normal, 2 = advanced, 3 = perfe
         AdaptiveAimSensitivity: true,
         AimSensitivityHead: 1.00,
         AimSensitivityNeck: 0.85,
-        AimSensitivityChest: 0.70,
-        AimSensitivityPelvis: 0.55,
+        AimSensitivityChest: 1.0,
+        AimSensitivityPelvis: 2.55,
         HighSpeedTargetBoost: 1.25,
         CloseRangeSensitivityBoost: 1.35,
 
