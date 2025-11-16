@@ -9,7 +9,7 @@ Enabled: true,
     PredictionStrength: 1.0,
     LockOn: true,
     LockStrength: 1.0,
-    AimFOV: 360
+    AimFOV: 360,
 
  EnableRealtimeEnemyTracking: true,
     RealtimeTrackingInterval: 0.001,
