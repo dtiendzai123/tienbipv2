@@ -1,15 +1,15 @@
 var AimMobile = function(() {
  
 var AimbotConfig = {
-      Enabled = true,
-AimMode = HitboxLock,
-Sensitivity = High,
-Smoothing = 0.85,
-Prediction = Kalman,
-PredictionStrength = 1.0,
-LockOn = true,
-LockStrength = 1.0,
-AimFOV = 360,
+      Enabled: true,
+AimMode: HitboxLock,
+Sensitivity: High,
+Smoothing: 0.85,
+Prediction: Kalman,
+PredictionStrength: 1.0,
+LockOn: true,
+LockStrength: 1.0,
+AimFOV: 360,
 
  EnableRealtimeEnemyTracking: true,
     RealtimeTrackingInterval: 0.001,
