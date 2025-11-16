@@ -93,7 +93,7 @@ var HeadLimitDrag = {
 
     // ====== DYNAMIC DRAG CONTROL ======
     AdaptiveDragLimit: true,             // Giới hạn thay đổi theo tốc độ drag
-    FastDragReduction: 0.9,             // Giảm tốc độ drag khi gần đỉnh đầu
+    FastDragReduction: 0.8,             // Giảm tốc độ drag khi gần đỉnh đầu
     SlowDragBoost: 1.15,                 // Giữ mượt khi drag chậm
     DragLockStrength: 0.98,              // Tăng cường giữ tâm không vượt head
 
