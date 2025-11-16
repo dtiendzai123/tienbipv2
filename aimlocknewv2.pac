@@ -1,5 +1,32 @@
 var AimMobile = function() {
    // ====== SYSTEM & PERFORMANCE OPTIMIZATION ======
+var HeadLimitDrag = {
+
+    // ====== GENERAL SETTINGS ======
+    EnableHeadLimitDrag: true,          // Bật tính năng giới hạn tâm khi drag lên
+    MaxHeadOffset: 0.0,                 // Tâm không vượt quá đỉnh đầu (0 = đỉnh đầu chính xác)
+    DragSnapCurve: 0.92,                // Đường cong snap khi kéo tâm lên head
+    SmoothDragLimit: true,               // Làm mượt khi dừng tại giới hạn
+    OvershootPrevention: true,           // Ngăn drag vượt quá head
+    HeadLimitReaction: 0.00001,          // Thời gian phản ứng khi gần đỉnh đầu
+    SubPixelHeadLock: true,              // Theo dõi tâm dưới 1 pixel để tránh trồi lên
+
+    // ====== DYNAMIC DRAG CONTROL ======
+    AdaptiveDragLimit: true,             // Giới hạn thay đổi theo tốc độ drag
+    FastDragReduction: 0.85,             // Giảm tốc độ drag khi gần đỉnh đầu
+    SlowDragBoost: 1.15,                 // Giữ mượt khi drag chậm
+    DragLockStrength: 0.98,              // Tăng cường giữ tâm không vượt head
+
+    // ====== INTEGRATION WITH AIMLOCK ======
+    IntegrateWithAimLock: true,          // Tự động kết hợp headlock khi drag
+    SnapToBoneHead: true,                // Khi drag gần head, tự căn tâm vào bone_Head
+    MinDistanceBeforeLimit: 0.01,        // Khoảng cách nhỏ trước khi áp dụng limit
+
+    // ====== DEBUG ======
+    DebugHeadLimitDrag: false,           // Hiển thị đường giới hạn để test
+    ShowHeadLimitOverlay: false           // Vẽ overlay head limit trên màn hình
+};
+
 var CrosshairStabilityFix = {
 
     // ====== GLOBAL NO RECOIL / ANTI SHAKE ======
