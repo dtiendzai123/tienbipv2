@@ -1,5 +1,68 @@
 var AimMobile = function() {
    // ====== SYSTEM & PERFORMANCE OPTIMIZATION ======
+var CrosshairStabilityFix = {
+
+    // ====== GLOBAL NO RECOIL / ANTI SHAKE ======
+    EnableRecoilFix: true,
+    MaxRecoilSuppression: 9999.0,       // Triệt hoàn toàn rung súng
+    VerticalRecoilControl: 0.00001,     // Hạn chế tâm nhảy lên
+    HorizontalRecoilControl: 0.00001,   // Hạn chế lệch trái/phải
+    RecoilDamping: 0.99999999,          // Làm mượt đường giật
+    RecoilSmoothFactor: 1.0,
+    RecoilSnapReturn: 0.00000001,       // Tâm trở lại vị trí chính xác
+
+    // ====== ANTI-CAMERA-SHAKE ======
+    AntiShake: true,
+    AntiCameraKick: true,
+    ShakeReductionLevel: 0.95,
+    CameraJitterFix: true,
+    StabilizeWhileMoving: true,
+
+    // ====== ADVANCED GUN-BY-GUN COMPENSATION ======
+    WeaponRecoilProfiles: {
+        default:      { vert: 0.00008, horiz: 0.00003, curve: 0.8 },
+        mp40:         { vert: 0.00002, horiz: 0.00001, curve: 0.3 },
+        thompson:     { vert: 0.00003, horiz: 0.00001, curve: 0.4 },
+        ump:          { vert: 0.00003, horiz: 0.00001, curve: 0.3 },
+        m4a1:         { vert: 0.00005, horiz: 0.00002, curve: 0.7 },
+        scar:         { vert: 0.00004, horiz: 0.00002, curve: 0.65 },
+        ak:           { vert: 0.00003, horiz: 0.00001, curve: 0.55 },
+        m1887:        { vert: 0.000001, horiz: 0.000001, curve: 0.0001 }, 
+        m1014:        { vert: 0.00002, horiz: 0.00001, curve: 0.25 }
+    },
+
+    // ====== REALTIME COMPENSATION ENGINE ======
+    RealtimeRecoilTracking: true,
+    DynamicRecoilAdapt: true,           // Tự chỉnh theo tốc độ bạn kéo tâm
+    VelocityBasedCompensation: true,    // Tối ưu theo tốc độ enemy
+    DistanceBasedRecoilFix: true,       // Cân bằng recoil theo khoảng cách
+    TapFireStabilizer: true,            // Tối ưu bắn tap
+    BurstControl: true,                 // Giữ tâm không văng khi spam đạn
+
+    // ====== DRAG LOCK + RECOIL SYNC ======
+    SyncDragToRecoil: true,             // Tâm kéo và giật đồng bộ
+    DragSmoothCompensation: 0.99999985, // Tạo đường kéo mượt
+    OvershootCorrection: true,          // Chống vượt tâm khi bắn
+
+    // ====== RETICLE BOUNCE FIX (tâm nhảy khi bắn) ======
+    FixReticleBounce: true,
+    ReticleKickRemoval: 0.0000001,
+    ReticleShakeAbsorb: 0.95,
+
+    // ====== HIGH FPS OPTIMIZER ======
+    FrameSyncCompensation: true,        // Giữ recoil mượt ở 60/90/120/144 FPS
+    StabilityFrameFactor: 1.0,
+    HighFpsStabilityBoost: 1.25,
+
+    // ====== PURE SMOOTHING MODE ======
+    EnableUltraSmoothMode: true,
+    SmoothnessLevel: 0.99999999,
+    MicroJitterElimination: true,
+
+    // ====== DEBUG ======
+    DebugRecoilFix: false
+};
+
 var SystemOptimizer = {
 
     // --- CPU / GPU Optimization ---
