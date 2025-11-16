@@ -402,12 +402,12 @@ ExactModeLevel: 3,                        // 1 = normal, 2 = advanced, 3 = perfe
         PreferClosestHitbox: true,
 
         AdaptiveAimSensitivity: true,
-      
-        AimSensitivityNeck: 0.95,
-        AimSensitivityChest: 1.0,
+      AimSensitivityHead: 0.3,
+        AimSensitivityNeck: 1.0,
+        AimSensitivityChest: 2.0,
         AimSensitivityPelvis: 2.55,
-        HighSpeedTargetBoost: 1.25,
-        CloseRangeSensitivityBoost: 1.35,
+        HighSpeedTargetBoost: 4.25,
+        CloseRangeSensitivityBoost: 5.35,
 
         EnableAdvancedEnemyTactics: true,
         EnemyAwarenessLevel: 0.85,
