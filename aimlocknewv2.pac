@@ -1,5 +1,106 @@
 var AimMobile = function(() {
-  var config = {
+ 
+var AimbotConfig = {
+      Enabled = true,
+AimMode = HitboxLock,
+Sensitivity = High,
+Smoothing = 0.85,
+Prediction = Kalman,
+PredictionStrength = 1.0,
+LockOn = true,
+LockStrength = 1.0,
+AimFOV = 360,
+
+ EnableRealtimeEnemyTracking: true,
+    RealtimeTrackingInterval: 0.001,
+    MultiEnemyTracking: true,
+    PredictEnemyMovement: true,
+    PredictivePathCorrection: true,
+    PredictiveSmoothing: 0.90,
+    EnableDynamicFOV: true,
+    FOVAngle: 90,
+    MaxLockDistance: 999.0,
+    ReactionTime: 0.001,
+    AvoidObstacles: true,
+    RetreatWhenBlocked: true,
+
+    // ====== AIM HITBOX LOCKING ======
+    LockAimToEnemy: true,
+    LockToHitbox: true,
+    EnableAutoFire: true,
+    AutoFireDelay: 0.020,
+    AutoFireOnHeadLock: true,
+    AutoFireSafeMode: false,
+
+    // ====== TARGET ZONE WEIGHTS ======
+    HeadWeight: 2.0,
+    NeckWeight: 1.2,
+    ChestWeight: 0.8,
+    PelvisWeight: 0.5,
+    UseSmartZoneSwitch: true,
+    PreferClosestHitbox: true,
+
+    // ====== REALTIME AIM SENSITIVITY ======
+    AdaptiveAimSensitivity: true,
+    AimSensitivityHead: 1.00,
+    AimSensitivityNeck: 0.85,
+    AimSensitivityChest: 0.70,
+    AimSensitivityPelvis: 0.55,
+    HighSpeedTargetBoost: 1.25,
+    CloseRangeSensitivityBoost: 1.35,
+
+    // ====== ADVANCED ENEMY TACTICS ======
+    EnableAdvancedEnemyTactics: true,
+    EnemyAwarenessLevel: 0.85,
+    PredictiveMovement: 1.0,
+    AggressionMultiplier: 1.20,
+    UseCoverEffectively: true,
+    EvadeProjectiles: true,
+    FlankPlayer: 0.70,
+    PrioritizeHeadshot: false,
+    TeamCoordination: true,
+    AdaptiveDifficulty: true,
+    AmbushProbability: 0.40,
+    RetreatThreshold: 0.25,
+    MaxPursuitDistance: 70.0,
+
+    // ====== REALTIME POSITION/ROTATION TRACKING ======
+    TrackEnemyHead: true,
+    TrackEnemyNeck: true,
+    TrackEnemyChest: true,
+    TrackEnemyRotation: true,
+    TrackEnemyVelocity: true,
+    TrackCameraRelative: true,
+    SnapToBoneAngle: 0.92,
+    RotationLockStrength: 1.0,
+
+    // ====== STABILITY / FILTER ======
+    UseKalmanFilter: true,
+    KalmanPositionFactor: 0.85,
+    KalmanVelocityFactor: 0.88,
+    NoiseReductionLevel: 0.65,
+    JitterFixer: true,
+    SmoothTracking: true,
+
+    // ====== DYNAMIC GAME BEHAVIOR ======
+    EnableDynamicGameBehavior: true,
+    DynamicAimAdjustment: true,          // Tăng/giảm nhạy aim theo tình huống
+    DynamicFireRate: true,                // Điều chỉnh tốc độ bắn theo số lượng/độ nguy hiểm mục tiêu
+    AdaptiveLockPriority: true,           // Thay đổi ưu tiên lock head/chest/neck theo trạng thái
+    ThreatAssessmentLevel: 0.85,          // Xác định mục tiêu nguy hiểm nhất (0.0 - 1.0)
+    CloseRangeBehaviorBoost: 1.20,        // Tăng nhạy ở cự ly gần
+    LongRangeBehaviorPenalty: 0.75,       // Giảm nhạy/độ chính xác ở cự ly xa
+    LowHealthEnemyFocus: true,            // Ưu tiên bắn vào kẻ địch máu thấp
+    MultiTargetDistribution: true,        // Phân bổ lock & fire cho nhiều mục tiêu
+    DynamicFOVScaling: true,              // Thay đổi FOV theo tình huống
+
+    // ====== DEBUG OPTIONS ======
+    EnableDebugLogs: false,
+    LogRealtimeData: false,
+    ShowTargetFOV: false,
+    ShowEnemyVectors: false
+};
+var config = {
   AutoTrackHead: true,          // Bật tự động bám đầu
   BuffMultiplier: 3,            // Hệ số khuếch đại tối đa
   HeadZoneWeight: 2.0,          // Trọng số vùng đầu (tăng độ ưu tiên headshot)
