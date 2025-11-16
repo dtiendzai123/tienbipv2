@@ -1,75 +1,182 @@
 var AimMobile = function() {
-   // ====== SYSTEM & PERFORMANCE OPTIMIZATION ======
-const HARDLOCK = {
+// ==========================
+// HARDLOCK ULTRA MAX
+// ==========================
+
+var HARDLOCK = {
+
     Enabled: true,
 
-    // --- Ưu tiên tuyệt đối vào đầu ---
-    HeadWeight: 2.0,               // Maximum priority
+    // ===== CORE LOCK =====
+    SnapSpeed: 1.0,
+    HardLockStrength: 1.0,
+    MicroCorrection: 0.96,
+    MaxAngleError: 0.0001,
+    StableDrag: 1.0,
+    AntiDropDrag: 1.0,
+    KalmanFactor: 0.97,
+
+    // ===== WEIGHTS =====
+    HeadWeight: 2.0,
     NeckWeight: 0.20,
     ChestWeight: 0.10,
 
-    // --- Hệ thống snap cứng ---
-    SnapSpeed: 1.0,                // 1.0 = instant
-    HardLockStrength: 0.98,        // giữ 98% camera bám đầu
-    MicroCorrection: 0.96,         // sửa sai số rất nhỏ
-    MaxAngleError: 0.0001,         // sai số gần 0 → luôn headshot
+    // ===== DynamicHardLock =====
+    DynamicHardLock: {
+        Enabled: true,
+        MinSpeed: 0.2,
+        MaxSpeed: 6.0,
+        ExtraLockBoost: 0.15,
+        VelocitySmoothing: 0.85
+    },
 
-    // --- Không rung khi drag ---
-    StableDrag: 0.95,
-    AntiDropDrag: 0.97,            // chống tụt xuống cổ khi kéo mạnh
+    // ===== AirHeadCorrector =====
+    AirHeadCorrector: {
+        Enabled: true,
+        VerticalBoost: 0.012,
+        PredictionLead: 0.018,
+        GravityCompensation: 0.95
+    },
 
-    // --- Kalman Filter chống lệch ---
-    KalmanFactor: 0.97,
+    // ===== UltraSmoothRecoilBlend =====
+    UltraSmoothRecoilBlend: {
+        Enabled: true,
+        RecoilNeutralize: 1.0,
+        BlendStrength: 0.92,
+        StabilizeFalloff: 0.75,
+        InstantRecovery: 0.25
+    },
+
+    // ===== Rotation-Aware Head Offset =====
+    RotationAwareHeadOffset: {
+        Enabled: true,
+        BaseOffset: { x: 0.0, y: 0.025, z: 0.0 },
+        MaxTiltOffset: 0.018,
+        MaxYawOffset: 0.020,
+        MaxPitchOffset: 0.022
+    },
+
+    // ===== AnimationMotionPredictor =====
+    AnimationMotionPredictor: {
+        Enabled: true,
+        RunBoost: 0.015,
+        CrouchBoost: -0.010,
+        SlideBoost: 0.020,
+        JumpBoost: 0.018,
+        PredictionFactor: 0.012
+    },
+
+    // ===== UltimateLockResolver =====
+    UltimateLockResolver: {
+        Enabled: true,
+        MaxDrift: 0.085,
+        SnapBackForce: 0.95,
+        JitterFilter: 0.90,
+        AntiPeekLoss: true,
+        HistoryFrames: 5
+    }
 };
 
-function HardLockAim(player, enemy) {
-    if (!HARDLOCK.Enabled || !enemy) return;
-
-    // Bone positions
-    const head  = enemy.getBonePosition("Head");
-    const neck  = enemy.getBonePosition("Neck");
-    const chest = enemy.getBonePosition("Chest");
-
-    // Chọn head 100%
-    let target = head;
-
-    // Tính hướng từ player → head
-    let dir = target.sub(player.camera.position).normalize();
-
-    // Kalman giữ không rung
-    dir = KalmanSmooth(dir, HARDLOCK.KalmanFactor);
-
-    // Snap cực nhanh vào head
-    let snapped = player.camera.forward.lerp(dir, HARDLOCK.SnapSpeed);
-
-    // Hard lock giữ dính vào đầu
-    let locked = player.camera.forward.lerp(snapped, HARDLOCK.HardLockStrength);
-
-    // Micro correction sửa sai số nhỏ
-    let corrected = locked.lerp(dir, HARDLOCK.MicroCorrection);
-
-    // Chống tụt khi drag
-    corrected = corrected.lerp(dir, HARDLOCK.AntiDropDrag);
-
-    // Không rung khi kéo
-    corrected = corrected.lerp(dir, HARDLOCK.StableDrag);
-
-    // Kiểm tra sai số cuối
-    let error = player.camera.forward.angleTo(dir);
-    if (error < HARDLOCK.MaxAngleError) {
-        corrected = dir;   // sửa về head tuyệt đối
-    }
-
-    // Set hướng camera
-    player.camera.setDirection(corrected);
-}
-
+// ==========================
 // Kalman Filter
-function KalmanSmooth(newVal, f) {
+// ==========================
+var KalmanSmooth = function(newVal, f) {
     if (!KalmanSmooth.last) KalmanSmooth.last = newVal;
     KalmanSmooth.last = KalmanSmooth.last.mul(f).add(newVal.mul(1 - f));
     return KalmanSmooth.last;
 };
+
+// ==========================
+// HARDLOCK AIM FUNCTION
+// ==========================
+var HardLockAim = function(player, enemy) {
+    if (!HARDLOCK.Enabled || !enemy) return;
+
+    // ===== LẤY BONE =====
+    var head = enemy.getBonePosition("Head");
+    var dir = head.sub(player.camera.position).normalize();
+
+    // ===== KALMAN =====
+    dir = KalmanSmooth(dir, HARDLOCK.KalmanFactor);
+
+    // ===== Rotation-Aware Head Offset =====
+    if (HARDLOCK.RotationAwareHeadOffset.Enabled) {
+        var rot = enemy.getBoneRotation("Head");
+        var yaw   = rot.getYaw();
+        var pitch = rot.getPitch();
+        var roll  = rot.getRoll();
+        var offset = HARDLOCK.RotationAwareHeadOffset.BaseOffset;
+        offset.x += roll  * HARDLOCK.RotationAwareHeadOffset.MaxTiltOffset;
+        offset.y += pitch * HARDLOCK.RotationAwareHeadOffset.MaxPitchOffset;
+        offset.z += yaw   * HARDLOCK.RotationAwareHeadOffset.MaxYawOffset;
+        dir = dir.add(offset);
+    }
+
+    // ===== AnimationMotionPredictor =====
+    if (HARDLOCK.AnimationMotionPredictor.Enabled) {
+        var anim = enemy.getAnimationState();
+        var add = 0;
+        if (anim === "run") add = HARDLOCK.AnimationMotionPredictor.RunBoost;
+        if (anim === "jump") add = HARDLOCK.AnimationMotionPredictor.JumpBoost;
+        if (anim === "crouch") add = HARDLOCK.AnimationMotionPredictor.CrouchBoost;
+        if (anim === "slide") add = HARDLOCK.AnimationMotionPredictor.SlideBoost;
+        dir.y += add;
+        dir = dir.add(enemy.getVelocity().mul(HARDLOCK.AnimationMotionPredictor.PredictionFactor));
+    }
+
+    // ===== DynamicHardLock =====
+    if (HARDLOCK.DynamicHardLock.Enabled) {
+        var vel = enemy.getVelocity();
+        var speed = vel.length() * HARDLOCK.DynamicHardLock.VelocitySmoothing;
+        var factor = Math.min(1, Math.max(0, (speed - HARDLOCK.DynamicHardLock.MinSpeed) / 
+                    (HARDLOCK.DynamicHardLock.MaxSpeed - HARDLOCK.DynamicHardLock.MinSpeed)));
+        HARDLOCK.HardLockStrengthDynamic = HARDLOCK.HardLockStrength + (factor * HARDLOCK.DynamicHardLock.ExtraLockBoost);
+    } else {
+        HARDLOCK.HardLockStrengthDynamic = HARDLOCK.HardLockStrength;
+    }
+
+    // ===== AirHeadCorrector =====
+    if (HARDLOCK.AirHeadCorrector.Enabled && enemy.isInAir()) {
+        dir.y += HARDLOCK.AirHeadCorrector.VerticalBoost;
+        dir = dir.add(enemy.getVelocity().mul(HARDLOCK.AirHeadCorrector.PredictionLead));
+        dir.y *= HARDLOCK.AirHeadCorrector.GravityCompensation;
+    }
+
+    // ===== UltraSmoothRecoilBlend =====
+    if (HARDLOCK.UltraSmoothRecoilBlend.Enabled) {
+        var recoil = player.getRecoilVector().mul(HARDLOCK.UltraSmoothRecoilBlend.RecoilNeutralize);
+        dir = dir.mul(HARDLOCK.UltraSmoothRecoilBlend.BlendStrength)
+                 .add(recoil.mul(1 - HARDLOCK.UltraSmoothRecoilBlend.BlendStrength));
+        dir = dir.mul(HARDLOCK.UltraSmoothRecoilBlend.StabilizeFalloff);
+    }
+
+    // ===== UltimateLockResolver =====
+    if (HARDLOCK.UltimateLockResolver.Enabled) {
+        if (!HardLockAim.history) HardLockAim.history = [];
+        HardLockAim.history.push(dir);
+        if (HardLockAim.history.length > HARDLOCK.UltimateLockResolver.HistoryFrames)
+            HardLockAim.history.shift();
+        var drift = player.camera.forward.angleTo(dir);
+        if (drift > HARDLOCK.UltimateLockResolver.MaxDrift) {
+            dir = HardLockAim.history[0].mul(HARDLOCK.UltimateLockResolver.SnapBackForce)
+                  .add(dir.mul(1 - HARDLOCK.UltimateLockResolver.SnapBackForce));
+        }
+        dir = dir.mul(HARDLOCK.UltimateLockResolver.JitterFilter);
+    }
+
+    // ===== SNAP + HARD LOCK =====
+    var snapped = player.camera.forward.lerp(dir, HARDLOCK.SnapSpeed);
+    var locked  = player.camera.forward.lerp(snapped, HARDLOCK.HardLockStrengthDynamic);
+    var corrected = locked.lerp(dir, HARDLOCK.MicroCorrection);
+
+    corrected = corrected.lerp(dir, HARDLOCK.AntiDropDrag);
+    corrected = corrected.lerp(dir, HARDLOCK.StableDrag);
+
+    player.camera.setDirection(corrected);
+};
+
+
+// ====== SYSTEM & PERFORMANCE OPTIMIZATION ======
 
 var FreeFireScreenBlackFix = {
 
