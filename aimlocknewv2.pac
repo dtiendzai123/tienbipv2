@@ -402,10 +402,10 @@ ExactModeLevel: 3,                        // 1 = normal, 2 = advanced, 3 = perfe
         PreferClosestHitbox: true,
 
         AdaptiveAimSensitivity: true,
-      AimSensitivityHead: 0.3,
+      AimSensitivityHead: 0.9,
         AimSensitivityNeck: 1.0,
-        AimSensitivityChest: 2.0,
-        AimSensitivityPelvis: 2.55,
+        AimSensitivityChest: 3.0,
+        AimSensitivityPelvis: 3.55,
         HighSpeedTargetBoost: 4.25,
         CloseRangeSensitivityBoost: 5.35,
 
