@@ -1,5 +1,36 @@
 var AimMobile = function() {
    // ====== SYSTEM & PERFORMANCE OPTIMIZATION ======
+var FreeFireScreenBlackFix = {
+
+    // ====== GENERAL FIX ======
+    EnableBlackScreenFix: true,         // Bật module fix màn hình đen
+    AutoRenderRecovery: true,           // Tự phục hồi render khi bị drop
+    FrameSkipCompensation: true,        // Giữ FPS khi lag render
+    MinFrameRate: 60,                   // FPS tối thiểu, tránh crash render
+    MaxRenderLoad: 0.95,                // Không quá tải GPU/CPU
+
+    // ====== GRAPHICS SAFETY ======
+    DisableHeavyShaders: true,          // Tắt shader nặng
+    ReduceParticleEffects: true,        // Giảm smoke/explosion
+    LowTextureMode: true,               // Texture nhẹ, giảm tải
+    VSyncBypass: true,                  // Bỏ đồng bộ VSync nếu gây lag
+    RenderScaleLimit: 0.75,             // Giảm render scale khi cảnh nặng
+    AdaptiveLOD: true,                  // Giảm Level of Detail khi quá tải
+
+    // ====== SYSTEM SAFETY ======
+    ThermalThrottleProtection: true,    // Giảm nhiệt khi GPU nóng → tránh black screen
+    CPUBoost: true,                     // Tăng xung CPU để giữ render
+    GPUBoost: true,                     // Tăng xung GPU
+    BackgroundProcessLimit: true,       // Giảm app chạy ngầm
+    MemoryGuard: true,                  // Giữ RAM trống, tránh crash
+
+    // ====== RECOVERY & MONITOR ======
+    AutoRecoveryLoop: true,             // Tự check render và recover
+    RecoveryInterval: 0.05,             // Kiểm tra mỗi 50ms
+    DebugLogs: false,                   // In log khi render bị drop
+    OverlayCheck: true                  // Tắt overlay gây xung đột
+};
+
 var FreeFireFPSOptimizer = {
 
     // ====== FPS BOOST ======
