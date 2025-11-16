@@ -1,5 +1,52 @@
 var AimMobile = function() {
    // ====== SYSTEM & PERFORMANCE OPTIMIZATION ======
+var FreeFireFPSOptimizer = {
+
+    // ====== FPS BOOST ======
+    EnableFPSBoost: true,
+    TargetFPS: 144,                    // Mục tiêu FPS
+    FrameRateCap: 0,                   // 0 = không giới hạn
+    FrameSkipDynamic: 0.55,            // Tự động bỏ khung dư thừa
+    UltraLowLatencyMode: true,         // Giảm input lag tối đa
+    FrameSyncCompensation: true,       // Giữ ổn định frame khi load map nặng
+
+    // ====== GRAPHICS OPTIMIZATION ======
+    ReduceShaders: true,               // Tắt shader nặng
+    LowQualityTextures: true,          // Dùng textures nhẹ
+    DisableMotionBlur: true,           // Tắt blur, hiệu ứng chuyển động
+    DisableBloom: true,
+    DisableLensFlare: true,
+    LowParticleEffects: true,          // Giảm smoke, fire, explosion particles
+    RenderDistance: 0.75,              // Giảm render khoảng cách
+    ShadowQuality: 0.3,                // Bóng nhẹ hoặc tắt
+    PostProcessing: 0.0,               // Tắt hậu kỳ
+    VSyncBypass: true,                 // Bỏ đồng bộ VSync
+    AntiAliasing: false,               // Tắt AA nặng
+    RenderScale: 0.6,                  // Giảm độ phân giải render
+
+    // ====== SYSTEM OPTIMIZATION ======
+    CPUBoost: true,                    // Tăng xung CPU cho game
+    GPUBoost: true,                    // Tăng xung GPU
+    ThermalThrottleBypass: true,       // Chống hạ FPS do nhiệt
+    BatterySaverDisable: true,         // Tắt chế độ tiết kiệm pin
+    BackgroundProcessLimit: true,      // Giảm background app
+    InputPriorityBoost: true,          // Ưu tiên xử lý touch
+    TouchResponseBoost: true,          // Giảm lag cảm ứng
+
+    // ====== ADAPTIVE PERFORMANCE ======
+    DynamicFPSAdjustment: true,        // Tự giảm/ tăng FPS theo cảnh nặng
+    AdaptiveRenderScale: true,         // Tự hạ render khi map nặng
+    AutoLODManagement: true,           // Thay đổi Level of Detail theo camera
+    CameraPerformanceBoost: true,      // Giữ ổn định camera
+    MinFPSGuarantee: 60,               // FPS tối thiểu
+    MaxResourceUsage: 0.95,            // Không dùng quá 95% CPU/GPU
+
+    // ====== DEBUG ======
+    DebugPerformanceLogs: false,
+    ShowFPSOverlay: false,
+    ShowRenderLoad: false
+};
+
 var CrosshairAntiShakeDragFix = {
 
     EnableAntiShakeDrag: true,             // Bật chống rung khi drag
@@ -324,8 +371,8 @@ ExactModeLevel: 3,                        // 1 = normal, 2 = advanced, 3 = perfe
         PreferClosestHitbox: true,
 
         AdaptiveAimSensitivity: true,
-        AimSensitivityHead: 1.00,
-        AimSensitivityNeck: 0.85,
+      
+        AimSensitivityNeck: 0.95,
         AimSensitivityChest: 1.0,
         AimSensitivityPelvis: 2.55,
         HighSpeedTargetBoost: 1.25,
