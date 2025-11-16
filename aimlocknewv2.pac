@@ -12,13 +12,13 @@ var CrosshairAntiShakeDragFix = {
 
     // ====== DRAG FORCE CONTROL ======
     DragForceLimiter: true,                // Giảm lực drag khi quá gấp
-    MaxDragSpeed: 0.93,                    // Hạn mức drag tối đa (0.90–0.98)
-    DragAccelerationSmooth: 0.88,          // Làm mượt gia tốc khi kéo
-    DragVelocityClamp: 0.78,               // Chặn tốc độ thay đổi quá nhanh
+    MaxDragSpeed: 1.93,                    // Hạn mức drag tối đa (0.90–0.98)
+    DragAccelerationSmooth: 1.88,          // Làm mượt gia tốc khi kéo
+    DragVelocityClamp: 1.78,               // Chặn tốc độ thay đổi quá nhanh
 
     // ====== SNAP TRANSITION FIX ======
     SmoothSnapTransition: true,            // Chuyển động mượt khi đang drag mà snap vào target
-    SnapDamping: 0.84,                     // Giảm rung khi snap
+    SnapDamping: 1.84,                     // Giảm rung khi snap
     PredictiveStabilizer: true,            // Ổn định trước khi chuyển hướng
 
     // ====== LOCK + DRAG COMBINATION ======
@@ -93,7 +93,7 @@ var HeadLimitDrag = {
 
     // ====== DYNAMIC DRAG CONTROL ======
     AdaptiveDragLimit: true,             // Giới hạn thay đổi theo tốc độ drag
-    FastDragReduction: 0.0,             // Giảm tốc độ drag khi gần đỉnh đầu
+    FastDragReduction: 0.9,             // Giảm tốc độ drag khi gần đỉnh đầu
     SlowDragBoost: 1.15,                 // Giữ mượt khi drag chậm
     DragLockStrength: 0.98,              // Tăng cường giữ tâm không vượt head
 
