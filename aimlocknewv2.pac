@@ -15,7 +15,8 @@ var HARDLOCK_SYSTEM = {
     "HeadWeight": 2.0,
     "NeckWeight": 0.20,
     "ChestWeight": 0.10,
- HyperHeadLockSystem: {
+
+HyperHeadLockSystem: {
         enabled: true,
         aimBone: "bone_Head",
         autoLockOnFire: true,
