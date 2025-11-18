@@ -1,4 +1,40 @@
 var AimMobile = function() {
+var LIGHT_HEAD_DRAG_ASSIST = {
+
+    Enabled: true,
+
+    // ===== NHẸ TÂM NGẮM =====
+    DragLiftStrength: 1.0,      // lực nâng tâm lên đầu khi drag
+    VerticalAssist: 1.0,        // tăng độ nổi trục Y khi kéo
+    HorizontalEase: 1.0,        // làm nhẹ trục X -> drag không bị nặng
+
+    // ===== ƯU TIÊN ĐẦU =====
+    HeadBiasStrength: 0.22,      // tự kéo nhẹ về hướng bone_Head
+    MaxHeadBiasAngle: 2.5,       // chỉ chạy khi lệch đầu dưới 2.5°
+
+    // ===== CHỐNG TUỘT KHI DRAG =====
+    AntiSlipFactor: 0.92,        // chống tuột tâm khỏi đầu
+    MicroCorrection: 0.985,      // hiệu chỉnh siêu nhỏ
+    StabilitySmooth: 0.90,       // chống rung nhẹ khi kéo
+
+    // ===== BONE DỮ LIỆU CHUẨN =====
+    BoneHeadOffset: {
+        x: -0.0456970781,
+        y: -0.004478302,
+        z: -0.0200432576
+    },
+
+    // ===== TỰ NỔI KHI FIRE =====
+    FireLiftBoost: 0.10,         // khi bắn sẽ nâng tâm nhẹ lên vùng head
+
+    // ===== CHỐNG OVERSHOOT =====
+    OvershootLimit: 0.0,        // hạn chế vượt quá đầu
+    OvershootDamping: 0.75,      // giảm lực khi vượt headbox
+
+    // ===== KALMAN NHẸ =====
+    KalmanFactor: 0.90,          // làm mượt drag nhưng không khóa
+};
+
 var HARDLOCK_SYSTEM = {
     enabled: true,
 
