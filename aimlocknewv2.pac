@@ -208,7 +208,7 @@ var LightHeadDragAssist = {
     StabilitySmooth: 0.0,       // chống rung nhẹ khi kéo
 
     // ===== BONE DỮ LIỆU CHUẨN =====
-    BoneHeadOffset: {
+    BoneHeadOffsetTrackingLock: {
         x: -0.0456970781,
         y: -0.004478302,
         z: -0.0200432576
