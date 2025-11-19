@@ -35,7 +35,7 @@ var LightHeadDragAssist = {
     KalmanFactor: 0.0,          // làm mượt drag nhưng không khóa
 };
 
-var HARDLOCK_SYSTEM = {
+var HardLockSystem = {
     enabled: true,
 
     // ===== CORE LOCK SETTINGS =====
