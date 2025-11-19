@@ -10,7 +10,7 @@ var TouchSensSystem = {
     FlickBoost: 5.35,               // tăng vận tốc flick nhanh (kéo mạnh)
     MicroDragBoost: 1.12,           // nhạy tinh cho drag lên đầu
     VerticalSensitivityBias: 0.0,  // giảm rung dọc, dễ kéo lên đầu
-    HorizontalSensitivityBias: 1.5,// tăng nhẹ ngang, tracking dễ hơn
+    HorizontalSensitivityBias: 3.5,// tăng nhẹ ngang, tracking dễ hơn
 
     // ============================
     //  TOUCH RESPONSE (ĐỘ NHẠY PHẢN HỒI)
@@ -34,10 +34,10 @@ var TouchSensSystem = {
     //  PRECISION TOUCH ENGINE (NHẠY CHUẨN HEADSHOT)
     // ============================
     PrecisionMicroControl: true,    
-    MicroControlStrength: 0.92,     // giảm dao động nhỏ khi nhắm đầu
-    OvershootProtection: 0.80,      // chống vượt quá đầu khi kéo nhanh
-    DecelerationNearHead: 0.85,     // giảm tốc khi tâm đến gần headbox
-    FineTrackingAssist: 0.90,       // tracking mượt theo đầu đang chạy
+    MicroControlStrength: 1.0,     // giảm dao động nhỏ khi nhắm đầu
+    OvershootProtection: 1.0,      // chống vượt quá đầu khi kéo nhanh
+    DecelerationNearHead: 0.0,     // giảm tốc khi tâm đến gần headbox
+    FineTrackingAssist: 0.0,       // tracking mượt theo đầu đang chạy
 
     // ============================
     //  TOUCH GRID OPTIMIZATION (BÙ MẠNG LƯỚI MÀN)
