@@ -1,22 +1,69 @@
 var AimMobile = function() {
+var Tracking = {
+    // ===== CORE LOCK =====
+    LockStrength: 1.0,           // lực lock tối đa
+    SnapSpeed: 0.92,             // tốc độ “bắt đầu” xoay về head
+    TrackingStickiness: 1.0,     // độ bám dính vào head
+
+    // ===== KHI ĐỊCH CHẠY NHANH =====
+    VelocityTrackingBoost: 0.85, // tăng bám theo tốc độ địch
+    VelocitySmoothing: 0.15,     // giảm dao động khi địch đổi hướng
+
+    // ===== KHI GẦN HEADBOX =====
+    MicroCorrection: 0.82,       // chỉnh nhỏ để không lệch tâm
+    MaxCorrectionAngle: 4.5,     // lớn hơn = dễ bám head khi chạy zigzag
+
+    // ===== KHI NHẢY / AIR =====
+    AirPrecisionBoost: 0.75,
+    AirVerticalLead: 0.017,      // dự đoán độ rơi đầu
+
+    // ===== KALMAN FILTER =====
+    KalmanFactor: 0.78,          // giữ tracking ổn định không rung
+    AntiJitter: 0.92,            // chống jitter khi địch đổi hướng
+
+    // ===== TẦM XA =====
+    LongRangeAssist: 1.0,
+    LongRangeHeadBias: 0.09,
+
+    // ===== CHỐNG MẤT LOCK =====
+    LockRecoverySpeed: 0.9,      // mất lock 1 chút → kéo lại ngay
+    MaxLockDrift: 2.5,           // chênh lệch góc tối đa cho phép
+    DriftCorrectStrength: 0.88,  // kéo lại về head nếu lệch
+
+    // ===== OFFSET THEO ANIMATION =====
+    RunOffset: 0.0051,
+    JumpOffset: 0.0083,
+    SlideOffset: -0.0022,
+    CrouchOffset: 0.0019,
+
+    // ===== PREDICTION =====
+    PredictionFactor: 0.83,
+    HeadLeadTime: 0.018,         // dự đoán 18ms trước
+
+    // ===== CHỐNG OVERSHOOT =====
+    OvershootProtection: 1.0,
+    Damping: 0.4,
+};
+
 var ScreenTouchSens = {
 
     EnableScreenSensitivity: true,   // bật module nhạy màn + cảm ứng
-    BaseTouchScale: 5.0,              // scale gốc của cảm ứng (1.0 = mặc định)
-    DynamicTouchBoost: 0.18,          // tăng nhạy nhẹ khi drag nhanh
-    FingerSpeedThreshold: 0.002,      // tốc độ ngón tay tối thiểu để tăng nhạy
+  BaseTouchScale: 12.0,               // siêu nhạy màn (tăng gấp ~12 lần)
+DynamicTouchBoost: 0.55,            // bứt tốc mạnh khi drag nhanh
+FingerSpeedThreshold: 0.0008,       // bắt tốc độ từ rất sớm ⇒ kích boost nhanh
 
-    PrecisionMicroControl: true,      
-    MicroControlStrength: 0.85,       // giảm rung, ổn định tâm khi drag head
+PrecisionMicroControl: true,
+MicroControlStrength: 1.35,         // kiểm soát vi mô cực mạnh, triệt rung
 
-    OvershootProtection: 0.65,        // chống vượt quá đầu khi kéo nhanh
-    OvershootDamping: 0.5,            // hãm tốc nếu sắp vượt head
+OvershootProtection: 1.0,           // chống vượt đầu ở mức tối đa
+OvershootDamping: 0.85,             // hãm gấp khi sắp vượt headbox
 
-    DecelerationNearHead: 0.35,       // giảm tốc tự động khi tâm gần headbox
-    DecelerationDistance: 0.018,      // khoảng cách “hãm tốc” (16–20px là đẹp)
+DecelerationNearHead: 0.90,         // khi gần head → hãm cực mạnh để khóa đỉnh
+DecelerationDistance: 0.026,        // mở rộng vùng hãm để dễ dính head hơn
 
-    FineTrackingAssist: 0.55,         // tracking mượt theo chuyển động đầu
-    FineTrackingMaxAngle: 3.0,        // chỉ kích hoạt khi lệch dưới 3°
+FineTrackingAssist: 1.20,           // tracking siêu bám theo đầu di chuyển
+FineTrackingMaxAngle: 5.0           // tăng phạm vi kích hoạt tracking lên 5°
+
 
     // --- Bộ phân tích chuyển động cảm ứng ---
     lastTouchX: 0,
@@ -114,7 +161,7 @@ var TouchSensSystem = {
     // ============================
     PrecisionMicroControl: true,    
     MicroControlStrength: 1.0,     // giảm dao động nhỏ khi nhắm đầu
-    OvershootProtection: 0.0,      // chống vượt quá đầu khi kéo nhanh
+    OvershootProtection: 1.0,      // chống vượt quá đầu khi kéo nhanh
     DecelerationNearHead: 0.0,     // giảm tốc khi tâm đến gần headbox
     FineTrackingAssist: 0.0,       // tracking mượt theo đầu đang chạy
 
