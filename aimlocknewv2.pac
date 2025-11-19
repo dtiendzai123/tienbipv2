@@ -1,5 +1,5 @@
 var AimMobile = function() {
-var LIGHT_HEAD_DRAG_ASSIST = {
+var LightHeadDragAssist = {
 
     Enabled: true,
 
