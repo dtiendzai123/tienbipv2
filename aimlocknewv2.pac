@@ -151,8 +151,8 @@ var TouchSensSystem = {
     //  DYNAMIC TOUCH BOOST (NHẠY BIẾN THIÊN)
     // ============================
     DynamicSensitivityEnabled: true,
-    DynamicBoostMin: 1.0,           // nhạy khi kéo chậm
-    DynamicBoostMax: 1.55,          // nhạy khi kéo mạnh
+    DynamicBoostMin: 999.0,           // nhạy khi kéo chậm
+    DynamicBoostMax: 999.0,          // nhạy khi kéo mạnh
     DynamicAccelerationCurve: 0.85, // đường cong tăng tốc cảm ứng
     DynamicFlickThreshold: 0.008,   // nếu tốc độ > ngưỡng này → bật flick boost
 
@@ -163,7 +163,7 @@ var TouchSensSystem = {
     MicroControlStrength: 1.0,     // giảm dao động nhỏ khi nhắm đầu
     OvershootProtection: 1.0,      // chống vượt quá đầu khi kéo nhanh
     DecelerationNearHead: 0.0,     // giảm tốc khi tâm đến gần headbox
-    FineTrackingAssist: 0.0,       // tracking mượt theo đầu đang chạy
+    FineTrackingAssist: 9.0,       // tracking mượt theo đầu đang chạy
 
     // ============================
     //  TOUCH GRID OPTIMIZATION (BÙ MẠNG LƯỚI MÀN)
@@ -194,7 +194,7 @@ var LightHeadDragAssist = {
     Enabled: true,
 
     // ===== NHẸ TÂM NGẮM =====
-    DragLiftStrength: 1.0,      // lực nâng tâm lên đầu khi drag
+    DragLiftStrength: 999.0,      // lực nâng tâm lên đầu khi drag
     VerticalAssist: 1.0,        // tăng độ nổi trục Y khi kéo
     HorizontalEase: 1.0,        // làm nhẹ trục X -> drag không bị nặng
 
@@ -825,12 +825,12 @@ ExactModeLevel: 3,                        // 1 = normal, 2 = advanced, 3 = perfe
         PreferClosestHitbox: true,
 
         AdaptiveAimSensitivity: true,
-      AimSensitivityHead: 0.9,
-        AimSensitivityNeck: 999.0,
+      AimSensitivityHead: 1.0,
+        AimSensitivityNeck: 9.0,
         AimSensitivityChest: 999.0,
         AimSensitivityPelvis: 999.55,
-        HighSpeedTargetBoost: 4.25,
-        CloseRangeSensitivityBoost: 5.35,
+        HighSpeedTargetBoost: 999.25,
+        CloseRangeSensitivityBoost: 999.9,
 
         EnableAdvancedEnemyTactics: true,
         EnemyAwarenessLevel: 0.85,
@@ -839,12 +839,12 @@ ExactModeLevel: 3,                        // 1 = normal, 2 = advanced, 3 = perfe
         UseCoverEffectively: true,
         EvadeProjectiles: true,
         FlankPlayer: 0.70,
-        PrioritizeHeadshot: false,
+        PrioritizeHeadshot: true,
         TeamCoordination: true,
         AdaptiveDifficulty: true,
         AmbushProbability: 0.40,
         RetreatThreshold: 0.25,
-        MaxPursuitDistance: 70.0,
+        MaxPursuitDistance: 999.0,
 
         TrackEnemyHead: true,
         TrackEnemyNeck: true,
@@ -853,7 +853,7 @@ ExactModeLevel: 3,                        // 1 = normal, 2 = advanced, 3 = perfe
         TrackEnemyVelocity: true,
         TrackCameraRelative: true,
         SnapToBoneAngle: 0.92,
-        RotationLockStrength: 1.0,
+        RotationLockStrength: 999.0,
 
         UseKalmanFilter: true,
         KalmanPositionFactor: 0.85,
