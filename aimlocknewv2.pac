@@ -1,4 +1,83 @@
 var AimMobile = function() {
+var ScreenTouchSens = {
+
+    EnableScreenSensitivity: true,   // bật module nhạy màn + cảm ứng
+    BaseTouchScale: 5.0,              // scale gốc của cảm ứng (1.0 = mặc định)
+    DynamicTouchBoost: 0.18,          // tăng nhạy nhẹ khi drag nhanh
+    FingerSpeedThreshold: 0.002,      // tốc độ ngón tay tối thiểu để tăng nhạy
+
+    PrecisionMicroControl: true,      
+    MicroControlStrength: 0.85,       // giảm rung, ổn định tâm khi drag head
+
+    OvershootProtection: 0.65,        // chống vượt quá đầu khi kéo nhanh
+    OvershootDamping: 0.5,            // hãm tốc nếu sắp vượt head
+
+    DecelerationNearHead: 0.35,       // giảm tốc tự động khi tâm gần headbox
+    DecelerationDistance: 0.018,      // khoảng cách “hãm tốc” (16–20px là đẹp)
+
+    FineTrackingAssist: 0.55,         // tracking mượt theo chuyển động đầu
+    FineTrackingMaxAngle: 3.0,        // chỉ kích hoạt khi lệch dưới 3°
+
+    // --- Bộ phân tích chuyển động cảm ứng ---
+    lastTouchX: 0,
+    lastTouchY: 0,
+    lastTouchTime: 0,
+
+    processTouch(x, y) {
+        let now = Date.now();
+        let dt = now - this.lastTouchTime;
+        if (dt < 1) dt = 1;
+
+        let dx = x - this.lastTouchX;
+        let dy = y - this.lastTouchY;
+        let fingerSpeed = Math.sqrt(dx*dx + dy*dy) / dt;
+
+        this.lastTouchX = x;
+        this.lastTouchY = y;
+        this.lastTouchTime = now;
+
+        // Tăng nhạy màn khi drag nhanh
+        let dynamicBoost = 1.0;
+        if (fingerSpeed > this.FingerSpeedThreshold) {
+            dynamicBoost += this.DynamicTouchBoost;
+        }
+
+        return {
+            dx: dx * this.BaseTouchScale * dynamicBoost,
+            dy: dy * this.BaseTouchScale * dynamicBoost,
+            speed: fingerSpeed
+        };
+    },
+
+    // --- Bộ xử lý khi tâm gần headbox ---
+    applyNearHeadControl(angleDiff, distanceToHead) {
+
+        let adjust = 1.0;
+
+        // Hãm tốc khi gần head
+        if (this.DecelerationNearHead && distanceToHead < this.DecelerationDistance) {
+            adjust *= (1 - this.DecelerationNearHead);
+        }
+
+        // Chống vượt head
+        if (this.OvershootProtection && angleDiff < 1.5) {
+            adjust *= (1 - this.OvershootDamping);
+        }
+
+        // Micro control — ổn định tâm
+        if (this.PrecisionMicroControl && angleDiff < 2.0) {
+            adjust *= (1 - this.MicroControlStrength * 0.3);
+        }
+
+        // Tracking mượt
+        if (this.FineTrackingAssist && angleDiff <= this.FineTrackingMaxAngle) {
+            adjust *= (1 + this.FineTrackingAssist * 0.15);
+        }
+
+        return adjust;
+    }
+};
+
 var TouchSensSystem = {
 
     Enabled: true,
@@ -6,7 +85,7 @@ var TouchSensSystem = {
     // ============================
     //  TOUCH SENS BOOST (NHẠY MÀN)
     // ============================
-    BaseTouchSensitivity: 1.0,      // nhạy gốc – càng cao càng nhanh
+    BaseTouchSensitivity: 5.0,      // nhạy gốc – càng cao càng nhanh
     FlickBoost: 5.35,               // tăng vận tốc flick nhanh (kéo mạnh)
     MicroDragBoost: 1.12,           // nhạy tinh cho drag lên đầu
     VerticalSensitivityBias: 0.0,  // giảm rung dọc, dễ kéo lên đầu
