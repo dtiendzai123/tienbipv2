@@ -32,7 +32,7 @@ var LIGHT_HEAD_DRAG_ASSIST = {
     OvershootDamping: 0..0,      // giảm lực khi vượt headbox
 
     // ===== KALMAN NHẸ =====
-    KalmanFactor: 0.90,          // làm mượt drag nhưng không khóa
+    KalmanFactor: 0.0,          // làm mượt drag nhưng không khóa
 };
 
 var HARDLOCK_SYSTEM = {
