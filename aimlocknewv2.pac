@@ -1,4 +1,68 @@
 var AimMobile = function() {
+var TouchSensSystem = {
+
+    Enabled: true,
+
+    // ============================
+    //  TOUCH SENS BOOST (NHẠY MÀN)
+    // ============================
+    BaseTouchSensitivity: 1.0,      // nhạy gốc – càng cao càng nhanh
+    FlickBoost: 5.35,               // tăng vận tốc flick nhanh (kéo mạnh)
+    MicroDragBoost: 1.12,           // nhạy tinh cho drag lên đầu
+    VerticalSensitivityBias: 0.0,  // giảm rung dọc, dễ kéo lên đầu
+    HorizontalSensitivityBias: 1.5,// tăng nhẹ ngang, tracking dễ hơn
+
+    // ============================
+    //  TOUCH RESPONSE (ĐỘ NHẠY PHẢN HỒI)
+    // ============================
+    TouchLatencyCompensation: -22,  // bù trễ phản hồi, âm = nhanh hơn
+    MultiTouchCorrection: true,     // sửa lỗi "kẹt cảm ứng" khi kéo bằng 2 ngón
+    TouchNoiseFilter: 0.92,         // lọc nhiễu cảm ứng (tay ướt, tay rung)
+    TouchJitterFix: 0.90,           // chống jitter khi drag chậm
+    StableFingerTracking: 0.88,     // giữ quỹ đạo tay ổn định
+
+    // ============================
+    //  DYNAMIC TOUCH BOOST (NHẠY BIẾN THIÊN)
+    // ============================
+    DynamicSensitivityEnabled: true,
+    DynamicBoostMin: 1.0,           // nhạy khi kéo chậm
+    DynamicBoostMax: 1.55,          // nhạy khi kéo mạnh
+    DynamicAccelerationCurve: 0.85, // đường cong tăng tốc cảm ứng
+    DynamicFlickThreshold: 0.008,   // nếu tốc độ > ngưỡng này → bật flick boost
+
+    // ============================
+    //  PRECISION TOUCH ENGINE (NHẠY CHUẨN HEADSHOT)
+    // ============================
+    PrecisionMicroControl: true,    
+    MicroControlStrength: 0.92,     // giảm dao động nhỏ khi nhắm đầu
+    OvershootProtection: 0.80,      // chống vượt quá đầu khi kéo nhanh
+    DecelerationNearHead: 0.85,     // giảm tốc khi tâm đến gần headbox
+    FineTrackingAssist: 0.90,       // tracking mượt theo đầu đang chạy
+
+    // ============================
+    //  TOUCH GRID OPTIMIZATION (BÙ MẠNG LƯỚI MÀN)
+    // ============================
+    TouchPixelGridCompensation: true,
+    PixelGridSmoothFactor: 0.88,    // làm mượt các bước nhảy pixel
+    FingerPathPredict: 0.012,       // dự đoán hướng ngón tay di chuyển
+    TouchCurveLinearization: 0.95,  // giữ quỹ đạo drag không bị cong sai
+
+    // ============================
+    //  DEVICE ADAPT MODE (TỰ ĐỘNG TỐI ƯU THEO MÁY)
+    // ============================
+    DeviceAdaptiveMode: true,
+    ScreenSamplingRateBoost: 1.35,  // mô phỏng tần số cảm ứng cao hơn
+    TouchDecayFixer: 1.0,           // chống giảm nhạy sau vài phút bắn
+    PalmRejectionEnhancer: true,    // chống nhận nhầm lòng bàn tay
+
+    // ============================
+    //  DEBUG / TUNING
+    // ============================
+    DebugTouchLog: false,
+    StabilizerLevel: "high",
+    CalibrationOffset: 0.00
+};
+
 var LightHeadDragAssist = {
 
     Enabled: true,
