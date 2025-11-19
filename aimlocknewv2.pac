@@ -1,21 +1,21 @@
 var AimMobile = function() {
 var Tracking = {
     // ===== CORE LOCK =====
-    LockStrength: 1.0,           // lực lock tối đa
-    SnapSpeed: 0.92,             // tốc độ “bắt đầu” xoay về head
-    TrackingStickiness: 1.0,     // độ bám dính vào head
+    LockStrength: 999.0,           // lực lock tối đa
+    SnapSpeed: 999.0,             // tốc độ “bắt đầu” xoay về head
+    TrackingStickiness: 999.0,     // độ bám dính vào head
 
     // ===== KHI ĐỊCH CHẠY NHANH =====
-    VelocityTrackingBoost: 0.85, // tăng bám theo tốc độ địch
+    VelocityTrackingBoost: 999.0, // tăng bám theo tốc độ địch
     VelocitySmoothing: 0.15,     // giảm dao động khi địch đổi hướng
 
     // ===== KHI GẦN HEADBOX =====
     MicroCorrection: 0.82,       // chỉnh nhỏ để không lệch tâm
-    MaxCorrectionAngle: 4.5,     // lớn hơn = dễ bám head khi chạy zigzag
+    MaxCorrectionAngle: 360.0,     // lớn hơn = dễ bám head khi chạy zigzag
 
     // ===== KHI NHẢY / AIR =====
-    AirPrecisionBoost: 0.75,
-    AirVerticalLead: 0.017,      // dự đoán độ rơi đầu
+    AirPrecisionBoost: 1.0,
+    AirVerticalLead: 0.001,      // dự đoán độ rơi đầu
 
     // ===== KALMAN FILTER =====
     KalmanFactor: 0.78,          // giữ tracking ổn định không rung
@@ -23,7 +23,7 @@ var Tracking = {
 
     // ===== TẦM XA =====
     LongRangeAssist: 1.0,
-    LongRangeHeadBias: 0.09,
+    LongRangeHeadBias: 999.0,
 
     // ===== CHỐNG MẤT LOCK =====
     LockRecoverySpeed: 0.9,      // mất lock 1 chút → kéo lại ngay
