@@ -35,7 +35,7 @@ var TouchSensSystem = {
     // ============================
     PrecisionMicroControl: true,    
     MicroControlStrength: 1.0,     // giảm dao động nhỏ khi nhắm đầu
-    OvershootProtection: 1.0,      // chống vượt quá đầu khi kéo nhanh
+    OvershootProtection: 0.0,      // chống vượt quá đầu khi kéo nhanh
     DecelerationNearHead: 0.0,     // giảm tốc khi tâm đến gần headbox
     FineTrackingAssist: 0.0,       // tracking mượt theo đầu đang chạy
 
