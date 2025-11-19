@@ -15,7 +15,7 @@ var LIGHT_HEAD_DRAG_ASSIST = {
     // ===== CHỐNG TUỘT KHI DRAG =====
     AntiSlipFactor: 1.0,        // chống tuột tâm khỏi đầu
     MicroCorrection: 0.985,      // hiệu chỉnh siêu nhỏ
-    StabilitySmooth: 0.90,       // chống rung nhẹ khi kéo
+    StabilitySmooth: 0.0,       // chống rung nhẹ khi kéo
 
     // ===== BONE DỮ LIỆU CHUẨN =====
     BoneHeadOffset: {
