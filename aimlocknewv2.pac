@@ -9,8 +9,8 @@ var LIGHT_HEAD_DRAG_ASSIST = {
     HorizontalEase: 1.0,        // làm nhẹ trục X -> drag không bị nặng
 
     // ===== ƯU TIÊN ĐẦU =====
-    HeadBiasStrength: 0.22,      // tự kéo nhẹ về hướng bone_Head
-    MaxHeadBiasAngle: 2.5,       // chỉ chạy khi lệch đầu dưới 2.5°
+    HeadBiasStrength: 1.0,      // tự kéo nhẹ về hướng bone_Head
+    MaxHeadBiasAngle: 360.0,       // chỉ chạy khi lệch đầu dưới 2.5°
 
     // ===== CHỐNG TUỘT KHI DRAG =====
     AntiSlipFactor: 1.0,        // chống tuột tâm khỏi đầu
