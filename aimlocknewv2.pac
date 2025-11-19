@@ -13,7 +13,7 @@ var LIGHT_HEAD_DRAG_ASSIST = {
     MaxHeadBiasAngle: 2.5,       // chỉ chạy khi lệch đầu dưới 2.5°
 
     // ===== CHỐNG TUỘT KHI DRAG =====
-    AntiSlipFactor: 0.92,        // chống tuột tâm khỏi đầu
+    AntiSlipFactor: 1.0,        // chống tuột tâm khỏi đầu
     MicroCorrection: 0.985,      // hiệu chỉnh siêu nhỏ
     StabilitySmooth: 0.90,       // chống rung nhẹ khi kéo
 
@@ -25,11 +25,11 @@ var LIGHT_HEAD_DRAG_ASSIST = {
     },
 
     // ===== TỰ NỔI KHI FIRE =====
-    FireLiftBoost: 0.10,         // khi bắn sẽ nâng tâm nhẹ lên vùng head
+    FireLiftBoost: 1.0,         // khi bắn sẽ nâng tâm nhẹ lên vùng head
 
     // ===== CHỐNG OVERSHOOT =====
     OvershootLimit: 0.0,        // hạn chế vượt quá đầu
-    OvershootDamping: 0.75,      // giảm lực khi vượt headbox
+    OvershootDamping: 0..0,      // giảm lực khi vượt headbox
 
     // ===== KALMAN NHẸ =====
     KalmanFactor: 0.90,          // làm mượt drag nhưng không khóa
@@ -67,7 +67,7 @@ var HARDLOCK_SYSTEM = {
         disableBodyRecenter: true,
         trackingSpeed: 10.0,
         smoothing: 0.0,
-        maxDragDistance: 0.0,
+        maxDragDistance: 999.0,
         snapBackToHead: true,
         predictionFactor: 1.5,
         autoFireOnLock: true,
