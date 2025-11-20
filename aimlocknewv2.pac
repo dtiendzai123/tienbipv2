@@ -1,12 +1,12 @@
 var AimMobile = function() {
 var Tracking = {
     // ===== CORE LOCK =====
-    LockStrength: 999.0,           // lực lock tối đa
-    SnapSpeed: 999.0,             // tốc độ “bắt đầu” xoay về head
-    TrackingStickiness: 999.0,     // độ bám dính vào head
+    LockStrength: 2.0,           // lực lock tối đa
+    SnapSpeed: 2.0,             // tốc độ “bắt đầu” xoay về head
+    TrackingStickiness: 2.0,     // độ bám dính vào head
 
     // ===== KHI ĐỊCH CHẠY NHANH =====
-    VelocityTrackingBoost: 999.0, // tăng bám theo tốc độ địch
+    VelocityTrackingBoost: 2.0, // tăng bám theo tốc độ địch
     VelocitySmoothing: 0.15,     // giảm dao động khi địch đổi hướng
 
     // ===== KHI GẦN HEADBOX =====
@@ -22,8 +22,8 @@ var Tracking = {
     AntiJitter: 0.92,            // chống jitter khi địch đổi hướng
 
     // ===== TẦM XA =====
-    LongRangeAssist: 999.0,
-    LongRangeHeadBias: 999.0,
+    LongRangeAssist: 2.0,
+    LongRangeHeadBias: 2.0,
 
     // ===== CHỐNG MẤT LOCK =====
     LockRecoverySpeed: 1.0,      // mất lock 1 chút → kéo lại ngay
@@ -37,7 +37,7 @@ var Tracking = {
     CrouchOffset: 0.0019,
 
     // ===== PREDICTION =====
-    PredictionFactor: 0.83,
+    PredictionFactor: 2.0,
     HeadLeadTime: 0.018,         // dự đoán 18ms trước
 
     // ===== CHỐNG OVERSHOOT =====
@@ -58,11 +58,11 @@ MicroControlStrength: 1.35,         // kiểm soát vi mô cực mạnh, triệt
 OvershootProtection: 1.0,           // chống vượt đầu ở mức tối đa
 OvershootDamping: 0.85,             // hãm gấp khi sắp vượt headbox
 
-DecelerationNearHead: 999.0,         // khi gần head → hãm cực mạnh để khóa đỉnh
+DecelerationNearHead: 10.0,         // khi gần head → hãm cực mạnh để khóa đỉnh
 DecelerationDistance: 0.030,        // mở rộng vùng hãm để dễ dính head hơn
 
-FineTrackingAssist: 999.0,           // tracking siêu bám theo đầu di chuyển
-FineTrackingMaxAngle: 360.0           // tăng phạm vi kích hoạt tracking lên 5°
+FineTrackingAssist: 10.0,           // tracking siêu bám theo đầu di chuyển
+FineTrackingMaxAngle: 10.0           // tăng phạm vi kích hoạt tracking lên 5°
 
 
     // --- Bộ phân tích chuyển động cảm ứng ---
@@ -151,8 +151,8 @@ var TouchSensSystem = {
     //  DYNAMIC TOUCH BOOST (NHẠY BIẾN THIÊN)
     // ============================
     DynamicSensitivityEnabled: true,
-    DynamicBoostMin: 999.0,           // nhạy khi kéo chậm
-    DynamicBoostMax: 999.0,          // nhạy khi kéo mạnh
+    DynamicBoostMin: 10.0,           // nhạy khi kéo chậm
+    DynamicBoostMax: 10.0,          // nhạy khi kéo mạnh
     DynamicAccelerationCurve: 0.85, // đường cong tăng tốc cảm ứng
     DynamicFlickThreshold: 0.008,   // nếu tốc độ > ngưỡng này → bật flick boost
 
@@ -827,10 +827,10 @@ ExactModeLevel: 3,                        // 1 = normal, 2 = advanced, 3 = perfe
         AdaptiveAimSensitivity: true,
       AimSensitivityHead: 1.0,
         AimSensitivityNeck: 9.0,
-        AimSensitivityChest: 999.0,
-        AimSensitivityPelvis: 999.55,
-        HighSpeedTargetBoost: 999.25,
-        CloseRangeSensitivityBoost: 999.9,
+        AimSensitivityChest: 40.0,
+        AimSensitivityPelvis: 50.55,
+        HighSpeedTargetBoost: 100.25,
+        CloseRangeSensitivityBoost: 100.9,
 
         EnableAdvancedEnemyTactics: true,
         EnemyAwarenessLevel: 0.85,
@@ -844,7 +844,7 @@ ExactModeLevel: 3,                        // 1 = normal, 2 = advanced, 3 = perfe
         AdaptiveDifficulty: true,
         AmbushProbability: 0.40,
         RetreatThreshold: 0.25,
-        MaxPursuitDistance: 999.0,
+        MaxPursuitDistance: 10.0,
 
         TrackEnemyHead: true,
         TrackEnemyNeck: true,
@@ -852,7 +852,7 @@ ExactModeLevel: 3,                        // 1 = normal, 2 = advanced, 3 = perfe
         TrackEnemyRotation: true,
         TrackEnemyVelocity: true,
         TrackCameraRelative: true,
-        SnapToBoneAngle: 0.92,
+        SnapToBoneAngle: 360.0,
         RotationLockStrength: 999.0,
 
         UseKalmanFilter: true,
