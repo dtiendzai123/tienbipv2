@@ -11,17 +11,25 @@ var DefaultNeckAimAnchor = {
 
     // OFFSET CHUẨN CHO CỔ (đảm bảo không lệch)
     NeckOffset: { 
-        x: -0.128512, 
-        y: 0.000000, 
-        z: 0.000000 
+         x: -0.0456970781,
+        y: -0.004478302,
+         z: -0.0200432576
     },
 
     // Rotation nhẹ để camera không lệch khi nhìn cổ
     RotationOffset: { 
-        x: -0.012738, 
-        y: -0.002122, 
-        z: 0.164307, 
-        w: 0.986325 
+         x: 0.0258174837,
+
+          y: -0.08611039,
+
+          z: -0.1402113,
+
+          w: 0.9860321
+
+        
+
+      
+
     },
 
     // CHỐNG RUNG KHI GIỮ TÂM Ở CỔ
@@ -37,7 +45,7 @@ var DefaultNeckAimAnchor = {
     Stickiness: "medium",        // độ bám vào cổ ở trạng thái idle
 };
 
-var Tracking = {
+var HeadTracking = {
     // ===== CORE LOCK =====
     LockStrength: 2.0,           // lực lock tối đa
     SnapSpeed: 2.0,             // tốc độ “bắt đầu” xoay về head
