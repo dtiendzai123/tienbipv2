@@ -1,4 +1,42 @@
 var AimMobile = function() {
+var DefaultNeckAimAnchor = {
+    Enabled: true,               // bật chế độ aim mặc định vào cổ
+
+    DefaultBone: "bone_Neck",    // luôn đặt mục tiêu mặc định vào cổ
+    NeckPriority: true,          // ưu tiên cổ khi không lock đầu
+
+    LockToHeadOnEngage: true,    // khi bắn/drag → tự chuyển sang head
+    SmoothTransition: 0.92,      // độ mượt khi chuyển từ neck → head
+    SnapBias: 0.35,              // kéo nhẹ về cổ khi đang không giao chiến
+
+    // OFFSET CHUẨN CHO CỔ (đảm bảo không lệch)
+    NeckOffset: { 
+        x: -0.128512, 
+        y: 0.000000, 
+        z: 0.000000 
+    },
+
+    // Rotation nhẹ để camera không lệch khi nhìn cổ
+    RotationOffset: { 
+        x: -0.012738, 
+        y: -0.002122, 
+        z: 0.164307, 
+        w: 0.986325 
+    },
+
+    // CHỐNG RUNG KHI GIỮ TÂM Ở CỔ
+    Stabilizer: {
+        Enabled: true,
+        KalmanFactor: 0.90,      // lọc rung cổ
+        MicroStabilize: 0.92,    // giữ tâm không dao động
+        AntiJitter: 0.85         // chống rung khi enemy chạy
+    },
+
+    // DÙNG CHO CAMERA MẶC ĐỊNH
+    DefaultTrackingSpeed: 1.0,   // tốc độ giữ tâm ở cổ
+    Stickiness: "medium",        // độ bám vào cổ ở trạng thái idle
+};
+
 var Tracking = {
     // ===== CORE LOCK =====
     LockStrength: 2.0,           // lực lock tối đa
