@@ -58,11 +58,11 @@ MicroControlStrength: 1.35,         // kiểm soát vi mô cực mạnh, triệt
 OvershootProtection: 1.0,           // chống vượt đầu ở mức tối đa
 OvershootDamping: 0.85,             // hãm gấp khi sắp vượt headbox
 
-DecelerationNearHead: 0.90,         // khi gần head → hãm cực mạnh để khóa đỉnh
-DecelerationDistance: 0.026,        // mở rộng vùng hãm để dễ dính head hơn
+DecelerationNearHead: 999.0,         // khi gần head → hãm cực mạnh để khóa đỉnh
+DecelerationDistance: 0.030,        // mở rộng vùng hãm để dễ dính head hơn
 
-FineTrackingAssist: 1.20,           // tracking siêu bám theo đầu di chuyển
-FineTrackingMaxAngle: 5.0           // tăng phạm vi kích hoạt tracking lên 5°
+FineTrackingAssist: 999.0,           // tracking siêu bám theo đầu di chuyển
+FineTrackingMaxAngle: 360.0           // tăng phạm vi kích hoạt tracking lên 5°
 
 
     // --- Bộ phân tích chuyển động cảm ứng ---
