@@ -22,13 +22,13 @@ var Tracking = {
     AntiJitter: 0.92,            // chống jitter khi địch đổi hướng
 
     // ===== TẦM XA =====
-    LongRangeAssist: 1.0,
+    LongRangeAssist: 999.0,
     LongRangeHeadBias: 999.0,
 
     // ===== CHỐNG MẤT LOCK =====
-    LockRecoverySpeed: 0.9,      // mất lock 1 chút → kéo lại ngay
-    MaxLockDrift: 2.5,           // chênh lệch góc tối đa cho phép
-    DriftCorrectStrength: 0.88,  // kéo lại về head nếu lệch
+    LockRecoverySpeed: 1.0,      // mất lock 1 chút → kéo lại ngay
+    MaxLockDrift: 360.0,           // chênh lệch góc tối đa cho phép
+    DriftCorrectStrength: 1.0,  // kéo lại về head nếu lệch
 
     // ===== OFFSET THEO ANIMATION =====
     RunOffset: 0.0051,
